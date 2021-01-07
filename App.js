@@ -6,10 +6,15 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './Components/HomeScreen';
 import CreateProfile from './Components/CreateProfile';
 import AddPreferences from './Components/AddPreferences';
+import ApiKeys from './constants/ApiKeys';
+import * as firebase from 'firebase';
 
 const Stack = createStackNavigator();
 
 export default function App() {
+
+  firebase.initializeApp(ApiKeys.firebaseConfig);
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
