@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View, Button, Platform } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button, Platform, SafeAreaView, ScrollView } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { ButtonGroup } from "react-native-elements";
+import Constants from 'expo-constants';
 
 function CreateProfile({ navigation }) {
 
@@ -10,6 +12,35 @@ function CreateProfile({ navigation }) {
     const [postcode, onChangePostCode] = React.useState('');
     const [date, setDate] = useState(new Date());
     const [show, setShow] = useState(false);
+
+    const genderOptions = [
+        "male",
+        "female",
+        "non-binary",
+        "other",
+        "I prefer not to say"
+    ];
+    const [gender, setGender] = useState(4);
+
+    const handOptions = ["left-handed", "right-handed", "either"];
+    const [hand, setHand] = useState(2);
+
+    const abilityLevelButtons = [
+        "beginner",
+        "intermediate",
+        "advanced",
+        "expert",
+    ];
+    const [userAbility, setAbility] = useState(0);
+
+    const availabilityButtons = [
+        "weekday daytime",
+        "weekday evenings",
+        "weekends"
+    ];
+    const [userAvailability, setAvailability] = useState();
+
+    const [description, onChangeDescriptionText] = React.useState('');
 
     //Date stored in the state as a timestamp
     const onChange = (event, selectedDate) => {
@@ -30,60 +61,106 @@ function CreateProfile({ navigation }) {
     }
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Create Profile</Text>
-            <TextInput
-                style={styles.inputFields}
-                onChangeText={text => onChangeFirstNameText(text)}
-                value={firstName}
-                placeholder="First Name"
-                autoCompleteType="name"
-            />
-            <TextInput
-                style={styles.inputFields}
-                onChangeText={text => onChangeLastNameText(text)}
-                value={lastName}
-                placeholder="Last Name"
-                autoCompleteType='name'
-            />
-            <TextInput
-                style={styles.inputFields}
-                onChangeText={text => onChangeAddressText(text)}
-                value={address}
-                placeholder="Address"
-                autoCompleteType="street-address"
-            />
-            <TextInput
-                style={styles.inputFields}
-                onChangeText={text => onChangePostCode(text)}
-                value={postcode}
-                placeholder="Post Code"
-                autoCompleteType="postal-code"
-            />
+        <SafeAreaView style={styles.container}>
+            <ScrollView style={styles.scrollView}>
 
-            <View>
-                <Button onPress={showDatepicker} title="Enter Date of Birth" />
-            </View>
-
-            {show && (
-                <DateTimePicker
-                    testID="dateTimePicker"
-                    value={date}
-                    is24Hour={true}
-                    display="calendar"
-                    onChange={onChange}
+                {/* <View style={styles.container}> */}
+                <Text style={styles.title}>Create Profile</Text>
+                <TextInput
+                    style={styles.inputFields}
+                    onChangeText={text => onChangeFirstNameText(text)}
+                    value={firstName}
+                    placeholder="First Name"
+                    autoCompleteType="name"
                 />
-            )}
-            {/* Uncomment to see what date is selected if required!
+                <TextInput
+                    style={styles.inputFields}
+                    onChangeText={text => onChangeLastNameText(text)}
+                    value={lastName}
+                    placeholder="Last Name"
+                    autoCompleteType='name'
+                />
+                <TextInput
+                    style={styles.inputFields}
+                    onChangeText={text => onChangeAddressText(text)}
+                    value={address}
+                    placeholder="Address"
+                    autoCompleteType="street-address"
+                />
+                <TextInput
+                    style={styles.inputFields}
+                    onChangeText={text => onChangePostCode(text)}
+                    value={postcode}
+                    placeholder="Post Code"
+                    autoCompleteType="postal-code"
+                />
+                <Text>What is your Date of Birth?</Text>
+                <View>
+                    <Button onPress={showDatepicker} title="Choose Date" />
+                </View>
+
+                {show && (
+                    <DateTimePicker
+                        testID="dateTimePicker"
+                        value={date}
+                        is24Hour={true}
+                        display="calendar"
+                        onChange={onChange}
+                    />
+                )}
+                {/* Uncomment to see what date is selected if required!
             <Text>{date.toString()}</Text>
             <Text>{formatDate(date)}</Text> */}
 
-            <Button
-                title="Add Prefernces (/would be on submit)"
-                onPress={() => navigation.navigate('AddPreferences')}
-            />
+                <Text>What is your gender?</Text>
+                <ButtonGroup
+                    onPress={(selected) => setGender(selected)}
+                    selectedIndex={gender}
+                    buttons={genderOptions}
+                ></ButtonGroup>
 
-        </View>
+                <Text>What hand do you play?</Text>
+                <ButtonGroup
+                    onPress={(selected) => {
+                        setHand(selected);
+                    }}
+                    selectedIndex={hand}
+                    buttons={handOptions}
+                ></ButtonGroup>
+
+                <Text>What is your ability level?</Text>
+                <ButtonGroup
+                    onPress={(selected) => setAbility(selected)}
+                    selectedIndex={userAbility}
+                    buttons={abilityLevelButtons}
+                ></ButtonGroup>
+
+                <Text>What is your availabilty?</Text>
+                <ButtonGroup
+                    onPress={(selected) => setAvailability(selected)}
+                    selectMultiple={true}
+                    selectedIndexes={userAvailability}
+                    buttons={availabilityButtons}
+                ></ButtonGroup>
+
+                <Text>Please write a brief description of what you are looking for.</Text>
+                <TextInput
+                    style={styles.inputFields_description}
+                    onChangeText={text => onChangeDescriptionText(text)}
+                    value={description}
+                    placeholder="New friends to play tennis with in the Leeds area!"
+                />
+
+
+
+                <Button
+                    title="Add Prefernces (/would be on submit)"
+                    onPress={() => navigation.navigate('AddPreferences')}
+                />
+
+                {/* </View> */}
+            </ScrollView>
+        </SafeAreaView>
     );
 }
 
@@ -92,13 +169,22 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
+        marginTop: Constants.statusBarHeight,
+    },
+    scrollView: {
+        marginHorizontal: 10,
     },
     title: {
         marginTop: 50,
         fontSize: 40,
-        marginBottom: 20
+        marginBottom: 20,
+        alignSelf: 'center'
     },
     inputFields: {
+        borderBottomWidth: 1,
+        marginBottom: 20
+    },
+    inputFields_description: {
         borderBottomWidth: 1,
         marginBottom: 20
     }
