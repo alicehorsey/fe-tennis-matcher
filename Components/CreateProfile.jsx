@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, View, Button, Platform, SafeAreaView, ScrollView } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+
 import { ButtonGroup } from "react-native-elements";
 import Constants from 'expo-constants';
+
+import SelectAndAddPhoto from './SelectAndAddPhoto';
+
 
 function CreateProfile({ navigation }) {
 
@@ -112,6 +116,7 @@ function CreateProfile({ navigation }) {
             <Text>{date.toString()}</Text>
             <Text>{formatDate(date)}</Text> */}
 
+
                 <Text>What is your gender?</Text>
                 <ButtonGroup
                     onPress={(selected) => setGender(selected)}
@@ -134,6 +139,13 @@ function CreateProfile({ navigation }) {
                     selectedIndex={userAbility}
                     buttons={abilityLevelButtons}
                 ></ButtonGroup>
+
+            <SelectAndAddPhoto />
+            <Button
+                title="Add Prefernces (/would be on submit)"
+                onPress={() => navigation.navigate('AddPreferences')}
+            />
+
 
                 <Text>What is your availabilty?</Text>
                 <ButtonGroup
