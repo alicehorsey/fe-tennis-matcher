@@ -6,6 +6,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "./Components/HomeScreen";
 import CreateProfile from "./Components/CreateProfile";
 import AddPreferences from "./Components/AddPreferences";
+import DisplayMatches from "./Components/DisplayMatches";
 
 const Stack = createStackNavigator();
 
@@ -25,9 +26,9 @@ export default function App() {
         }}
       >
         <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{ title: "Home" }}
+          name="DisplayMatches"
+          component={DisplayMatches}
+          options={{ title: "DisplayMatches" }}
         />
         <Stack.Screen
           name="CreateProfile"
