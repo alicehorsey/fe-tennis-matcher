@@ -2,12 +2,16 @@ import React, { useState, useEffect } from 'react';
 import firebase from '../constants/Firebase';
 
 
-const DisplayMatches = ({ username }) => {
+const DisplayMatches = ({ user }) => {
 
-    const [image, setImage] = useState('')
+    const [matchingUsers, setMatchingUsers] = useState([])
+    const [image, setImage] = useState([])
 
     useEffect(() => {
-        console.log('useEffect!')
+        getMatchingUsers(user)
+
+
+
         const ref = firebase
             .storage()
             .ref()
