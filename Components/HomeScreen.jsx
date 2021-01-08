@@ -8,23 +8,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 function HomeScreen({ navigation }) {
 
-    console.log('hello')
-
-    const [image, setImage] = useState('')
-
-    useEffect(() => {
-        console.log('useEffect!')
-        const ref = firebase
-            .storage()
-            .ref()
-            .child('man_playing_tennis_1.jpg');
-        ref.getDownloadURL().then(url => setImage(url))
-    }, [])
-
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>Tennis Match NEW!!</Text>
-            <Image source={{ uri: image }} style={{ width: 250, height: 250 }} />
+            <Text>Tennis Match</Text>
             <Button
                 title="Create Profile"
                 onPress={() => navigation.navigate('CreateProfile')}
