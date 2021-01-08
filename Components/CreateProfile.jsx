@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, View, Button, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import SelectAndAddPhoto from './SelectAndAddPhoto';
 
 function CreateProfile({ navigation }) {
 
@@ -77,7 +78,7 @@ function CreateProfile({ navigation }) {
             {/* Uncomment to see what date is selected if required!
             <Text>{date.toString()}</Text>
             <Text>{formatDate(date)}</Text> */}
-
+            <SelectAndAddPhoto />
             <Button
                 title="Add Prefernces (/would be on submit)"
                 onPress={() => navigation.navigate('AddPreferences')}
