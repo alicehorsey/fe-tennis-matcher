@@ -61,9 +61,9 @@ function CreateProfile({ navigation }) {
   ];
   const [userAbility, setAbility] = useState(0);
 
-  const [weekdayDaytime, setWeekdayDaytime] = useState();
-  const [weekdayEvening, setWeekdayEvening] = useState();
-  const [weekends, setWeekends] = useState();
+  const [weekdayDaytime, setWeekdayDaytime] = useState(false);
+  const [weekdayEvening, setWeekdayEvening] = useState(false);
+  const [weekends, setWeekends] = useState(false);
 
   const [description, onChangeDescriptionText] = React.useState("");
 
