@@ -191,7 +191,7 @@ function CreateProfile({ navigation }) {
           checkedIcon="check-circle"
           uncheckedIcon="times-circle"
           onPress={() => {
-            if (setWeekdayDaytime === false) {
+            if (weekdayDaytime === false) {
               setWeekdayDaytime(!weekdayDaytime);
               setWeekdayEvening(weekdayDaytime);
               setWeekends(weekdayDaytime);
