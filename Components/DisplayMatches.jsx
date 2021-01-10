@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, Image } from 'react-native';
+import { Text, View, Image, ScrollView, Dimensions, StyleSheet } from 'react-native';
 import firebase from '../constants/Firebase';
-import {getUsers} from '../API.js'
-
+import { getUsers } from '../API.js';
+const { width } = Dimensions.get("window")
+const height = width * 1.5
 
 const DisplayMatches = () => {
 
-    const [matchingUsers, setMatchingUsers] = useState([])
-    const [image, setImage] = useState([])
+    const [matchedUsers, setMatchedUsers] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
+    const [active, setActive] = useState(0)
+    const [images, setImages] = useState([
+        'https://firebasestorage.googleapis.com/v0/b/tennis-match-b1298.appspot.com/o/aliciamolik%40me.com.jpg?alt=media&token=2ee044b6-89a6-4f09-8e0c-724751e7ded7',
+        'https://firebasestorage.googleapis.com/v0/b/tennis-match-b1298.appspot.com/o/apero777%40hotmail.co.uk.jpg?alt=media&token=0afd8ac4-3664-4199-b055-5de043a3a2af',
+        'https://firebasestorage.googleapis.com/v0/b/tennis-match-b1298.appspot.com/o/aurelie.vedy%40yahoo.co.uk.jpg?alt=media&token=60fc9c2b-6d5d-45e1-9848-8ba0cf46fec2',
+    ])
     const [user, setUser] = useState({
         "user_id": "1",
         "username": "martina.hingis@yahoo.co.uk",
@@ -33,27 +40,62 @@ const DisplayMatches = () => {
         "gender_preference": ""
     })
 
+
     useEffect(() => {
         getUsers(user)
-
-
-
-        const ref = firebase
-            .storage()
-            .ref()
-            .child(user.username + ".jpg");
-        ref.getDownloadURL().then(url => {
-            console.log(url)
-            setImage(url)
-        })
+            .then(matchingUsers => {
+                setIsLoading(false)
+                setMatchedUsers(matchingUsers)
+            })
     }, [])
 
+    const changeActive = ({ nativeEvent }) => {
+        const slide = Math.ceil(nativeEvent.contentOffset.x / nativeEvent.layoutMeasurement.width)
+        if (slide != active) setActive(slide)
+    }
+
     return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>Hello</Text>
-            <Image source={image}/>
-        </View>
+        <View style={style.container}>
+            <ScrollView
+                pagingEnabled
+                horizontal style={style.scroll}
+                onScroll={changeActive}
+                scrollEventThrottle={16}
+                showsHorizontalScrollIndicator={false}
+                style={style.scroll}
+            >
+                {
+                    images.map((image, index) => (
+                        <View style={{ flexDirection: 'column' }}>
+                            <Image
+                                key={index}
+                                source={{ uri: image }}
+                                style={style.image}
+                            />
+                            <Text style={{ flex: 1, alignSelf: 'center' }}>INFO ABOUT USER NUMBER {index + 1}</Text>
+                        </View>
+                    ))
+                }
+            </ScrollView>
+            <View style={style.pagination}>
+                {
+                    images.map((_, i) => (
+                        <Text key={i} style={i == active ? style.pagingActiveText : style.pagingText}>⬤</Text>
+                    ))
+                }
+            </View>
+        </View >
     );
 };
+
+const style = StyleSheet.create({
+    container: { marginTop: 50, width, height },
+    scroll: { width, height },
+    image: { width, height, resizeMode: 'cover', flex: 2 },
+    pagination: { flexDirection: 'row', position: 'absolute', bottom: 20, alignSelf: 'center' },
+    userInfo: { flexDirection: 'row', position: 'absolute', bottom: 0, alignSelf: 'center' },
+    pagingText: { color: 'green', margin: 3 },
+    pagingActiveText: { color: '#fff', margin: 3 }
+})
 
 export default DisplayMatches;
