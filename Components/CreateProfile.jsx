@@ -61,9 +61,9 @@ function CreateProfile({ navigation }) {
   ];
   const [userAbility, setAbility] = useState(0);
 
-  const [weekdayDaytime, setWeekdayDaytime] = useState(false);
-  const [weekdayEvening, setWeekdayEvening] = useState(false);
-  const [weekends, setWeekends] = useState(false);
+  const [weekdayDaytime, setWeekdayDaytime] = useState();
+  const [weekdayEvening, setWeekdayEvening] = useState();
+  const [weekends, setWeekends] = useState();
 
   const [description, onChangeDescriptionText] = React.useState("");
 
@@ -189,6 +189,8 @@ function CreateProfile({ navigation }) {
           checkedIcon="check-circle"
           uncheckedIcon="times-circle"
           onPress={() => {
+            setWeekdayEvening();
+            setWeekends();
             setWeekdayDaytime(!weekdayDaytime);
           }}
           checked={weekdayDaytime}
@@ -200,6 +202,8 @@ function CreateProfile({ navigation }) {
           uncheckedIcon="times-circle"
           onPress={() => {
             setWeekdayEvening(!weekdayEvening);
+            setWeekdayDaytime();
+            setWeekends();
           }}
           checked={weekdayEvening}
         />
@@ -210,6 +214,8 @@ function CreateProfile({ navigation }) {
           uncheckedIcon="times-circle"
           onPress={() => {
             setWeekends(!weekends);
+            setWeekdayDaytime();
+            setWeekdayEvening();
           }}
           checked={weekends}
         />

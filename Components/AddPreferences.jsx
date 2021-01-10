@@ -10,21 +10,21 @@ import {
 import { Slider, Icon, CheckBox, ButtonGroup } from "react-native-elements";
 
 function AddPreferences({ route, navigation }) {
+  const profileInfo = { ...route.params };
   const {
     first_name,
     last_name,
-    address,
-    postcode,
+    latitude,
+    longitude,
     date_of_birth,
     gender,
     ability,
     playing_hand,
-    availability,
     weekday_daytime,
     weekday_evening,
     weekends,
     description,
-  } = route.params;
+  } = profileInfo;
   const [distance, setDistance] = useState(40);
   const opponentHandButtons = ["left-handed", "right-handed", "either"];
   const [opponentHand, setOpponentHand] = useState(2);
@@ -37,23 +37,50 @@ function AddPreferences({ route, navigation }) {
   const [opponentAbility, setOppoenentAbility] = useState();
   const opponentGroupOptions = ["mens", "womens", "either"];
   const [group, setGroup] = useState(2);
+  // current queries set up are gender / playing hand / min ability / max ability
+  const addPreferences = (
+    profileData,
+    distance,
+    opponentAbility,
+    abilityLevelButtons,
+    opponentHand,
+    opponentHandButtons,
+    group,
+    opponentGroupOptions
+  ) => {
+    profileData.distance = distance;
+    profileData.min_ability =
+      opponentHandButtons[opponentHand] === "left-handed" || "right-handed"
+        ? (profileData.hand_preference = opponentHandButtons[opponentHand])
+        : (profileData.hand_preference = "");
+    return profileData;
+  };
+
   return (
     <ScrollView>
-      <Text>First Name correct format: {first_name}</Text>
-      <Text>Last Name correct format: {last_name}</Text>
-      <Text>DOB in correct format {date_of_birth}</Text>
-      <Text>Gender in correct format: {gender}</Text>
-      <Text>LATITUDE AND LONGITUDE TO GO HERE</Text>
-      <Text>Playing Hand correct format: {playing_hand}</Text>
-      <Text>Formatted correct ability level index = {ability}</Text>
-      <Text>Week daytime availability: {weekday_daytime.toString()}</Text>
-      <Text>Week evenings availability: {weekday_evening.toString()}</Text>
-      <Text>weekends availability: {weekends.toString()}</Text>
-      <Text>weekends availability:this is the desc: {description}</Text>
+      <Text>This list shows the data needed in its k:v pairs</Text>
+      <Text>First_name: {first_name}</Text>
+      <Text>Last Name: {last_name}</Text>
+      <Text>LATITUDE TO GO HERE</Text>
+      <Text>LONGITUDE TO GO HERE</Text>
+      <Text>date_of_birth: {date_of_birth}</Text>
+      <Text>gender: {gender}</Text>
+      <Text>playing_hand: {playing_hand}</Text>
+      <Text>gender= {ability}</Text>
+      <Text>
+        weekday_daytime: {weekday_daytime.toString()} -- typeof confirms boolean
+      </Text>
+      <Text>weekday_evening: {weekday_evening.toString()}</Text>
+      <Text>weekends: {weekends.toString()}</Text>
+      <Text>description: {description}</Text>
+      <Text>
+        distance: (typeof-- {typeof distance}) total -- {distance}
+      </Text>
       <Text>User adding preferences screen</Text>
       <Text>Availability</Text>
       <Text>Set your maximim distance:</Text>
       <Text>Distance: {distance}</Text>
+      <Text>Distance: {Object.entries(profileInfo)}</Text>
       <View>
         <Slider
           value={distance}
@@ -109,12 +136,12 @@ function AddPreferences({ route, navigation }) {
       ></ButtonGroup>
       <Text>Your preferred group: {opponentGroupOptions[group]}</Text>
       <Button
-        title="Add Preferences"
+        title="Save Preferences"
         onPress={() => navigation.navigate("AddPreferences")}
       />
       {/* Add Preferences button will take us to full users list */}
     </ScrollView>
   );
 }
-
+// have a submit button with disabled until preferences saved ??? ternary ???
 export default AddPreferences;
