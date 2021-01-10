@@ -176,7 +176,7 @@ function AddPreferences({ route, navigation }) {
         }}
       />
       <Button title="Submit Profile" disabled={!savedPreferences} />
-      {/* Add Preferences button will take us to full users list */}
+      {/* this button first needs to send post request then navigate to matches */}
     </ScrollView>
   );
 }
