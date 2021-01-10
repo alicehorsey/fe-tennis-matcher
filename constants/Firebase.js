@@ -1,4 +1,4 @@
-import * as firebase from 'firebase';
+import firebase from 'firebase';
 
 const firebaseConfig = {
     apiKey: "AIzaSyCDebnOqYKC8dlLC-Xri4F_xNbKrC_HCx8",
@@ -14,5 +14,4 @@ if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig)
 }
 
-// export { firebase };
 export default firebase
