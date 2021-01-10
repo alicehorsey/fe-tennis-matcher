@@ -34,7 +34,8 @@ function AddPreferences({ route, navigation }) {
     "advanced",
     "expert",
   ];
-  const [opponentAbility, setOppoenentAbility] = useState();
+  const [opponentAbility, setOppoenentAbility] = useState([]);
+  console.log(opponentAbility);
   const opponentGroupOptions = ["mens", "womens", "either"];
   const [group, setGroup] = useState(2);
   const [savedPreferences, setSavedPreferences] = useState(false);
@@ -80,6 +81,12 @@ function AddPreferences({ route, navigation }) {
       <Text>Set your maximim distance:</Text>
       <Text>Distance: {distance}</Text>
       <Text> {Object.entries(profileInfo)}</Text>
+      <Text>ability index {typeof opponentAbility}</Text>
+      <Text>min ability index {opponentAbility.sort()[0] + 1}</Text>
+      <Text>
+        min ability index{" "}
+        {opponentAbility.sort()[opponentAbility.length - 1] + 1}
+      </Text>
       <View>
         <Slider
           value={distance}
