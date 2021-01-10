@@ -67,9 +67,7 @@ function AddPreferences({ route, navigation }) {
       <Text>gender: {gender}</Text>
       <Text>playing_hand: {playing_hand}</Text>
       <Text>gender= {ability}</Text>
-      <Text>
-        weekday_daytime: {weekday_daytime.toString()} -- typeof confirms boolean
-      </Text>
+      <Text>weekday_daytime: {weekday_daytime.toString()}</Text>
       <Text>weekday_evening: {weekday_evening.toString()}</Text>
       <Text>weekends: {weekends.toString()}</Text>
       <Text>description: {description}</Text>

@@ -21,7 +21,7 @@ Data to pass through :
 - ✅ DOB": string" - uses Alices format date function to get to the correct format 
 - ❓✅"gender: string" --> change to Do you want to play mens, womens or mixed? does this avoid the issue? 
 - ❓✅ability: index **Backend isn't stored as zero-index have added formatter
-- ✅ "playing_hand": "left-handed",
+- ❓✅ "playing_hand": "left-handed", needs button removal or formatter
 -❓"club_membership": "Pudsey Lawn Tennis Club", double check if required think not :)
 -❓✅✅✅ Availability: boolean changing to checkboxes
  "weekday_daytime": true, boolean
@@ -92,9 +92,9 @@ function CreateProfile({ navigation }) {
   };
   // getting gender into m /f / mixed
   const formatGender = (choice) => {
-    if ((choice = "male")) {
+    if (choice === "male") {
       return "m";
-    } else if ((choice = "female")) {
+    } else if (choice === "female") {
       return "f";
     } else {
       return "mixed";
@@ -189,9 +189,13 @@ function CreateProfile({ navigation }) {
           checkedIcon="check-circle"
           uncheckedIcon="times-circle"
           onPress={() => {
-            setWeekdayEvening();
-            setWeekends();
-            setWeekdayDaytime(!weekdayDaytime);
+            if (setWeekdayDaytime === false) {
+              setWeekdayDaytime(!weekdayDaytime);
+              setWeekdayEvening(weekdayDaytime);
+              setWeekends(weekdayDaytime);
+            } else {
+              setWeekdayDaytime(false);
+            }
           }}
           checked={weekdayDaytime}
         />
@@ -201,9 +205,13 @@ function CreateProfile({ navigation }) {
           checkedIcon="check-circle"
           uncheckedIcon="times-circle"
           onPress={() => {
-            setWeekdayEvening(!weekdayEvening);
-            setWeekdayDaytime();
-            setWeekends();
+            if (weekdayEvening === false) {
+              setWeekdayEvening(!weekdayEvening);
+              setWeekdayDaytime(false);
+              setWeekends(false);
+            } else {
+              setWeekdayEvening(false);
+            }
           }}
           checked={weekdayEvening}
         />
@@ -213,9 +221,13 @@ function CreateProfile({ navigation }) {
           checkedIcon="check-circle"
           uncheckedIcon="times-circle"
           onPress={() => {
-            setWeekends(!weekends);
-            setWeekdayDaytime();
-            setWeekdayEvening();
+            if (weekends === false) {
+              setWeekends(!weekends);
+              setWeekdayDaytime(false);
+              setWeekdayEvening(false);
+            } else {
+              setWeekends(false);
+            }
           }}
           checked={weekends}
         />
