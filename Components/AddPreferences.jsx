@@ -10,6 +10,7 @@ function AddPreferences({ route, navigation }) {
     postcode,
     date_of_birth,
     gender,
+    playing_hand,
   } = route.params;
   const [distance, setDistance] = useState(40);
   const opponentHandButtons = ["left-handed", "right-handed", "either"];
@@ -25,9 +26,11 @@ function AddPreferences({ route, navigation }) {
   const [group, setGroup] = useState(2);
   return (
     <View>
-      <Text>First Name: {first_name}</Text>
-      <Text>Last Name: {last_name}</Text>
-      <Text>Last Name: {date_of_birth}</Text>
+      <Text>First Name correct format: {first_name}</Text>
+      <Text>Last Name correct format: {last_name}</Text>
+      <Text>DOB in correct format {date_of_birth}</Text>
+      <Text>Gender in correct format: {gender}</Text>
+      <Text>Playing Hand correct format: {playing_hand}</Text>
       <Text>User adding preferences screen</Text>
       <Text>Availability</Text>
       <Text>Set your maximim distance:</Text>

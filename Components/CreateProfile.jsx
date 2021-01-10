@@ -12,13 +12,21 @@ import {
 import DateTimePicker from "@react-native-community/datetimepicker";
 /*
 Data to pass through :
-- ❌ "username: string" --> will need to eith be authentication or added to the form
+- ❌ "username: string" --> will need to be authentication or added to the form as a field
 - ✅ first_name": string" - passing through
 - ✅ last_name": string" - passing through
 - ❌"latitude": 53.802177,
-- ❌"longitude": -1.558265, --> ask Alice how this is being made
+- ❌ "longitude": -1.558265, --> ask Alice how this is being made
 - date_of_birth": "string",
 - ✅ DOB": string" - uses Alices format date function to get to the correct format 
+- ❓"gender: string" --> change to Do you want to play mens, womens or mixed? does this avoid the issue? 
+- ❌ability: index **Backend isn't stored as zero-index!!!!! will format to backend setup
+- ✅ "playing_hand": "left-handed",
+-❓"club_membership": "Pudsey Lawn Tennis Club", -is this required?? - can we unrequire it if so/ get the picker organised? 
+❌"weekday_daytime": true,
+❌"weekday_evening": false,
+❌"weekends": false,
+❌"description":
 */
 import { ButtonGroup } from "react-native-elements";
 import Constants from "expo-constants";
@@ -84,7 +92,16 @@ function CreateProfile({ navigation }) {
     );
     return formattedDate.toISOString().slice(0, 10).replace(/-/g, "");
   };
-
+  // getting gender into m /f / mixed
+  const formatGender = (choice) => {
+    if ((choice = "male")) {
+      return "m";
+    } else if ((choice = "female")) {
+      return "f";
+    } else {
+      return "mixed";
+    }
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
@@ -186,6 +203,8 @@ function CreateProfile({ navigation }) {
               first_name: firstName,
               last_name: lastName,
               date_of_birth: formatDate(date),
+              gender: formatGender(gender),
+              playing_hand: handOptions[hand],
             })
           }
         />
