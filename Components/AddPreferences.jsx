@@ -2,7 +2,15 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View, Button, Animated } from "react-native";
 import { Slider, Icon, CheckBox, ButtonGroup } from "react-native-elements";
 
-function AddPreferences({ navigation }) {
+function AddPreferences({ route, navigation }) {
+  const {
+    first_name,
+    last_name,
+    address,
+    postcode,
+    date_of_birth,
+    gender,
+  } = route.params;
   const [distance, setDistance] = useState(40);
   const opponentHandButtons = ["left-handed", "right-handed", "either"];
   const [opponentHand, setOpponentHand] = useState(2);
@@ -17,6 +25,9 @@ function AddPreferences({ navigation }) {
   const [group, setGroup] = useState(2);
   return (
     <View>
+      <Text>First Name: {first_name}</Text>
+      <Text>Last Name: {last_name}</Text>
+      <Text>Last Name: {date_of_birth}</Text>
       <Text>User adding preferences screen</Text>
       <Text>Availability</Text>
       <Text>Set your maximim distance:</Text>
