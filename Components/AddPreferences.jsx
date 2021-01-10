@@ -10,6 +10,7 @@ function AddPreferences({ route, navigation }) {
     postcode,
     date_of_birth,
     gender,
+    ability,
     playing_hand,
   } = route.params;
   const [distance, setDistance] = useState(40);
@@ -31,6 +32,7 @@ function AddPreferences({ route, navigation }) {
       <Text>DOB in correct format {date_of_birth}</Text>
       <Text>Gender in correct format: {gender}</Text>
       <Text>Playing Hand correct format: {playing_hand}</Text>
+      <Text>Formatted correct ability level index {ability}</Text>
       <Text>User adding preferences screen</Text>
       <Text>Availability</Text>
       <Text>Set your maximim distance:</Text>

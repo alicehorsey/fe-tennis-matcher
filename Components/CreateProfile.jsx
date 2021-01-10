@@ -19,8 +19,8 @@ Data to pass through :
 - ❌ "longitude": -1.558265, --> ask Alice how this is being made
 - date_of_birth": "string",
 - ✅ DOB": string" - uses Alices format date function to get to the correct format 
-- ❓"gender: string" --> change to Do you want to play mens, womens or mixed? does this avoid the issue? 
-- ❌ability: index **Backend isn't stored as zero-index!!!!! will format to backend setup
+- ❓✅"gender: string" --> change to Do you want to play mens, womens or mixed? does this avoid the issue? 
+- ❓✅ability: index **Backend isn't stored as zero-index have added formatter
 - ✅ "playing_hand": "left-handed",
 -❓"club_membership": "Pudsey Lawn Tennis Club", -is this required?? - can we unrequire it if so/ get the picker organised? 
 ❌"weekday_daytime": true,
@@ -101,6 +101,10 @@ function CreateProfile({ navigation }) {
     } else {
       return "mixed";
     }
+  };
+
+  const formatAbilityIndex = (abilityIndex) => {
+    return abilityIndex + 1;
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -204,6 +208,7 @@ function CreateProfile({ navigation }) {
               last_name: lastName,
               date_of_birth: formatDate(date),
               gender: formatGender(gender),
+              ability: formatAbilityIndex(userAbility),
               playing_hand: handOptions[hand],
             })
           }
