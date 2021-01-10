@@ -40,7 +40,13 @@ function AddPreferences({ route, navigation }) {
   const [group, setGroup] = useState(2);
   const [savedPreferences, setSavedPreferences] = useState(false);
   // current queries set up are gender / playing hand / min ability / max ability
-  const addPreferences = (profileData, distance, opponentAbility) => {
+  const addPreferences = (
+    profileData,
+    distance,
+    opponentAbility,
+    group,
+    opponentHand
+  ) => {
     profileData.distance = distance;
     if (opponentAbility.length === 0) {
       profileData.min_ability = 1;
@@ -53,7 +59,17 @@ function AddPreferences({ route, navigation }) {
       profileData.max_ability =
         opponentAbility.sort()[opponentAbility.length - 1] + 1;
     }
-    // profileData.min_ability =
+    if (group === 0) {
+      profileData.gender_preference = "m";
+    } else if (group === 1) {
+      profileData.gender_preference = "f";
+    }
+    if (opponentHand === 0) {
+      profileData.hand_preference = "left-handed";
+    }
+    if (opponentHand === 1) {
+      profileData.hand_preference = "right-handed";
+    }
     //   opponentHandButtons[opponentHand] === "left-handed" || "right-handed"
     //     ? (profileData.hand_preference = opponentHandButtons[opponentHand])
     //     : (profileData.hand_preference = "");
@@ -89,6 +105,7 @@ function AddPreferences({ route, navigation }) {
         min ability index{" "}
         {opponentAbility.sort()[opponentAbility.length - 1] + 1}
       </Text>
+      <Text>Should be false on refresh: {savedPreferences.toString()}</Text>
       <View>
         <Slider
           value={distance}
@@ -146,12 +163,19 @@ function AddPreferences({ route, navigation }) {
       <Button
         title="Save Preferences"
         onPress={() => {
-          addPreferences(profileInfo, distance, opponentAbility);
+          addPreferences(
+            profileInfo,
+            distance,
+            opponentAbility,
+            group,
+            opponentHand
+          );
           console.log(distance, typeof distance);
           setSavedPreferences(true);
           console.log(profileInfo);
         }}
       />
+      <Button title="Submit Profile" disabled={!savedPreferences} />
       {/* Add Preferences button will take us to full users list */}
     </ScrollView>
   );
