@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, Image, ScrollView, Dimensions, StyleSheet } from 'react-native';
+import { Text, View, Image, Button, ScrollView, Dimensions, StyleSheet } from 'react-native';
 import firebase from '../constants/Firebase';
 import { getUsers } from '../API.js';
 const { width } = Dimensions.get("window")
@@ -66,13 +66,15 @@ const DisplayMatches = () => {
             >
                 {
                     images.map((image, index) => (
-                        <View style={{ flexDirection: 'column' }}>
+                        <View key={index} style={{ flexDirection: 'column' }}>
                             <Image
-                                key={index}
                                 source={{ uri: image }}
                                 style={style.image}
                             />
-                            <Text style={{ flex: 1, alignSelf: 'center' }}>INFO ABOUT USER NUMBER {index + 1}</Text>
+                            <Text style={{ alignSelf: 'center' }}>INFO ABOUT USER NUMBER {index + 1}</Text>
+                            <Button
+                                title='Remove player'
+                            />
                         </View>
                     ))
                 }
@@ -89,13 +91,12 @@ const DisplayMatches = () => {
 };
 
 const style = StyleSheet.create({
-    container: { marginTop: 50, width, height },
+    container: { borderWidth: 5, marginTop: 10, width, height },
     scroll: { width, height },
-    image: { width, height, resizeMode: 'cover', flex: 2 },
-    pagination: { flexDirection: 'row', position: 'absolute', bottom: 20, alignSelf: 'center' },
-    userInfo: { flexDirection: 'row', position: 'absolute', bottom: 0, alignSelf: 'center' },
+    image: { width, height, resizeMode: 'cover', flex: 1 },
+    pagination: { flexDirection: 'row', position: 'absolute', bottom: -30, alignSelf: 'center' },
     pagingText: { color: 'green', margin: 3 },
-    pagingActiveText: { color: '#fff', margin: 3 }
+    pagingActiveText: { color: 'black', margin: 3 }
 })
 
 export default DisplayMatches;
