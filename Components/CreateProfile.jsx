@@ -90,14 +90,16 @@ function CreateProfile({ navigation }) {
     );
     return formattedDate.toISOString().slice(0, 10).replace(/-/g, "");
   };
-  // getting gender into m /f / mixed
-  const formatGender = (choice) => {
-    if (choice === "male") {
+  // getting gender into m /f / other
+  const formatGender = (choice, array) => {
+    console.log(choice);
+    console.log(array[choice]);
+    if (array[choice] == "male") {
       return "m";
-    } else if (choice === "female") {
+    } else if (array[choice] == "female") {
       return "f";
     } else {
-      return "mixed";
+      return "other";
     }
   };
 
@@ -248,7 +250,7 @@ function CreateProfile({ navigation }) {
               first_name: firstName,
               last_name: lastName,
               date_of_birth: formatDate(date),
-              gender: formatGender(gender),
+              gender: formatGender(gender, genderOptions),
               ability: formatAbilityIndex(userAbility),
               playing_hand: handOptions[hand],
               weekday_daytime: weekdayDaytime,

@@ -37,6 +37,7 @@ function AddPreferences({ route, navigation }) {
   const [opponentAbility, setOppoenentAbility] = useState();
   const opponentGroupOptions = ["mens", "womens", "either"];
   const [group, setGroup] = useState(2);
+  const [savedPreferences, setSavedPreferences] = useState(false);
   // current queries set up are gender / playing hand / min ability / max ability
   const addPreferences = (
     profileData,
@@ -66,7 +67,7 @@ function AddPreferences({ route, navigation }) {
       <Text>date_of_birth: {date_of_birth}</Text>
       <Text>gender: {gender}</Text>
       <Text>playing_hand: {playing_hand}</Text>
-      <Text>gender= {ability}</Text>
+      <Text>ability= {ability}</Text>
       <Text>weekday_daytime: {weekday_daytime.toString()}</Text>
       <Text>weekday_evening: {weekday_evening.toString()}</Text>
       <Text>weekends: {weekends.toString()}</Text>
@@ -78,7 +79,7 @@ function AddPreferences({ route, navigation }) {
       <Text>Availability</Text>
       <Text>Set your maximim distance:</Text>
       <Text>Distance: {distance}</Text>
-      <Text>Distance: {Object.entries(profileInfo)}</Text>
+      <Text> {Object.entries(profileInfo)}</Text>
       <View>
         <Slider
           value={distance}
@@ -135,7 +136,11 @@ function AddPreferences({ route, navigation }) {
       <Text>Your preferred group: {opponentGroupOptions[group]}</Text>
       <Button
         title="Save Preferences"
-        onPress={() => navigation.navigate("AddPreferences")}
+        onPress={(distance) => {
+          addPreferences(distance);
+          setSavedPreferences(true);
+          console.log(profileInfo);
+        }}
       />
       {/* Add Preferences button will take us to full users list */}
     </ScrollView>
