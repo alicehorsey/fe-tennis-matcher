@@ -40,21 +40,23 @@ function AddPreferences({ route, navigation }) {
   const [group, setGroup] = useState(2);
   const [savedPreferences, setSavedPreferences] = useState(false);
   // current queries set up are gender / playing hand / min ability / max ability
-  const addPreferences = (
-    profileData,
-    distance,
-    opponentAbility,
-    abilityLevelButtons,
-    opponentHand,
-    opponentHandButtons,
-    group,
-    opponentGroupOptions
-  ) => {
+  const addPreferences = (profileData, distance, opponentAbility) => {
     profileData.distance = distance;
-    profileData.min_ability =
-      opponentHandButtons[opponentHand] === "left-handed" || "right-handed"
-        ? (profileData.hand_preference = opponentHandButtons[opponentHand])
-        : (profileData.hand_preference = "");
+    if (opponentAbility.length === 0) {
+      profileData.min_ability = 1;
+      profileData.max_ability = 4;
+    } else if (opponentAbility.length === 1) {
+      profileData.min_ability = opponentAbility[0] + 1;
+      profileData.max_ability = opponentAbility[0] + 1;
+    } else {
+      profileData.min_ability = opponentAbility.sort()[0] + 1;
+      profileData.max_ability =
+        opponentAbility.sort()[opponentAbility.length - 1] + 1;
+    }
+    // profileData.min_ability =
+    //   opponentHandButtons[opponentHand] === "left-handed" || "right-handed"
+    //     ? (profileData.hand_preference = opponentHandButtons[opponentHand])
+    //     : (profileData.hand_preference = "");
     return profileData;
   };
 
@@ -81,7 +83,7 @@ function AddPreferences({ route, navigation }) {
       <Text>Set your maximim distance:</Text>
       <Text>Distance: {distance}</Text>
       <Text> {Object.entries(profileInfo)}</Text>
-      <Text>ability index {typeof opponentAbility}</Text>
+      <Text>ability array length {opponentAbility.length}</Text>
       <Text>min ability index {opponentAbility.sort()[0] + 1}</Text>
       <Text>
         min ability index{" "}
@@ -143,8 +145,9 @@ function AddPreferences({ route, navigation }) {
       <Text>Your preferred group: {opponentGroupOptions[group]}</Text>
       <Button
         title="Save Preferences"
-        onPress={(distance) => {
-          addPreferences(distance);
+        onPress={() => {
+          addPreferences(profileInfo, distance, opponentAbility);
+          console.log(distance, typeof distance);
           setSavedPreferences(true);
           console.log(profileInfo);
         }}
