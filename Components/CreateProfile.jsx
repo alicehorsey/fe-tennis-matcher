@@ -18,6 +18,7 @@ Data to pass through :
 - ❌"latitude": 53.802177,
 - ❌"longitude": -1.558265, --> ask Alice how this is being made
 - date_of_birth": "string",
+- ✅ DOB": string" - uses Alices format date function to get to the correct format 
 */
 import { ButtonGroup } from "react-native-elements";
 import Constants from "expo-constants";
@@ -184,7 +185,7 @@ function CreateProfile({ navigation }) {
             navigation.navigate("AddPreferences", {
               first_name: firstName,
               last_name: lastName,
-              date_of_birth: date.toJSON(),
+              date_of_birth: formatDate(date),
             })
           }
         />
