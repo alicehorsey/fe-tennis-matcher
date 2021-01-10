@@ -45,10 +45,11 @@ function AddPreferences({ route, navigation }) {
       <Text>Gender in correct format: {gender}</Text>
       <Text>LATITUDE AND LONGITUDE TO GO HERE</Text>
       <Text>Playing Hand correct format: {playing_hand}</Text>
-      <Text>Formatted correct ability level index {ability}</Text>
+      <Text>Formatted correct ability level index = {ability}</Text>
       <Text>Week daytime availability: {weekday_daytime.toString()}</Text>
       <Text>Week evenings availability: {weekday_evening.toString()}</Text>
       <Text>weekends availability: {weekends.toString()}</Text>
+      <Text>weekends availability:this is the desc: {description}</Text>
       <Text>User adding preferences screen</Text>
       <Text>Availability</Text>
       <Text>Set your maximim distance:</Text>

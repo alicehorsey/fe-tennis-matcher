@@ -27,7 +27,7 @@ Data to pass through :
  "weekday_daytime": true, boolean
     "weekday_evening": false,
     "weekends": false,
- ❌"description":
+ ✅"description":
 */
 import { ButtonGroup, CheckBox } from "react-native-elements";
 import Constants from "expo-constants";
@@ -236,6 +236,7 @@ function CreateProfile({ navigation }) {
               weekday_daytime: weekdayDaytime,
               weekday_evening: weekdayEvening,
               weekends: weekends,
+              description: description,
             })
           }
         />
