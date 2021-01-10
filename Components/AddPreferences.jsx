@@ -19,6 +19,11 @@ function AddPreferences({ route, navigation }) {
     gender,
     ability,
     playing_hand,
+    availability,
+    weekday_daytime,
+    weekday_evening,
+    weekends,
+    description,
   } = route.params;
   const [distance, setDistance] = useState(40);
   const opponentHandButtons = ["left-handed", "right-handed", "either"];
@@ -41,6 +46,9 @@ function AddPreferences({ route, navigation }) {
       <Text>LATITUDE AND LONGITUDE TO GO HERE</Text>
       <Text>Playing Hand correct format: {playing_hand}</Text>
       <Text>Formatted correct ability level index {ability}</Text>
+      <Text>Week daytime availability: {weekday_daytime.toString()}</Text>
+      <Text>Week evenings availability: {weekday_evening.toString()}</Text>
+      <Text>weekends availability: {weekends.toString()}</Text>
       <Text>User adding preferences screen</Text>
       <Text>Availability</Text>
       <Text>Set your maximim distance:</Text>

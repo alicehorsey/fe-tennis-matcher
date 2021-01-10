@@ -12,7 +12,7 @@ import {
 import DateTimePicker from "@react-native-community/datetimepicker";
 /*
 Data to pass through :
-- ❌ "username: string" --> will need to be authentication or added to the form as a field
+- ❌ "username: string" --> will need to be authentication or added to the form as a field if authen needs passing via props
 - ✅ first_name": string" - passing through
 - ✅ last_name": string" - passing through
 - ❌"latitude": 53.802177,
@@ -22,13 +22,14 @@ Data to pass through :
 - ❓✅"gender: string" --> change to Do you want to play mens, womens or mixed? does this avoid the issue? 
 - ❓✅ability: index **Backend isn't stored as zero-index have added formatter
 - ✅ "playing_hand": "left-handed",
--❓"club_membership": "Pudsey Lawn Tennis Club", -is this required?? - can we unrequire it if so/ get the picker organised? 
-❌"weekday_daytime": true,
-❌"weekday_evening": false,
-❌"weekends": false,
-❌"description":
+-❓"club_membership": "Pudsey Lawn Tennis Club", double check if required think not :)
+-❓✅✅✅ Availability: boolean changing to checkboxes
+ "weekday_daytime": true, boolean
+    "weekday_evening": false,
+    "weekends": false,
+ ❌"description":
 */
-import { ButtonGroup } from "react-native-elements";
+import { ButtonGroup, CheckBox } from "react-native-elements";
 import Constants from "expo-constants";
 import SelectAndAddPhoto from "./SelectAndAddPhoto";
 
@@ -60,12 +61,9 @@ function CreateProfile({ navigation }) {
   ];
   const [userAbility, setAbility] = useState(0);
 
-  const availabilityButtons = [
-    "weekday daytime",
-    "weekday evenings",
-    "weekends",
-  ];
-  const [userAvailability, setAvailability] = useState();
+  const [weekdayDaytime, setWeekdayDaytime] = useState(false);
+  const [weekdayEvening, setWeekdayEvening] = useState(false);
+  const [weekends, setWeekends] = useState(false);
 
   const [description, onChangeDescriptionText] = React.useState("");
 
@@ -106,6 +104,7 @@ function CreateProfile({ navigation }) {
   const formatAbilityIndex = (abilityIndex) => {
     return abilityIndex + 1;
   };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
@@ -183,13 +182,37 @@ function CreateProfile({ navigation }) {
         <SelectAndAddPhoto />
 
         <Text>What is your availabilty?</Text>
-        <ButtonGroup
-          onPress={(selected) => setAvailability(selected)}
-          selectMultiple={true}
-          selectedIndexes={userAvailability}
-          buttons={availabilityButtons}
-        ></ButtonGroup>
 
+        <CheckBox
+          center
+          title="weekday daytime"
+          checkedIcon="dot-circle-o"
+          uncheckedIcon="circle-o"
+          onPress={() => {
+            setWeekdayDaytime(!weekdayDaytime);
+          }}
+          checked={weekdayDaytime}
+        />
+        <CheckBox
+          center
+          title="weekday evening"
+          checkedIcon="dot-circle-o"
+          uncheckedIcon="circle-o"
+          onPress={() => {
+            setWeekdayEvening(!weekdayEvening);
+          }}
+          checked={weekdayEvening}
+        />
+        <CheckBox
+          center
+          title="weekends"
+          checkedIcon="dot-circle-o"
+          uncheckedIcon="circle-o"
+          onPress={() => {
+            setWeekends(!weekends);
+          }}
+          checked={weekends}
+        />
         <Text>
           Please write a brief description of what you are looking for.
         </Text>
@@ -210,6 +233,9 @@ function CreateProfile({ navigation }) {
               gender: formatGender(gender),
               ability: formatAbilityIndex(userAbility),
               playing_hand: handOptions[hand],
+              weekday_daytime: weekdayDaytime,
+              weekday_evening: weekdayEvening,
+              weekends: weekends,
             })
           }
         />
@@ -247,3 +273,20 @@ const styles = StyleSheet.create({
 });
 
 export default CreateProfile;
+
+/*
+Old availability button group
+  const availabilityButtons = [
+    "weekday daytime",
+    "weekday evenings",
+    "weekends",
+  ];
+  const [userAvailability, setAvailability] = useState();
+  <ButtonGroup
+          onPress={(selected) => setAvailability(selected)}
+          selectMultiple={true}
+          selectedIndexes={userAvailability}
+          buttons={availabilityButtons}
+        ></ButtonGroup>
+
+*/
