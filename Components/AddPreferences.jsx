@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Button, Animated } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  Animated,
+  ScrollView,
+} from "react-native";
 import { Slider, Icon, CheckBox, ButtonGroup } from "react-native-elements";
 
 function AddPreferences({ route, navigation }) {
@@ -26,11 +33,12 @@ function AddPreferences({ route, navigation }) {
   const opponentGroupOptions = ["mens", "womens", "either"];
   const [group, setGroup] = useState(2);
   return (
-    <View>
+    <ScrollView>
       <Text>First Name correct format: {first_name}</Text>
       <Text>Last Name correct format: {last_name}</Text>
       <Text>DOB in correct format {date_of_birth}</Text>
       <Text>Gender in correct format: {gender}</Text>
+      <Text>LATITUDE AND LONGITUDE TO GO HERE</Text>
       <Text>Playing Hand correct format: {playing_hand}</Text>
       <Text>Formatted correct ability level index {ability}</Text>
       <Text>User adding preferences screen</Text>
@@ -96,7 +104,7 @@ function AddPreferences({ route, navigation }) {
         onPress={() => navigation.navigate("AddPreferences")}
       />
       {/* Add Preferences button will take us to full users list */}
-    </View>
+    </ScrollView>
   );
 }
 
