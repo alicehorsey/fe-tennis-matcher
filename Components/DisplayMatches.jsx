@@ -3,7 +3,7 @@ import { Text, View, Image, Button, ScrollView, Dimensions, StyleSheet } from 'r
 import firebase from '../constants/Firebase';
 import { getUsers } from '../API.js';
 const { width } = Dimensions.get("window")
-const height = width * 1.5
+const height = width * 1.3
 
 const DisplayMatches = () => {
 
@@ -91,12 +91,12 @@ const DisplayMatches = () => {
 };
 
 const style = StyleSheet.create({
-    container: { borderWidth: 5, marginTop: 10, width, height },
+    container: { marginTop: 10, width, height },
     scroll: { width, height },
     image: { width, height, resizeMode: 'cover', flex: 1 },
     pagination: { flexDirection: 'row', position: 'absolute', bottom: -30, alignSelf: 'center' },
-    pagingText: { color: 'green', margin: 3 },
-    pagingActiveText: { color: 'black', margin: 3 }
+    pagingText: { fontSize: (width / 20), color: 'green', margin: 3 },
+    pagingActiveText: { fontSize: (width / 20), color: 'black', margin: 3 }
 })
 
 export default DisplayMatches;

@@ -28,7 +28,7 @@ export default function App() {
         <Stack.Screen
           name="DisplayMatches"
           component={DisplayMatches}
-          options={{ title: "DisplayMatches" }}
+          options={{ title: "Your Matches!" }}
         />
         <Stack.Screen
           name="CreateProfile"
