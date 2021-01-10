@@ -186,8 +186,8 @@ function CreateProfile({ navigation }) {
         <CheckBox
           center
           title="weekday daytime"
-          checkedIcon="dot-circle-o"
-          uncheckedIcon="circle-o"
+          checkedIcon="check-circle"
+          uncheckedIcon="times-circle"
           onPress={() => {
             setWeekdayDaytime(!weekdayDaytime);
           }}
@@ -196,8 +196,8 @@ function CreateProfile({ navigation }) {
         <CheckBox
           center
           title="weekday evening"
-          checkedIcon="dot-circle-o"
-          uncheckedIcon="circle-o"
+          checkedIcon="check-circle"
+          uncheckedIcon="times-circle"
           onPress={() => {
             setWeekdayEvening(!weekdayEvening);
           }}
@@ -206,8 +206,8 @@ function CreateProfile({ navigation }) {
         <CheckBox
           center
           title="weekends"
-          checkedIcon="dot-circle-o"
-          uncheckedIcon="circle-o"
+          checkedIcon="check-circle"
+          uncheckedIcon="times-circle"
           onPress={() => {
             setWeekends(!weekends);
           }}
