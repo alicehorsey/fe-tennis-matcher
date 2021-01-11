@@ -32,7 +32,6 @@ Data to pass through :
 import { ButtonGroup, CheckBox } from "react-native-elements";
 import Constants from "expo-constants";
 import SelectAndAddPhoto from "./SelectAndAddPhoto";
-import { set } from "react-native-reanimated";
 
 function CreateProfile({ route, navigation }) {
   const userLoginDetails = { ...route.params };
@@ -41,7 +40,6 @@ function CreateProfile({ route, navigation }) {
   const [firstName, onChangeFirstNameText] = React.useState("");
   const [lastName, onChangeLastNameText] = React.useState("");
   // NEED TO STORE PHOTO URL
-  const [address, onChangeAddressText] = React.useState("");
   const [postcode, onChangePostCode] = React.useState("");
   // NEED longitude and latitude
   const [date, setDate] = useState(new Date());
@@ -139,13 +137,7 @@ function CreateProfile({ route, navigation }) {
           placeholder="Last Name"
           autoCompleteType="name"
         />
-        <TextInput
-          style={styles.inputFields}
-          onChangeText={(text) => onChangeAddressText(text)}
-          value={address}
-          placeholder="Address"
-          autoCompleteType="street-address"
-        />
+
         <TextInput
           style={styles.inputFields}
           onChangeText={(text) => onChangePostCode(text)}
