@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import firebase from '../constants/Firebase';
 
 
-const DisplayMatches = ({ user }) => {
+const DisplayMatches = (props) => {
+
+    console.log(props.route.params.user, "display matches screen")
 
     const [matchingUsers, setMatchingUsers] = useState([])
     const [image, setImage] = useState([])
