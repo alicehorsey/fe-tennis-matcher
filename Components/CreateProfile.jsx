@@ -10,6 +10,7 @@ import {
   ScrollView,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { getLatitude, getLongitude } from "../API";
 /*
 Data to pass through :
 - ❌ "username: string" --> will need to be authentication or added to the form as a field if authen needs passing via props
@@ -38,6 +39,7 @@ function CreateProfile({ route, navigation }) {
   //console.log(userLoginDetails);
   // Above should contain the email address/username to send to PSQL database
   // Username should come from the route from Alice's login feature
+  const testUsername = "marthae@hi.com";
   const [firstName, onChangeFirstNameText] = React.useState("");
   const [lastName, onChangeLastNameText] = React.useState("");
   // NEED TO STORE PHOTO URL
@@ -52,6 +54,7 @@ function CreateProfile({ route, navigation }) {
   const [weekdayEvening, setWeekdayEvening] = useState(true);
   const [weekends, setWeekends] = useState(true);
   const [description, onChangeDescriptionText] = React.useState("");
+  const [latitude, setLatitude] = useState(0);
   // create an object of all the details to pass through
   // userComplete is set when all the detailChecker criteria are met i.e. all fields are filled
   const [userDetails, setUserDetails] = useState({});
@@ -199,8 +202,10 @@ function CreateProfile({ route, navigation }) {
           selectedIndex={userAbility}
           buttons={abilityLevelButtons}
         ></ButtonGroup>
-
-        <SelectAndAddPhoto />
+        {/*
+        need to pass username down on the props
+        */}
+        <SelectAndAddPhoto username={testUsername} />
 
         <Text>What is your availabilty?</Text>
 
@@ -276,6 +281,11 @@ function CreateProfile({ route, navigation }) {
             });
             console.log(userDetails);
             // LAT LONG REQUEST
+            getLatitude(postcode).then((latitude) => {
+              console.log("lat >>> ", latitude);
+              setLatitude(latitude);
+            });
+
             console.log(firstName, "<<<< should be the first name");
             detailsChecker(firstName, lastName);
             // doesn't work here  detailsChecker(userDetails);

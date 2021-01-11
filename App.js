@@ -77,9 +77,9 @@ export default function App() {
           <Stack.Screen name="Create Profile">
             {(props) => <CreateProfile {...props} extraData={user} />}
           </Stack.Screen>
-          <Stack.Screen name="Matches">
+          {/* <Stack.Screen name="Matches">
             {(props) => <DisplayMatches {...props} extraData={user} />}
-          </Stack.Screen>
+          </Stack.Screen> */}
           <Stack.Screen
             name="AddPreferences"
             component={AddPreferences}

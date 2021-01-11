@@ -74,80 +74,25 @@ const DisplayMatches = () => {
       setMatchedUsers(newMatchedUsers);
     };
 
-<<<<<<< HEAD
-    return isLoading ? (
-      <View>
-        <Text>LOADING</Text>
-      </View>
-    ) : (
-      <View style={style.container}>
-        <ScrollView
-          pagingEnabled
-          horizontal
-          style={style.scroll}
-          onScroll={changeActive}
-          scrollEventThrottle={16}
-          showsHorizontalScrollIndicator={false}
-          style={style.scroll}
-        >
-          {matchedUsers.map((matchedUser, index) => (
-            <View key={index} style={{ flexDirection: "column" }}>
-              <Button title="Remove player" id={index} onPress={handleClick} />
-              <Image
-                source={{ uri: matchedUser.image_url }}
-                style={style.image}
-              />
-              <View style={style.userInfo}>
-                <Text style={{ fontWeight: "bold", fontSize: width / 20 }}>
-                  {matchedUser.first_name}
-                </Text>
-                <Text>Ability: {abilityStrings[matchedUser.ability]}</Text>
-                <Text>{matchedUser.playing_hand}</Text>
-                <Text>{matchedUser.description}</Text>
-              </View>
-            </View>
-          ))}
-        </ScrollView>
-        <View style={style.pagination}>
-          {matchedUsers.map((_, i) => (
-            <Text
-              key={i}
-              style={i == active ? style.pagingActiveText : style.pagingText}
-            >
-              ⬤
-            </Text>
-          ))}
-        </View>
-      </View>
-    );
+    const style = StyleSheet.create({
+      container: { marginTop: 0, width, height },
+      scroll: { width, height },
+      image: { width, height, resizeMode: "cover", flex: 1 },
+      userInfo: {
+        width,
+        paddingLeft: 5,
+        paddingRight: 5,
+        alignItems: "center",
+      },
+      pagination: {
+        flexDirection: "row",
+        position: "absolute",
+        bottom: -30,
+        alignSelf: "center",
+      },
+      pagingText: { fontSize: width / 35, color: "green", margin: 3 },
+      pagingActiveText: { fontSize: width / 35, color: "black", margin: 3 },
+    });
   };
-
-  const style = StyleSheet.create({
-    container: { marginTop: 0, width, height },
-    scroll: { width, height },
-    image: { width, height, resizeMode: "cover", flex: 1 },
-    userInfo: { width, paddingLeft: 5, paddingRight: 5, alignItems: "center" },
-    pagination: {
-      flexDirection: "row",
-      position: "absolute",
-      bottom: -30,
-      alignSelf: "center",
-    },
-    pagingText: { fontSize: width / 35, color: "green", margin: 3 },
-    pagingActiveText: { fontSize: width / 35, color: "black", margin: 3 },
-  });
 };
 export default DisplayMatches;
-=======
-    const style = StyleSheet.create({
-        container: { marginTop: 0, width, height },
-        scroll: { width, height },
-        image: { width, height, resizeMode: 'cover', flex: 1 },
-        userInfo: { width, paddingLeft: 5, paddingRight: 5, alignItems: 'center' },
-        pagination: { flexDirection: 'row', position: 'absolute', bottom: -30, alignSelf: 'center' },
-        pagingText: { fontSize: (width / 35), color: 'green', margin: 3 },
-        pagingActiveText: { fontSize: (width / 35), color: 'black', margin: 3 }
-    })
-}
-    export default DisplayMatches;
->>>>>>> 7bd16b172b68acbf74098a327a981fc654835330
