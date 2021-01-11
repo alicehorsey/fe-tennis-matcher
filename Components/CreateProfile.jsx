@@ -112,8 +112,21 @@ function CreateProfile({ route, navigation }) {
     return abilityIndex + 1;
   };
   // returns boolean true or false for the button?
-  const detailsChecker = (firstname) => {
-    if (firstname.length === 0) {
+  // doesn't need passing can access the things drect
+  const detailsChecker = () => {
+    console.log(firstName.length === 0 || lastName.length === 0);
+    /*
+    Everything else at least has a pre-set state --> could still alter so there is none and check if equal ro "" or undefined
+    TESTED : First Name, Last Name, Postcode (lat and long??) Description
+
+    NOT TESTED: Lat/long, Photo Url, DOB (need to be at least 18)
+    */
+    if (
+      firstName.length === 0 ||
+      lastName.length === 0 ||
+      postcode.length === 0 ||
+      description.length === 0
+    ) {
       setUserComplete(true);
     } else {
       setUserComplete(false);
@@ -262,7 +275,7 @@ function CreateProfile({ route, navigation }) {
             });
             console.log(userDetails);
             console.log(firstName, "<<<< should be the first name");
-            detailsChecker(firstName);
+            detailsChecker(firstName, lastName);
             // doesn't work here  detailsChecker(userDetails);
           }}
         />
