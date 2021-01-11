@@ -16,11 +16,13 @@ import Constants from "expo-constants";
 import SelectAndAddPhoto from "./SelectAndAddPhoto";
 
 function CreateProfile({ route, navigation }) {
-  // const userLoginDetails = { ...route.params.user };
-  //console.log(userLoginDetails);
-  // Above should contain the email address/username to send to PSQL database
-  // Username should come from the route from Alice's login feature
-  const testUsername = "marthae@hi.com";
+  const userLoginDetails = { ...route.params.user };
+  console.log(userLoginDetails);
+  const username = userLoginDetails.email;
+  console.log(username);
+  //Above is working :)
+  //Username should come from the route from Registration
+
   const [firstName, onChangeFirstNameText] = React.useState("");
   const [lastName, onChangeLastNameText] = React.useState("");
   // NEED TO STORE PHOTO URL
@@ -95,8 +97,8 @@ function CreateProfile({ route, navigation }) {
   const formatAbilityIndex = (abilityIndex) => {
     return abilityIndex + 1;
   };
-  // returns boolean true or false for the button?
-  // doesn't need passing can access the things drect
+  // returns boolean true or false for the disabled feature of the go to preferences button
+  // accesses the props directly
   const detailsChecker = () => {
     console.log(firstName.length === 0 || lastName.length === 0);
     /*
@@ -252,8 +254,10 @@ function CreateProfile({ route, navigation }) {
               //console.log(coords.latitude);
               setUserDetails({
                 // need to hard code the user and photo to test upload
+                username: username,
                 first_name: firstName,
                 last_name: lastName,
+                image_url: "I NEED REPLACING :)",
                 latitude: coords.latitude,
                 longitude: coords.longitude,
                 date_of_birth: formatDate(date),
