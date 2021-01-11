@@ -18,7 +18,7 @@ const DisplayMatches = () => {
         "latitude": "53.796305",
         "longitude": "-1.564126",
         "date_of_birth": "19800930",
-        "gender": "f",
+        "gender": "m",
         "ability": "1",
         "playing_hand": "right-handed",
         "club_membership": "Kirkstall Abbey Tennis Club",
@@ -34,6 +34,8 @@ const DisplayMatches = () => {
         "max_age": "100",
         "gender_preference": "f"
     })
+
+    const abilityStrings = { 1: 'Beginner', 2: 'Intermediate', 3: 'Advanced', 4: 'Expert' }
 
 
     useEffect(() => {
@@ -83,6 +85,8 @@ const DisplayMatches = () => {
                                 />
                                 <View style={style.userInfo}>
                                     <Text style={{ fontWeight: 'bold', fontSize: width / 20 }}>{matchedUser.first_name}</Text>
+                                    <Text>Ability: {abilityStrings[matchedUser.ability]}</Text>
+                                    <Text>{matchedUser.playing_hand}</Text>
                                     <Text >{matchedUser.description}</Text>
                                 </View>
                             </View>
