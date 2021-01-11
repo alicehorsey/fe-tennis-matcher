@@ -74,6 +74,7 @@ const DisplayMatches = () => {
       setMatchedUsers(newMatchedUsers);
     };
 
+<<<<<<< HEAD
     return isLoading ? (
       <View>
         <Text>LOADING</Text>
@@ -137,3 +138,16 @@ const DisplayMatches = () => {
   });
 };
 export default DisplayMatches;
+=======
+    const style = StyleSheet.create({
+        container: { marginTop: 0, width, height },
+        scroll: { width, height },
+        image: { width, height, resizeMode: 'cover', flex: 1 },
+        userInfo: { width, paddingLeft: 5, paddingRight: 5, alignItems: 'center' },
+        pagination: { flexDirection: 'row', position: 'absolute', bottom: -30, alignSelf: 'center' },
+        pagingText: { fontSize: (width / 35), color: 'green', margin: 3 },
+        pagingActiveText: { fontSize: (width / 35), color: 'black', margin: 3 }
+    })
+}
+    export default DisplayMatches;
+>>>>>>> 7bd16b172b68acbf74098a327a981fc654835330

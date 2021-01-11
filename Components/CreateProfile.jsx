@@ -34,7 +34,8 @@ import Constants from "expo-constants";
 import SelectAndAddPhoto from "./SelectAndAddPhoto";
 
 function CreateProfile({ route, navigation }) {
-  const userLoginDetails = { ...route.params };
+  // const userLoginDetails = { ...route.params.user };
+  //console.log(userLoginDetails);
   // Above should contain the email address/username to send to PSQL database
   // Username should come from the route from Alice's login feature
   const [firstName, onChangeFirstNameText] = React.useState("");
@@ -274,6 +275,7 @@ function CreateProfile({ route, navigation }) {
               description: description,
             });
             console.log(userDetails);
+            // LAT LONG REQUEST
             console.log(firstName, "<<<< should be the first name");
             detailsChecker(firstName, lastName);
             // doesn't work here  detailsChecker(userDetails);
