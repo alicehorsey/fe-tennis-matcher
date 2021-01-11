@@ -116,5 +116,6 @@ const DisplayMatches = () => {
         pagingText: { fontSize: (width / 35), color: 'green', margin: 3 },
         pagingActiveText: { fontSize: (width / 35), color: 'black', margin: 3 }
     })
+}
 
-    export default DisplayMatches;
+export default DisplayMatches;
