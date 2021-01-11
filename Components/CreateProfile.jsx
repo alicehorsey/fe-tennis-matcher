@@ -16,13 +16,13 @@ import Constants from "expo-constants";
 import SelectAndAddPhoto from "./SelectAndAddPhoto";
 
 function CreateProfile({ route, navigation }) {
-  const userLoginDetails = { ...route.params.user };
-  console.log(userLoginDetails);
-  const username = userLoginDetails.email;
-  console.log(username);
+  // const userLoginDetails = { ...route.params.user };
+  // console.log(userLoginDetails);
+  // const username = userLoginDetails.email;
+  // console.log(username);
   //Above is working :)
   //Username should come from the route from Registration
-
+  const testUsername = "wileycoyote@roadrunner.com";
   const [firstName, onChangeFirstNameText] = React.useState("");
   const [lastName, onChangeLastNameText] = React.useState("");
   // NEED TO STORE PHOTO URL
@@ -254,7 +254,7 @@ function CreateProfile({ route, navigation }) {
               //console.log(coords.latitude);
               setUserDetails({
                 // need to hard code the user and photo to test upload
-                username: username,
+                //username: username,
                 first_name: firstName,
                 last_name: lastName,
                 image_url: "I NEED REPLACING :)",
@@ -277,7 +277,7 @@ function CreateProfile({ route, navigation }) {
           title="Go To Preferences"
           onPress={() => {
             console.log(userDetails, "Here are the passing details");
-            // navigation.navigate("AddPreferences", userDetails);
+            navigation.navigate("AddPreferences", userDetails);
           }}
           disabled={userComplete}
         />

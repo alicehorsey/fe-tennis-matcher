@@ -10,27 +10,9 @@ import {
 import { Slider, Icon, CheckBox, ButtonGroup } from "react-native-elements";
 
 function AddPreferences({ route, navigation }) {
-  console.log("in pref page here is the route.params: ");
   const profileInfo = { ...route.params };
-  const {
-    // USERNAME
-    first_name,
-    last_name,
-    //latitude,
-    //longitude,
-    date_of_birth,
-    // PHOTO URL
-    gender,
-    ability,
-    playing_hand,
-    weekday_daytime,
-    weekday_evening,
-    weekends,
-    description,
-  } = profileInfo;
+  // console.log(profileInfo);
 
-  console.log(profileInfo);
-  console.log(first_name.length, "<<<< should read as zero");
   const [distance, setDistance] = useState(40);
   const opponentHandButtons = ["left-handed", "right-handed", "either"];
   const [opponentHand, setOpponentHand] = useState(2);
@@ -40,8 +22,8 @@ function AddPreferences({ route, navigation }) {
     "advanced",
     "expert",
   ];
-  const [opponentAbility, setOppoenentAbility] = useState([]);
-  console.log(opponentAbility);
+  const [opponentAbility, setOppoenentAbility] = useState([0, 3]);
+
   const opponentGroupOptions = ["mens", "womens", "either"];
   const [group, setGroup] = useState(2);
   const [savedPreferences, setSavedPreferences] = useState(false);
@@ -69,48 +51,26 @@ function AddPreferences({ route, navigation }) {
       profileData.gender_preference = "m";
     } else if (group === 1) {
       profileData.gender_preference = "f";
+    } else {
+      profileData.gender_preference = "";
     }
     if (opponentHand === 0) {
       profileData.hand_preference = "left-handed";
-    }
-    if (opponentHand === 1) {
+    } else if (opponentHand === 1) {
       profileData.hand_preference = "right-handed";
+    } else {
+      // this will not add anything could be removed
+      profileData.hand_preference = "";
     }
-    //   opponentHandButtons[opponentHand] === "left-handed" || "right-handed"
-    //     ? (profileData.hand_preference = opponentHandButtons[opponentHand])
-    //     : (profileData.hand_preference = "");
     return profileData;
   };
 
   return (
     <ScrollView>
-      <Text>This list shows the data needed in its k:v pairs</Text>
-      <Text>First_name: {first_name}</Text>
-      <Text>Last Name: {last_name}</Text>
-      <Text>LATITUDE TO GO HERE</Text>
-      <Text>LONGITUDE TO GO HERE</Text>
-      <Text>date_of_birth: {date_of_birth}</Text>
-      <Text>gender: {gender}</Text>
-      <Text>playing_hand: {playing_hand}</Text>
-      <Text>ability= {ability}</Text>
-      <Text>weekday_daytime: {weekday_daytime.toString()}</Text>
-      <Text>weekday_evening: {weekday_evening.toString()}</Text>
-      <Text>weekends: {weekends.toString()}</Text>
-      <Text>description: {description}</Text>
-      <Text>
-        distance: (typeof-- {typeof distance}) total -- {distance}
-      </Text>
       <Text>User adding preferences screen</Text>
-      <Text>Availability</Text>
-      <Text>Set your maximim distance:</Text>
+      <Text>Set your maximum distance:</Text>
       <Text>Distance: {distance}</Text>
-      <Text> {Object.entries(profileInfo)}</Text>
-      <Text>ability array length {opponentAbility.length}</Text>
-      <Text>min ability index {opponentAbility.sort()[0] + 1}</Text>
-      <Text>
-        min ability index{" "}
-        {opponentAbility.sort()[opponentAbility.length - 1] + 1}
-      </Text>
+
       <Text>Should be false on refresh: {savedPreferences.toString()}</Text>
       <View>
         <Slider
@@ -148,7 +108,7 @@ function AddPreferences({ route, navigation }) {
       <Text>Opponent Hand is {opponentHandButtons[opponentHand]}</Text>
       <Text>***</Text>
       <Text>***</Text>
-      <Text>Choose opponent ability levels</Text>
+      <Text>Choose your range of opponent ability levels</Text>
       <ButtonGroup
         onPress={(selected) => setOppoenentAbility(selected)}
         selectMultiple={true}
@@ -176,12 +136,23 @@ function AddPreferences({ route, navigation }) {
             group,
             opponentHand
           );
-          console.log(distance, typeof distance);
+
           setSavedPreferences(true);
           console.log(profileInfo);
         }}
       />
-      <Button title="Submit Profile" disabled={!savedPreferences} />
+      <Button
+        title="Submit Profile"
+        disabled={!savedPreferences}
+        onPress={() => {
+          // PROBLEM : READ THE CONSOLE.LOG --> Only on second click of the submit button are matches posted
+          console.log(
+            "Here is the final object to post",
+            profileInfo,
+            Object.keys(profileInfo).length
+          );
+        }}
+      />
       {/* this button first needs to send post request then navigate to matches */}
     </ScrollView>
   );
