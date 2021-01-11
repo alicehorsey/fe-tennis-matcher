@@ -8,7 +8,9 @@ import Constants from 'expo-constants';
 import SelectAndAddPhoto from './SelectAndAddPhoto';
 
 
-function CreateProfile({ navigation }) {
+function CreateProfile({ navigation, route }) {
+
+    console.log(route.params.user, "Create Profile Page") //<---- user details from log in
 
     const [firstName, onChangeFirstNameText] = React.useState('');
     const [lastName, onChangeLastNameText] = React.useState('');
@@ -140,11 +142,11 @@ function CreateProfile({ navigation }) {
                     buttons={abilityLevelButtons}
                 ></ButtonGroup>
 
-            <SelectAndAddPhoto />
-            <Button
-                title="Add Prefernces (/would be on submit)"
-                onPress={() => navigation.navigate('AddPreferences')}
-            />
+                <SelectAndAddPhoto />
+                <Button
+                    title="Add Prefernces (/would be on submit)"
+                    onPress={() => navigation.navigate('AddPreferences')}
+                />
 
 
                 <Text>What is your availabilty?</Text>
