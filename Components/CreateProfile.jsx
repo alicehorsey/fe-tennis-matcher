@@ -38,8 +38,16 @@ function CreateProfile({ navigation }) {
   const [lastName, onChangeLastNameText] = React.useState("");
   const [address, onChangeAddressText] = React.useState("");
   const [postcode, onChangePostCode] = React.useState("");
+  // NEED TO STORE PHOTO URL
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
+  const [gender, setGender] = useState(4);
+  const [userAbility, setAbility] = useState(0);
+  const [hand, setHand] = useState(1);
+  const [weekdayDaytime, setWeekdayDaytime] = useState(true);
+  const [weekdayEvening, setWeekdayEvening] = useState(true);
+  const [weekends, setWeekends] = useState(true);
+  const [description, onChangeDescriptionText] = React.useState("");
 
   const genderOptions = [
     "male",
@@ -48,10 +56,8 @@ function CreateProfile({ navigation }) {
     "other",
     "I prefer not to say",
   ];
-  const [gender, setGender] = useState(4);
 
   const handOptions = ["left-handed", "right-handed", "either"];
-  const [hand, setHand] = useState(2);
 
   const abilityLevelButtons = [
     "beginner",
@@ -59,13 +65,6 @@ function CreateProfile({ navigation }) {
     "advanced",
     "expert",
   ];
-  const [userAbility, setAbility] = useState(0);
-
-  const [weekdayDaytime, setWeekdayDaytime] = useState(false);
-  const [weekdayEvening, setWeekdayEvening] = useState(false);
-  const [weekends, setWeekends] = useState(false);
-
-  const [description, onChangeDescriptionText] = React.useState("");
 
   //Date stored in the state as a timestamp
   const onChange = (event, selectedDate) => {
@@ -90,10 +89,10 @@ function CreateProfile({ navigation }) {
     );
     return formattedDate.toISOString().slice(0, 10).replace(/-/g, "");
   };
-  // getting gender into m /f / other
+  // getting gender into m /f / other for the backend
   const formatGender = (choice, array) => {
-    console.log(choice);
-    console.log(array[choice]);
+    //console.log(choice);
+    //console.log(array[choice]);
     if (array[choice] == "male") {
       return "m";
     } else if (array[choice] == "female") {
@@ -110,7 +109,6 @@ function CreateProfile({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
-        {/* <View style={styles.container}> */}
         <Text style={styles.title}>Create Profile</Text>
         <TextInput
           style={styles.inputFields}
@@ -191,13 +189,14 @@ function CreateProfile({ navigation }) {
           checkedIcon="check-circle"
           uncheckedIcon="times-circle"
           onPress={() => {
-            if (weekdayDaytime === false) {
-              setWeekdayDaytime(!weekdayDaytime);
-              setWeekdayEvening(weekdayDaytime);
-              setWeekends(weekdayDaytime);
-            } else {
-              setWeekdayDaytime(false);
-            }
+            //   if (weekdayDaytime === false) {
+            setWeekdayDaytime(!weekdayDaytime);
+            //  setWeekdayEvening(weekdayDaytime);
+            //  setWeekends(weekdayDaytime);
+            //   }
+            // else {
+            //   setWeekdayDaytime(false);
+            // }
           }}
           checked={weekdayDaytime}
         />
@@ -207,13 +206,14 @@ function CreateProfile({ navigation }) {
           checkedIcon="check-circle"
           uncheckedIcon="times-circle"
           onPress={() => {
-            if (weekdayEvening === false) {
-              setWeekdayEvening(!weekdayEvening);
-              setWeekdayDaytime(false);
-              setWeekends(false);
-            } else {
-              setWeekdayEvening(false);
-            }
+            // if (weekdayEvening === false) {
+            setWeekdayEvening(!weekdayEvening);
+            // setWeekdayDaytime(false);
+            // setWeekends(false);
+            //  }
+            // else {
+            //   setWeekdayEvening(false);
+            // }
           }}
           checked={weekdayEvening}
         />
@@ -223,16 +223,18 @@ function CreateProfile({ navigation }) {
           checkedIcon="check-circle"
           uncheckedIcon="times-circle"
           onPress={() => {
-            if (weekends === false) {
-              setWeekends(!weekends);
-              setWeekdayDaytime(false);
-              setWeekdayEvening(false);
-            } else {
-              setWeekends(false);
-            }
+            //  if (weekends === false) {
+            setWeekends(!weekends);
+            //  setWeekdayDaytime(false);
+            // setWeekdayEvening(false);
+            //  }
+            //  else {
+            //   setWeekends(false);
+            // }
           }}
           checked={weekends}
         />
+
         <Text>
           Please write a brief description of what you are looking for.
         </Text>

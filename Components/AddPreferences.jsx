@@ -12,11 +12,13 @@ import { Slider, Icon, CheckBox, ButtonGroup } from "react-native-elements";
 function AddPreferences({ route, navigation }) {
   const profileInfo = { ...route.params };
   const {
+    // USERNAME
     first_name,
     last_name,
-    latitude,
-    longitude,
+    //latitude,
+    //longitude,
     date_of_birth,
+    // PHOTO URL
     gender,
     ability,
     playing_hand,
