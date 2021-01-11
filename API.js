@@ -34,6 +34,12 @@ export const postNewUser = (newUser) => {
       return data;
     });
 };
+export const getCoords = (postcode) => {
+  return postcodeAPI.get(`/${postcode}`).then(({ data }) => {
+    console.log(data.result);
+    return data.result;
+  });
+};
 
 export const getLongitude = (postcode) => {
   return postcodeAPI

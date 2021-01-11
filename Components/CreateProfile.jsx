@@ -10,7 +10,7 @@ import {
   ScrollView,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { getLatitude, getLongitude } from "../API";
+import { getCoords, getLatitude, getLongitude } from "../API";
 /*
 Data to pass through :
 - ❌ "username: string" --> will need to be authentication or added to the form as a field if authen needs passing via props
@@ -55,6 +55,7 @@ function CreateProfile({ route, navigation }) {
   const [weekends, setWeekends] = useState(true);
   const [description, onChangeDescriptionText] = React.useState("");
   const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
   // create an object of all the details to pass through
   // userComplete is set when all the detailChecker criteria are met i.e. all fields are filled
   const [userDetails, setUserDetails] = useState({});
@@ -162,6 +163,9 @@ function CreateProfile({ route, navigation }) {
           placeholder="Post Code"
           autoCompleteType="postal-code"
         />
+        <Text>
+          Lat {longitude} and Long {longitude}
+        </Text>
         <Text>What is your Date of Birth?</Text>
         <View>
           <Button onPress={showDatepicker} title="Choose Date" />
@@ -266,34 +270,37 @@ function CreateProfile({ route, navigation }) {
         <Button
           title="Save your details"
           onPress={() => {
-            setUserDetails({
-              // missing lat long and photo
-              first_name: firstName,
-              last_name: lastName,
-              date_of_birth: formatDate(date),
-              gender: formatGender(gender, genderOptions),
-              ability: formatAbilityIndex(userAbility),
-              playing_hand: handOptions[hand],
-              weekday_daytime: weekdayDaytime,
-              weekday_evening: weekdayEvening,
-              weekends: weekends,
-              description: description,
-            });
-            console.log(userDetails);
             // LAT LONG REQUEST
-            getLatitude(postcode).then((latitude) => {
-              console.log("lat >>> ", latitude);
-              setLatitude(latitude);
+            getCoords(postcode).then((coords) => {
+              //console.log(coords.latitude);
+              setUserDetails({
+                // need to hard code the user and photo to test upload
+                first_name: firstName,
+                last_name: lastName,
+                latitude: coords.latitude,
+                longitude: coords.longitude,
+                date_of_birth: formatDate(date),
+                gender: formatGender(gender, genderOptions),
+                ability: formatAbilityIndex(userAbility),
+                playing_hand: handOptions[hand],
+                weekday_daytime: weekdayDaytime,
+                weekday_evening: weekdayEvening,
+                weekends: weekends,
+                description: description,
+              });
+
+              detailsChecker();
             });
 
-            console.log(firstName, "<<<< should be the first name");
-            detailsChecker(firstName, lastName);
             // doesn't work here  detailsChecker(userDetails);
           }}
         />
         <Button
           title="Go To Preferences"
-          onPress={() => navigation.navigate("AddPreferences", userDetails)}
+          onPress={() => {
+            console.log(userDetails, "Here are the passing details");
+            // navigation.navigate("AddPreferences", userDetails);
+          }}
           disabled={userComplete}
         />
 
