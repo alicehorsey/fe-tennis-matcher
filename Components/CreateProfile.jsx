@@ -32,6 +32,7 @@ Data to pass through :
 import { ButtonGroup, CheckBox } from "react-native-elements";
 import Constants from "expo-constants";
 import SelectAndAddPhoto from "./SelectAndAddPhoto";
+import { set } from "react-native-reanimated";
 
 function CreateProfile({ route, navigation }) {
   const userLoginDetails = { ...route.params };
@@ -52,7 +53,10 @@ function CreateProfile({ route, navigation }) {
   const [weekdayEvening, setWeekdayEvening] = useState(true);
   const [weekends, setWeekends] = useState(true);
   const [description, onChangeDescriptionText] = React.useState("");
+  // create an object of all the details to pass through
+  // userComplete is set when all the detailChecker criteria are met i.e. all fields are filled
   const [userDetails, setUserDetails] = useState({});
+  const [userComplete, setUserComplete] = useState(true);
   const genderOptions = [
     "male",
     "female",
@@ -109,7 +113,14 @@ function CreateProfile({ route, navigation }) {
   const formatAbilityIndex = (abilityIndex) => {
     return abilityIndex + 1;
   };
-
+  // returns boolean true or false for the button?
+  const detailsChecker = (firstname) => {
+    if (firstname.length === 0) {
+      setUserComplete(true);
+    } else {
+      setUserComplete(false);
+    }
+  };
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
@@ -258,11 +269,15 @@ function CreateProfile({ route, navigation }) {
               description: description,
             });
             console.log(userDetails);
+            console.log(firstName, "<<<< should be the first name");
+            detailsChecker(firstName);
+            // doesn't work here  detailsChecker(userDetails);
           }}
         />
         <Button
           title="Go To Preferences"
           onPress={() => navigation.navigate("AddPreferences", userDetails)}
+          disabled={userComplete}
         />
 
         {/* </View> */}
@@ -314,4 +329,13 @@ Old availability button group
           buttons={availabilityButtons}
         ></ButtonGroup>
 
+*/
+
+/*
+here are API funcs
+
+import axios from "axios"; const tennisAPI = axios.create({ baseURL: "http://tennis-match-app.herokuapp.com" }) const postcodeAPI = axios.create({ baseURL: "https://api.postcodes.io/postcodes" }) 
+
+
+export const postNewUser = (newUser) => { return tennisAPI .post(`/users/${newUser.username}`, newUser) .then(({data}) => { console.log(data) return data }) } export const getLongitude = (postcode) => { return postcodeAPI .get(`/${postcode}`) .then(({ data }) => console.log(data.result.longitude)) } export const getLatitude = (postcode) => { return postcodeAPI .get(`/${postcode}`) .then(({ data }) => console.log(data.result.latitude)) } 
 */
