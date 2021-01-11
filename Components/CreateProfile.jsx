@@ -10,26 +10,7 @@ import {
   ScrollView,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { getCoords, getLatitude, getLongitude } from "../API";
-/*
-Data to pass through :
-- ❌ "username: string" --> will need to be authentication or added to the form as a field if authen needs passing via props
-- ✅ first_name": string" - passing through
-- ✅ last_name": string" - passing through
-- ❌"latitude": 53.802177,
-- ❌ "longitude": -1.558265, --> ask Alice how this is being made
-- date_of_birth": "string",
-- ✅ DOB": string" - uses Alices format date function to get to the correct format 
-- ❓✅"gender: string" --> change to Do you want to play mens, womens or mixed? does this avoid the issue? 
-- ❓✅ability: index **Backend isn't stored as zero-index have added formatter
-- ❓✅ "playing_hand": "left-handed", needs button removal or formatter
--❓"club_membership": "Pudsey Lawn Tennis Club", double check if required think not :)
--❓✅✅✅ Availability: boolean changing to checkboxes
- "weekday_daytime": true, boolean
-    "weekday_evening": false,
-    "weekends": false,
- ✅"description":
-*/
+import { getCoords } from "../API";
 import { ButtonGroup, CheckBox } from "react-native-elements";
 import Constants from "expo-constants";
 import SelectAndAddPhoto from "./SelectAndAddPhoto";
@@ -44,7 +25,7 @@ function CreateProfile({ route, navigation }) {
   const [lastName, onChangeLastNameText] = React.useState("");
   // NEED TO STORE PHOTO URL
   const [postcode, onChangePostCode] = React.useState("");
-  // NEED longitude and latitude
+  // lat and long are added directly to userDetails
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
   const [gender, setGender] = useState(4);
@@ -54,8 +35,6 @@ function CreateProfile({ route, navigation }) {
   const [weekdayEvening, setWeekdayEvening] = useState(true);
   const [weekends, setWeekends] = useState(true);
   const [description, onChangeDescriptionText] = React.useState("");
-  const [latitude, setLatitude] = useState(0);
-  const [longitude, setLongitude] = useState(0);
   // create an object of all the details to pass through
   // userComplete is set when all the detailChecker criteria are met i.e. all fields are filled
   const [userDetails, setUserDetails] = useState({});
@@ -163,9 +142,7 @@ function CreateProfile({ route, navigation }) {
           placeholder="Post Code"
           autoCompleteType="postal-code"
         />
-        <Text>
-          Lat {longitude} and Long {longitude}
-        </Text>
+
         <Text>What is your Date of Birth?</Text>
         <View>
           <Button onPress={showDatepicker} title="Choose Date" />
@@ -288,11 +265,8 @@ function CreateProfile({ route, navigation }) {
                 weekends: weekends,
                 description: description,
               });
-
               detailsChecker();
             });
-
-            // doesn't work here  detailsChecker(userDetails);
           }}
         />
         <Button
