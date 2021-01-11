@@ -6,7 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 
 
-function HomeScreen({ navigation }) {
+function TennisHomeScreen({ navigation }) {
 
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -19,4 +19,4 @@ function HomeScreen({ navigation }) {
     );
 }
 
-export default HomeScreen;
+export default TennisHomeScreen;
