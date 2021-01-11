@@ -10,6 +10,7 @@ import {
 import { Slider, Icon, CheckBox, ButtonGroup } from "react-native-elements";
 
 function AddPreferences({ route, navigation }) {
+  console.log("in pref page here is the route.params: ");
   const profileInfo = { ...route.params };
   const {
     // USERNAME
@@ -27,6 +28,9 @@ function AddPreferences({ route, navigation }) {
     weekends,
     description,
   } = profileInfo;
+
+  console.log(profileInfo);
+  console.log(first_name.length, "<<<< should read as zero");
   const [distance, setDistance] = useState(40);
   const opponentHandButtons = ["left-handed", "right-handed", "either"];
   const [opponentHand, setOpponentHand] = useState(2);

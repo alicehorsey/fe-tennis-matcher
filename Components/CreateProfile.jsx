@@ -33,12 +33,16 @@ import { ButtonGroup, CheckBox } from "react-native-elements";
 import Constants from "expo-constants";
 import SelectAndAddPhoto from "./SelectAndAddPhoto";
 
-function CreateProfile({ navigation }) {
+function CreateProfile({ route, navigation }) {
+  const userLoginDetails = { ...route.params };
+  // Above should contain the email address/username to send to PSQL database
+  // Username should come from the route from Alice's login feature
   const [firstName, onChangeFirstNameText] = React.useState("");
   const [lastName, onChangeLastNameText] = React.useState("");
+  // NEED TO STORE PHOTO URL
   const [address, onChangeAddressText] = React.useState("");
   const [postcode, onChangePostCode] = React.useState("");
-  // NEED TO STORE PHOTO URL
+  // NEED longitude and latitude
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
   const [gender, setGender] = useState(4);
@@ -48,7 +52,7 @@ function CreateProfile({ navigation }) {
   const [weekdayEvening, setWeekdayEvening] = useState(true);
   const [weekends, setWeekends] = useState(true);
   const [description, onChangeDescriptionText] = React.useState("");
-
+  const [userDetails, setUserDetails] = useState({});
   const genderOptions = [
     "male",
     "female",
@@ -57,7 +61,7 @@ function CreateProfile({ navigation }) {
     "I prefer not to say",
   ];
 
-  const handOptions = ["left-handed", "right-handed", "either"];
+  const handOptions = ["left-handed", "right-handed"];
 
   const abilityLevelButtons = [
     "beginner",
@@ -65,8 +69,8 @@ function CreateProfile({ navigation }) {
     "advanced",
     "expert",
   ];
-
-  //Date stored in the state as a timestamp
+  // Date-picker functionality
+  // Date stored in the state as a timestamp
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === "ios");
@@ -101,7 +105,7 @@ function CreateProfile({ navigation }) {
       return "other";
     }
   };
-
+  // Need to add 1 because using zero-index (0-3) and need (1-4)
   const formatAbilityIndex = (abilityIndex) => {
     return abilityIndex + 1;
   };
@@ -223,14 +227,7 @@ function CreateProfile({ navigation }) {
           checkedIcon="check-circle"
           uncheckedIcon="times-circle"
           onPress={() => {
-            //  if (weekends === false) {
             setWeekends(!weekends);
-            //  setWeekdayDaytime(false);
-            // setWeekdayEvening(false);
-            //  }
-            //  else {
-            //   setWeekends(false);
-            // }
           }}
           checked={weekends}
         />
@@ -244,11 +241,11 @@ function CreateProfile({ navigation }) {
           value={description}
           placeholder="New friends to play tennis with in the Leeds area!"
         />
-
         <Button
-          title="Add Preferences"
-          onPress={() =>
-            navigation.navigate("AddPreferences", {
+          title="Save your details"
+          onPress={() => {
+            setUserDetails({
+              // missing lat long and photo
               first_name: firstName,
               last_name: lastName,
               date_of_birth: formatDate(date),
@@ -259,8 +256,13 @@ function CreateProfile({ navigation }) {
               weekday_evening: weekdayEvening,
               weekends: weekends,
               description: description,
-            })
-          }
+            });
+            console.log(userDetails);
+          }}
+        />
+        <Button
+          title="Go To Preferences"
+          onPress={() => navigation.navigate("AddPreferences", userDetails)}
         />
 
         {/* </View> */}
