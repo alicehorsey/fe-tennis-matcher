@@ -22,16 +22,14 @@ const Stack = createStackNavigator();
 
 export default function App() {
 
-  const [loading, setLoading] = useState(true) //<--- not implemented yet
+  const [loading, setLoading] = useState(true)
   const [user, setUser] = useState(null)
   const [profileCreated, setProfileCreated] = useState(false)
 
-  // This function will be used when loading is implemented --->
+
   useEffect(() => {
     console.log("hello")
     const usersRef = firebase.firestore().collection('users');
-
-    console.log(usersRef, "usersRef in useEffect")
 
     firebase.auth().onAuthStateChanged(user => {
 
@@ -62,7 +60,7 @@ export default function App() {
       <Text>Loading!</Text>
     )
   } else {
-
+    //Need to add a mini "loading" here while get request to back end happens
     if (user) {
       getUser(user.email).then(data => {
         if (typeof data === "object") {
@@ -104,16 +102,16 @@ export default function App() {
                     component={AddPreferences}
                     options={{ title: "Preferences" }}
                   />
-                  {/* <Stack.Screen name="Matches" >
-                  {props => <DisplayMatches {...props} extraData={user} />}
-                </Stack.Screen>
-                <Stack.Screen
-                  name="Message Player"
-                  component={MessageScreen}
-                  options={{
-                    title: 'Chat!',
-                  }}
-                /> */}
+                  <Stack.Screen name="Matches" >
+                    {props => <DisplayMatches {...props} extraData={user} />}
+                  </Stack.Screen>
+                  <Stack.Screen
+                    name="Message Player"
+                    component={MessageScreen}
+                    options={{
+                      title: 'Chat!',
+                    }}
+                  />
                 </>
               )
             ) : (
