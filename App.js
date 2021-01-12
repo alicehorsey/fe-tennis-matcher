@@ -9,6 +9,7 @@ import { LoginScreen, RegistrationScreen } from './src/logInScreens'
 import CreateProfile from "./Components/CreateProfile";
 import AddPreferences from "./Components/AddPreferences";
 import DisplayMatches from './Components/DisplayMatches';
+import MessageScreen from "./Components/MessageScreen";
 
 import { decode, encode } from 'base-64'
 if (!global.btoa) { global.btoa = encode }
@@ -83,6 +84,13 @@ export default function App() {
             name="AddPreferences"
             component={AddPreferences}
             options={{ title: "Preferences" }}
+          />
+          <Stack.Screen
+            name="Message Player"
+            component={MessageScreen}
+            options={{
+              title: 'Chat!',
+            }}
           />
         </>
         {/* )} */}
