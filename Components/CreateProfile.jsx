@@ -133,6 +133,12 @@ function CreateProfile({ route, navigation }) {
       setUserComplete(false);
     }
   };
+
+  const copyURL = (url) => {
+    const copyOfUrl = url
+    console.log('in copyURL in CreateProfile', url, copyOfUrl)
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
@@ -203,7 +209,7 @@ function CreateProfile({ route, navigation }) {
         {/*
         need to pass username down on the props
         */}
-        <SelectAndAddPhoto username={testUsername} />
+        <SelectAndAddPhoto username={testUsername} copyURL={copyURL} />
 
         <Text>What is your availabilty?</Text>
 
