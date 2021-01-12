@@ -16,10 +16,8 @@ import Constants from "expo-constants";
 import SelectAndAddPhoto from "./SelectAndAddPhoto";
 
 function CreateProfile({ route, navigation }) {
-  // const userLoginDetails = { ...route.params.user };
-  // console.log(userLoginDetails);
-  // const username = userLoginDetails.email;
-  // console.log(username);
+  const userLoginDetails = { ...route.params.user };
+  const username = userLoginDetails.email;
   //Above is working :)
   //Username should come from the route from Registration
   const testUsername = "wileycoyote@roadrunner.com";
@@ -107,11 +105,29 @@ function CreateProfile({ route, navigation }) {
 
     NOT TESTED: Lat/long, Photo Url, DOB (need to be at least 18)
     */
+
+   const is18 = (dateString) => {
+    const today = new Date();
+    const year = dateString.slice(0, 4)
+    const month = dateString.slice(4, 6) - 1
+    const day = dateString.slice(6)
+    let age = today.getFullYear() - year;
+    let m = today.getMonth() - month;
+    if (m < 0 || (m === 0 && today.getDay() < day)) {
+        age--;
+    }
+    return (age >= 18);
+}
+
+const correctDate = formatDate(date)
+console.log(correctDate, is18(correctDate))
+
     if (
       firstName.length === 0 ||
       lastName.length === 0 ||
       postcode.length === 0 ||
-      description.length === 0
+      description.length === 0 ||
+      is18(correctDate) === false
     ) {
       setUserComplete(true);
     } else {
@@ -254,7 +270,7 @@ function CreateProfile({ route, navigation }) {
               //console.log(coords.latitude);
               setUserDetails({
                 // need to hard code the user and photo to test upload
-                //username: username,
+                username: username,
                 first_name: firstName,
                 last_name: lastName,
                 image_url: "I NEED REPLACING :)",

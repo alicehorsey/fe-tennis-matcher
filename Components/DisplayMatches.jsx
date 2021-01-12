@@ -43,8 +43,6 @@ const DisplayMatches = () => {
     max_age: "100",
     gender_preference: "f",
   });
-  const DisplayMatches = (props) => {
-    console.log(props.route.params.user, "display matches screen");
 
     const abilityStrings = {
       1: "Beginner",
@@ -93,6 +91,5 @@ const DisplayMatches = () => {
       pagingText: { fontSize: width / 35, color: "green", margin: 3 },
       pagingActiveText: { fontSize: width / 35, color: "black", margin: 3 },
     });
-  };
 };
 export default DisplayMatches;
