@@ -11,6 +11,7 @@ import AddPreferences from "./Components/AddPreferences";
 import DisplayMatches from './Components/DisplayMatches';
 
 import { decode, encode } from 'base-64'
+import DisplayTennisClubs from "./Components/DisplayTennisClubs";
 if (!global.btoa) { global.btoa = encode }
 if (!global.atob) { global.atob = decode }
 // import firebase from './constants/Firebase'; <---- for loading (not implemented yet)
@@ -50,53 +51,6 @@ export default function App() {
 
   // if (loading) {
   return (
-
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: "#f4511e",
-          },
-          headerTintColor: "#fff",
-          headerTitleStyle: {
-            fontWeight: "bold",
-          },
-        }}>
-        {/* To use when isLoading is up and running */}
-        {/* {user ? (
-          <>
-            <Stack.Screen name="Home">
-              {props => <TennisHomeScreen {...props} extraData={user} />}
-            </Stack.Screen>
-          </>
-        ) : ( */}
-        <>
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="Registration" component={RegistrationScreen} />
-          <Stack.Screen name="Create Profile">
-            {props => <CreateProfile {...props} extraData={user} />}
-          </Stack.Screen>
-          <Stack.Screen name="Matches">
-            {props => <DisplayMatches {...props} extraData={user} />}
-          </Stack.Screen>
-          <Stack.Screen
-            name="AddPreferences"
-            component={AddPreferences}
-            options={{ title: "Preferences" }}
-          />
-        </>
-        {/* )} */}
-      </Stack.Navigator>
-    </NavigationContainer>
+    <DisplayTennisClubs />
   );
-  // }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
