@@ -136,7 +136,6 @@ function CreateProfile({ route, navigation }) {
           placeholder="Last Name"
           autoCompleteType="name"
         />
-
         <TextInput
           style={styles.inputFields}
           onChangeText={(text) => onChangePostCode(text)}
@@ -144,12 +143,10 @@ function CreateProfile({ route, navigation }) {
           placeholder="Post Code"
           autoCompleteType="postal-code"
         />
-
         <Text>What is your Date of Birth?</Text>
         <View>
           <Button onPress={showDatepicker} title="Choose Date" />
         </View>
-
         {show && (
           <DateTimePicker
             testID="dateTimePicker"
@@ -159,17 +156,15 @@ function CreateProfile({ route, navigation }) {
             onChange={onChange}
           />
         )}
-        {/* Uncomment to see what date is selected if required!
-            <Text>{date.toString()}</Text>
-            <Text>{formatDate(date)}</Text> */}
-
+        Uncomment to see what date is selected if required!
+        <Text>{date.toString()}</Text>
+        <Text>{formatDate(date)}</Text>
         <Text>What is your gender?</Text>
         <ButtonGroup
           onPress={(selected) => setGender(selected)}
           selectedIndex={gender}
           buttons={genderOptions}
         ></ButtonGroup>
-
         <Text>What hand do you play?</Text>
         <ButtonGroup
           onPress={(selected) => {
@@ -178,7 +173,6 @@ function CreateProfile({ route, navigation }) {
           selectedIndex={hand}
           buttons={handOptions}
         ></ButtonGroup>
-
         <Text>What is your ability level?</Text>
         <ButtonGroup
           onPress={(selected) => setAbility(selected)}
@@ -189,9 +183,7 @@ function CreateProfile({ route, navigation }) {
         need to pass username down on the props
         */}
         <SelectAndAddPhoto username={testUsername} />
-
         <Text>What is your availabilty?</Text>
-
         <CheckBox
           center
           title="weekday daytime"
@@ -236,7 +228,6 @@ function CreateProfile({ route, navigation }) {
           }}
           checked={weekends}
         />
-
         <Text>
           Please write a brief description of what you are looking for.
         </Text>
@@ -281,7 +272,6 @@ function CreateProfile({ route, navigation }) {
           }}
           disabled={userComplete}
         />
-
         {/* </View> */}
       </ScrollView>
     </SafeAreaView>
