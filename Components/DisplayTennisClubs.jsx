@@ -1,11 +1,10 @@
 import * as React from 'react';
-import MapView from 'react-native-maps';
-import { Marker } from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
 const clubsData = require("../assets/tennis.clubs.js");
 
 export default function DisplayTennisClubs() {
-    console.log(clubsData[0])
+    console.log(clubsData)
     return (
         <View style={styles.container}>
             <MapView
@@ -15,7 +14,19 @@ export default function DisplayTennisClubs() {
                     latitudeDelta: 0.0922,
                     longitudeDelta: 0.0421,
                 }}
-                style={styles.map} />
+                style={styles.map}
+            >
+                {clubsData.map((club, index) => (
+                    <Marker
+                        key={index}
+                        coordinate={{ latitude: +club.latitude, longitude: +club.longitude }}
+                        title={club.club_name}
+                        pinColor='green'
+                        image={require('../assets/tennis-racket.png')}
+                        description={club.phone_number}
+                    />
+                ))}
+            </MapView>
         </View>
     );
 }
