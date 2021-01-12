@@ -8,6 +8,7 @@ import "react-native-gesture-handler";
 import { LoginScreen, RegistrationScreen } from "./src/logInScreens";
 import CreateProfile from "./Components/CreateProfile";
 import AddPreferences from "./Components/AddPreferences";
+import ChangePreferences from "./Components/ChangePreferences";
 import DisplayMatches from "./Components/DisplayMatches";
 
 import { decode, encode } from "base-64";
@@ -83,6 +84,11 @@ export default function App() {
           <Stack.Screen
             name="AddPreferences"
             component={AddPreferences}
+            options={{ title: "Preferences" }}
+          />
+          <Stack.Screen
+            name="ChangePreferences"
+            component={ChangePreferences}
             options={{ title: "Preferences" }}
           />
         </>

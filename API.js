@@ -34,6 +34,16 @@ export const postNewUser = (newUser) => {
       return data;
     });
 };
+
+export const updateUser = (currentUser) => {
+  return tennisAPI
+    .patch(`/users/${currentUser.username}`, currentUser)
+    .then(({ data }) => {
+      console.log(data);
+      return data;
+    });
+};
+
 export const getCoords = (postcode) => {
   return postcodeAPI.get(`/${postcode}`).then(({ data }) => {
     console.log(data.result);
