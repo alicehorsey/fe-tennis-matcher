@@ -10,38 +10,23 @@ import {
   ScrollView,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
-/*
-Data to pass through :
-- ❌ "username: string" --> will need to be authentication or added to the form as a field if authen needs passing via props
-- ✅ first_name": string" - passing through
-- ✅ last_name": string" - passing through
-- ❌"latitude": 53.802177,
-- ❌ "longitude": -1.558265, --> ask Alice how this is being made
-- date_of_birth": "string",
-- ✅ DOB": string" - uses Alices format date function to get to the correct format 
-- ❓✅"gender: string" --> change to Do you want to play mens, womens or mixed? does this avoid the issue? 
-- ❓✅ability: index **Backend isn't stored as zero-index have added formatter
-- ❓✅ "playing_hand": "left-handed", needs button removal or formatter
--❓"club_membership": "Pudsey Lawn Tennis Club", double check if required think not :)
--❓✅✅✅ Availability: boolean changing to checkboxes
- "weekday_daytime": true, boolean
-    "weekday_evening": false,
-    "weekends": false,
- ✅"description":
-*/
+import { getCoords } from "../API";
 import { ButtonGroup, CheckBox } from "react-native-elements";
 import Constants from "expo-constants";
 import SelectAndAddPhoto from "./SelectAndAddPhoto";
 
 function CreateProfile({ route, navigation }) {
-  const userLoginDetails = { ...route.params };
-  // Above should contain the email address/username to send to PSQL database
-  // Username should come from the route from Alice's login feature
+  // const userLoginDetails = { ...route.params.user };
+  // const username = userLoginDetails.email;
+  //Above is working :)
+  //Username should come from the route from Registration
+  const testUsername = "wileycoyote@roadrunner.com";
   const [firstName, onChangeFirstNameText] = React.useState("");
   const [lastName, onChangeLastNameText] = React.useState("");
   // NEED TO STORE PHOTO URL
   const [postcode, onChangePostCode] = React.useState("");
-  // NEED longitude and latitude
+  // lat and long are added directly to userDetails
+  const [image, setImage] = useState("");
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
   const [gender, setGender] = useState(4);
@@ -111,27 +96,51 @@ function CreateProfile({ route, navigation }) {
   const formatAbilityIndex = (abilityIndex) => {
     return abilityIndex + 1;
   };
-  // returns boolean true or false for the button?
-  // doesn't need passing can access the things drect
+  // returns boolean true or false for the disabled feature of the go to preferences button
+  // accesses the props directly
   const detailsChecker = () => {
-    console.log(firstName.length === 0 || lastName.length === 0);
+    // console.log(firstName.length === 0 || lastName.length === 0);
     /*
     Everything else at least has a pre-set state --> could still alter so there is none and check if equal ro "" or undefined
     TESTED : First Name, Last Name, Postcode (lat and long??) Description
-
     NOT TESTED: Lat/long, Photo Url, DOB (need to be at least 18)
     */
+
+    const is18 = (dateString) => {
+      const today = new Date();
+      const year = dateString.slice(0, 4);
+      const month = dateString.slice(4, 6) - 1;
+      const day = dateString.slice(6);
+      let age = today.getFullYear() - year;
+      let m = today.getMonth() - month;
+      if (m < 0 || (m === 0 && today.getDay() < day)) {
+        age--;
+      }
+      return age >= 18;
+    };
+
+    const correctDate = formatDate(date);
+    //console.log(correctDate, is18(correctDate));
+
     if (
       firstName.length === 0 ||
       lastName.length === 0 ||
       postcode.length === 0 ||
-      description.length === 0
+      description.length === 0 ||
+      is18(correctDate) === false
     ) {
       setUserComplete(true);
     } else {
       setUserComplete(false);
     }
   };
+
+  const copyURL = (url) => {
+    const copyOfUrl = url;
+    console.log("in copyURL in CreateProfile", url, copyOfUrl);
+    setImage(copyOfUrl);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
@@ -150,7 +159,6 @@ function CreateProfile({ route, navigation }) {
           placeholder="Last Name"
           autoCompleteType="name"
         />
-
         <TextInput
           style={styles.inputFields}
           onChangeText={(text) => onChangePostCode(text)}
@@ -162,7 +170,6 @@ function CreateProfile({ route, navigation }) {
         <View>
           <Button onPress={showDatepicker} title="Choose Date" />
         </View>
-
         {show && (
           <DateTimePicker
             testID="dateTimePicker"
@@ -172,9 +179,9 @@ function CreateProfile({ route, navigation }) {
             onChange={onChange}
           />
         )}
-        {/* Uncomment to see what date is selected if required!
-            <Text>{date.toString()}</Text>
-            <Text>{formatDate(date)}</Text> */}
+        {/* Uncomment to see what date is selected if required! */}
+        <Text>{date.toString()}</Text>
+        <Text>{formatDate(date)}</Text>
 
         <Text>What is your gender?</Text>
         <ButtonGroup
@@ -182,7 +189,6 @@ function CreateProfile({ route, navigation }) {
           selectedIndex={gender}
           buttons={genderOptions}
         ></ButtonGroup>
-
         <Text>What hand do you play?</Text>
         <ButtonGroup
           onPress={(selected) => {
@@ -191,18 +197,18 @@ function CreateProfile({ route, navigation }) {
           selectedIndex={hand}
           buttons={handOptions}
         ></ButtonGroup>
-
         <Text>What is your ability level?</Text>
         <ButtonGroup
           onPress={(selected) => setAbility(selected)}
           selectedIndex={userAbility}
           buttons={abilityLevelButtons}
         ></ButtonGroup>
-
-        <SelectAndAddPhoto />
+        {/*
+        need to pass username down on the props
+        */}
+        <SelectAndAddPhoto username={testUsername} copyURL={copyURL} />
 
         <Text>What is your availabilty?</Text>
-
         <CheckBox
           center
           title="weekday daytime"
@@ -247,7 +253,6 @@ function CreateProfile({ route, navigation }) {
           }}
           checked={weekends}
         />
-
         <Text>
           Please write a brief description of what you are looking for.
         </Text>
@@ -260,31 +265,39 @@ function CreateProfile({ route, navigation }) {
         <Button
           title="Save your details"
           onPress={() => {
-            setUserDetails({
-              // missing lat long and photo
-              first_name: firstName,
-              last_name: lastName,
-              date_of_birth: formatDate(date),
-              gender: formatGender(gender, genderOptions),
-              ability: formatAbilityIndex(userAbility),
-              playing_hand: handOptions[hand],
-              weekday_daytime: weekdayDaytime,
-              weekday_evening: weekdayEvening,
-              weekends: weekends,
-              description: description,
+            // LAT LONG REQUEST
+            getCoords(postcode).then((coords) => {
+              //console.log(coords.latitude);
+              setUserDetails({
+                // need to hard code the user and photo to test upload
+                // username: username,
+                first_name: firstName,
+                last_name: lastName,
+                image_url: image,
+                latitude: coords.latitude,
+                longitude: coords.longitude,
+                date_of_birth: formatDate(date),
+                gender: formatGender(gender, genderOptions),
+                ability: formatAbilityIndex(userAbility),
+                playing_hand: handOptions[hand],
+                weekday_daytime: weekdayDaytime,
+                weekday_evening: weekdayEvening,
+                weekends: weekends,
+                description: description,
+              });
+              console.log("testing the image", image, userDetails.image_url);
+              detailsChecker();
             });
-            console.log(userDetails);
-            console.log(firstName, "<<<< should be the first name");
-            detailsChecker(firstName, lastName);
-            // doesn't work here  detailsChecker(userDetails);
           }}
         />
         <Button
           title="Go To Preferences"
-          onPress={() => navigation.navigate("AddPreferences", userDetails)}
+          onPress={() => {
+            console.log(userDetails, "Here are the passing details");
+            navigation.navigate("AddPreferences", userDetails);
+          }}
           disabled={userComplete}
         />
-
         {/* </View> */}
       </ScrollView>
     </SafeAreaView>
@@ -333,14 +346,10 @@ Old availability button group
           selectedIndexes={userAvailability}
           buttons={availabilityButtons}
         ></ButtonGroup>
-
 */
 
 /*
 here are API funcs
-
-import axios from "axios"; const tennisAPI = axios.create({ baseURL: "http://tennis-match-app.herokuapp.com" }) const postcodeAPI = axios.create({ baseURL: "https://api.postcodes.io/postcodes" }) 
-
-
-export const postNewUser = (newUser) => { return tennisAPI .post(`/users/${newUser.username}`, newUser) .then(({data}) => { console.log(data) return data }) } export const getLongitude = (postcode) => { return postcodeAPI .get(`/${postcode}`) .then(({ data }) => console.log(data.result.longitude)) } export const getLatitude = (postcode) => { return postcodeAPI .get(`/${postcode}`) .then(({ data }) => console.log(data.result.latitude)) } 
+import axios from "axios"; const tennisAPI = axios.create({ baseURL: "http://tennis-match-app.herokuapp.com" }) const postcodeAPI = axios.create({ baseURL: "https://api.postcodes.io/postcodes" })
+export const postNewUser = (newUser) => { return tennisAPI .post(`/users/${newUser.username}`, newUser) .then(({data}) => { console.log(data) return data }) } export const getLongitude = (postcode) => { return postcodeAPI .get(`/${postcode}`) .then(({ data }) => console.log(data.result.longitude)) } export const getLatitude = (postcode) => { return postcodeAPI .get(`/${postcode}`) .then(({ data }) => console.log(data.result.latitude)) }
 */
