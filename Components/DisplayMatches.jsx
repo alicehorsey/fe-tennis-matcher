@@ -34,11 +34,11 @@ const DisplayMatches = (props) => {
         "hand_preference": "",
         "min_age": "18",
         "max_age": "100",
-        "gender_preference": "f"
+        "gender_preference": "m"
     })
 
 
-
+    // console.log(props.route.params.user, "display matches screen")
 
     const abilityStrings = { 1: 'Beginner', 2: 'Intermediate', 3: 'Advanced', 4: 'Expert' }
 
@@ -62,7 +62,6 @@ const DisplayMatches = (props) => {
         newMatchedUsers.splice(active, 1)
         setMatchedUsers(newMatchedUsers)
     }
-
 
     return (
         isLoading ? <View>
@@ -124,6 +123,5 @@ const style = StyleSheet.create({
     pagingText: { fontSize: (width / 35), color: 'green', margin: 3 },
     pagingActiveText: { fontSize: (width / 35), color: 'black', margin: 3 }
 })
-
 
 export default DisplayMatches;

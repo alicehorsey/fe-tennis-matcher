@@ -1,11 +1,11 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import 'react-native-gesture-handler';
+import "react-native-gesture-handler";
 
-import { LoginScreen, RegistrationScreen } from './src/logInScreens'
+import { LoginScreen, RegistrationScreen } from "./src/logInScreens";
 import CreateProfile from "./Components/CreateProfile";
 import AddPreferences from "./Components/AddPreferences";
 import DisplayMatches from './Components/DisplayMatches';
@@ -17,8 +17,6 @@ if (!global.atob) { global.atob = decode }
 import firebase from './constants/Firebase';
 import { getUser } from './API';
 import axios from "axios";
-
-
 
 const Stack = createStackNavigator();
 
@@ -138,8 +136,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
