@@ -11,15 +11,25 @@ export const getUsers = (currentUser) => {
         .catch((error) => console.log(error))
 }
 
+export const getUser = (loggedInUser) => {
+
+    return tennisAPI
+        .get(`/users/${loggedInUser}`)
+        .then(({ data }) => {
+            return data
+        })
+        .catch((error) => console.log(error))
+}
+
 //{ params: { username, gender, playing_hand, min_ability, max_ability, weekday_daytime, weekday_evening, weekends } })
 
 export const postNewUser = (newUser) => {
     return tennisAPI
         .post(`/users/${newUser.username}`, newUser)
-        .then(({data}) => {
-        console.log(data)
-        return data
-    })
+        .then(({ data }) => {
+            console.log(data)
+            return data
+        })
 }
 
 export const getLongitude = (postcode) => {

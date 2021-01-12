@@ -7,6 +7,8 @@ const height = width * 1.3
 
 const DisplayMatches = (props) => {
 
+    console.log(props.extraData, "display matches screen")
+
     const [matchedUsers, setMatchedUsers] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [active, setActive] = useState(0)
@@ -36,7 +38,7 @@ const DisplayMatches = (props) => {
     })
 
 
-    console.log(props.route.params.user, "display matches screen")
+
 
     const abilityStrings = { 1: 'Beginner', 2: 'Intermediate', 3: 'Advanced', 4: 'Expert' }
 
@@ -44,7 +46,7 @@ const DisplayMatches = (props) => {
     useEffect(() => {
         getUsers(user)
             .then(matchingUsers => {
-                console.log(matchingUsers[0], matchingUsers.length)
+                // console.log(matchingUsers[0], matchingUsers.length)
                 setIsLoading(false)
                 setMatchedUsers(matchingUsers)
             })

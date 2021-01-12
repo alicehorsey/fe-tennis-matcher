@@ -23,7 +23,7 @@ class Chat extends React.Component {
     }
 
     render() {
-        console.log(this.state.messages)
+
         const { matchedUser, user } = this.props.route.params;
 
 

@@ -14,7 +14,9 @@ import MessageScreen from "./Components/MessageScreen";
 import { decode, encode } from 'base-64'
 if (!global.btoa) { global.btoa = encode }
 if (!global.atob) { global.atob = decode }
-// import firebase from './constants/Firebase'; <---- for loading (not implemented yet)
+import firebase from './constants/Firebase';
+import { getUser } from './API';
+import axios from "axios";
 
 
 
@@ -24,81 +26,114 @@ export default function App() {
 
   const [loading, setLoading] = useState(true) //<--- not implemented yet
   const [user, setUser] = useState(null)
+  const [profileCreated, setProfileCreated] = useState(false)
 
   // This function will be used when loading is implemented --->
-  // useEffect(() => {
-  //   const usersRef = firebase.firestore().collection('users');
-  //   firebase.auth().onAuthStateChanged(user => {
-  //     console.log(user, "useEffect user")
-  //     if (user) {
-  //       usersRef
-  //         .doc(user.uid)
-  //         .get()
-  //         .then((document) => {
-  //           const userData = document.data()
-  //           setLoading(false)
-  //           setUser(userData)
-  //         })
-  //         .catch((error) => {
-  //           console.log(error)
-  //           setLoading(false)
-  //         });
-  //     } else {
-  //       setLoading(false)
-  //     }
-  //   });
-  // }, []);
+  useEffect(() => {
+    console.log("hello")
+    const usersRef = firebase.firestore().collection('users');
 
-  // if (loading) {
-  return (
+    console.log(usersRef, "usersRef in useEffect")
 
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: "#f4511e",
-          },
-          headerTintColor: "#fff",
-          headerTitleStyle: {
-            fontWeight: "bold",
-          },
-        }}>
-        {/* To use when isLoading is up and running */}
-        {/* {user ? (
-          <>
-            <Stack.Screen name="Home">
-              {props => <TennisHomeScreen {...props} extraData={user} />}
+    firebase.auth().onAuthStateChanged(user => {
+
+      if (user) {
+        usersRef
+          .doc(user.uid)
+          .get()
+          .then((document) => {
+            const userData = document.data()
+            console.log(userData, "userData line 53")
+            setLoading(false)
+            setUser(userData)
+          })
+          .catch((error) => {
+            console.log(error)
+            setLoading(false)
+          });
+      } else {
+        setLoading(false)
+      }
+    });
+  }, []);
+
+
+  //This is the beginning of the return function
+  if (loading) {
+    return (
+      <Text>Loading!</Text>
+    )
+  } else {
+
+    if (user) {
+      getUser(user.email).then(data => {
+        if (typeof data === "object") {
+          setProfileCreated(true)
+        }
+      })
+    }
+
+    return (
+      <>
+        < NavigationContainer >
+          <Stack.Navigator
+            screenOptions={{
+              headerStyle: {
+                backgroundColor: "#f4511e",
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}>
+
+            {user ? (profileCreated ? (<><Stack.Screen name="Matches" >
+              {props => <DisplayMatches {...props} extraData={user} />}
             </Stack.Screen>
-          </>
-        ) : ( */}
-        <>
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="Registration" component={RegistrationScreen} />
-          <Stack.Screen name="Create Profile">
-            {props => <CreateProfile {...props} extraData={user} />}
-          </Stack.Screen>
-          <Stack.Screen name="Matches">
-            {props => <DisplayMatches {...props} extraData={user} />}
-          </Stack.Screen>
-          <Stack.Screen
-            name="AddPreferences"
-            component={AddPreferences}
-            options={{ title: "Preferences" }}
-          />
-          <Stack.Screen
-            name="Message Player"
-            component={MessageScreen}
-            options={{
-              title: 'Chat!',
-            }}
-          />
-        </>
-        {/* )} */}
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-  // }
+              <Stack.Screen
+                name="Message Player"
+                component={MessageScreen}
+                options={{
+                  title: 'Chat!',
+                }}
+              /></>) : (
+                <>
+                  <Stack.Screen name="Create Profile">
+                    {props => <CreateProfile {...props} extraData={user} />}
+                  </Stack.Screen>
+                  <Stack.Screen
+                    name="AddPreferences"
+                    component={AddPreferences}
+                    options={{ title: "Preferences" }}
+                  />
+                  {/* <Stack.Screen name="Matches" >
+                  {props => <DisplayMatches {...props} extraData={user} />}
+                </Stack.Screen>
+                <Stack.Screen
+                  name="Message Player"
+                  component={MessageScreen}
+                  options={{
+                    title: 'Chat!',
+                  }}
+                /> */}
+                </>
+              )
+            ) : (
+                <>
+                  <Stack.Screen name="Login" component={LoginScreen} />
+                  <Stack.Screen name="Registration" component={RegistrationScreen} />
+
+                </>
+              )}
+          </Stack.Navigator>
+        </NavigationContainer >
+      </>
+    );
+  }
+
 }
+
+
 
 const styles = StyleSheet.create({
   container: {
