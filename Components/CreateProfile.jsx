@@ -17,9 +17,7 @@ import SelectAndAddPhoto from "./SelectAndAddPhoto";
 
 function CreateProfile({ route, navigation }) {
   // const userLoginDetails = { ...route.params.user };
-  // console.log(userLoginDetails);
   // const username = userLoginDetails.email;
-  // console.log(username);
   //Above is working :)
   //Username should come from the route from Registration
   const testUsername = "wileycoyote@roadrunner.com";
@@ -104,20 +102,43 @@ function CreateProfile({ route, navigation }) {
     /*
     Everything else at least has a pre-set state --> could still alter so there is none and check if equal ro "" or undefined
     TESTED : First Name, Last Name, Postcode (lat and long??) Description
-
     NOT TESTED: Lat/long, Photo Url, DOB (need to be at least 18)
     */
+
+    const is18 = (dateString) => {
+      const today = new Date();
+      const year = dateString.slice(0, 4)
+      const month = dateString.slice(4, 6) - 1
+      const day = dateString.slice(6)
+      let age = today.getFullYear() - year;
+      let m = today.getMonth() - month;
+      if (m < 0 || (m === 0 && today.getDay() < day)) {
+        age--;
+      }
+      return (age >= 18);
+    }
+
+    const correctDate = formatDate(date)
+    console.log(correctDate, is18(correctDate))
+
     if (
       firstName.length === 0 ||
       lastName.length === 0 ||
       postcode.length === 0 ||
-      description.length === 0
+      description.length === 0 ||
+      is18(correctDate) === false
     ) {
       setUserComplete(true);
     } else {
       setUserComplete(false);
     }
   };
+
+  const copyURL = (url) => {
+    const copyOfUrl = url
+    console.log('in copyURL in CreateProfile', url, copyOfUrl)
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
@@ -156,9 +177,10 @@ function CreateProfile({ route, navigation }) {
             onChange={onChange}
           />
         )}
-        Uncomment to see what date is selected if required!
+        {/* Uncomment to see what date is selected if required! */}
         <Text>{date.toString()}</Text>
         <Text>{formatDate(date)}</Text>
+
         <Text>What is your gender?</Text>
         <ButtonGroup
           onPress={(selected) => setGender(selected)}
@@ -182,7 +204,8 @@ function CreateProfile({ route, navigation }) {
         {/*
         need to pass username down on the props
         */}
-        <SelectAndAddPhoto username={testUsername} />
+        <SelectAndAddPhoto username={testUsername} copyURL={copyURL} />
+
         <Text>What is your availabilty?</Text>
         <CheckBox
           center
@@ -245,7 +268,7 @@ function CreateProfile({ route, navigation }) {
               //console.log(coords.latitude);
               setUserDetails({
                 // need to hard code the user and photo to test upload
-                //username: username,
+                // username: username,
                 first_name: firstName,
                 last_name: lastName,
                 image_url: "I NEED REPLACING :)",
@@ -320,14 +343,10 @@ Old availability button group
           selectedIndexes={userAvailability}
           buttons={availabilityButtons}
         ></ButtonGroup>
-
 */
 
 /*
 here are API funcs
-
-import axios from "axios"; const tennisAPI = axios.create({ baseURL: "http://tennis-match-app.herokuapp.com" }) const postcodeAPI = axios.create({ baseURL: "https://api.postcodes.io/postcodes" }) 
-
-
-export const postNewUser = (newUser) => { return tennisAPI .post(`/users/${newUser.username}`, newUser) .then(({data}) => { console.log(data) return data }) } export const getLongitude = (postcode) => { return postcodeAPI .get(`/${postcode}`) .then(({ data }) => console.log(data.result.longitude)) } export const getLatitude = (postcode) => { return postcodeAPI .get(`/${postcode}`) .then(({ data }) => console.log(data.result.latitude)) } 
+import axios from "axios"; const tennisAPI = axios.create({ baseURL: "http://tennis-match-app.herokuapp.com" }) const postcodeAPI = axios.create({ baseURL: "https://api.postcodes.io/postcodes" })
+export const postNewUser = (newUser) => { return tennisAPI .post(`/users/${newUser.username}`, newUser) .then(({data}) => { console.log(data) return data }) } export const getLongitude = (postcode) => { return postcodeAPI .get(`/${postcode}`) .then(({ data }) => console.log(data.result.longitude)) } export const getLatitude = (postcode) => { return postcodeAPI .get(`/${postcode}`) .then(({ data }) => console.log(data.result.latitude)) }
 */

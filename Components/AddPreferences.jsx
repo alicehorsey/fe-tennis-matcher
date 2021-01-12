@@ -8,6 +8,7 @@ import {
   ScrollView,
 } from "react-native";
 import { Slider, Icon, CheckBox, ButtonGroup } from "react-native-elements";
+import { postNewUser } from "../API";
 
 function AddPreferences({ route, navigation }) {
   const profileInfo = { ...route.params };
@@ -137,11 +138,20 @@ function AddPreferences({ route, navigation }) {
             opponentHand
           );
 
-          setSavedPreferences(true);
-          console.log(profileInfo);
+          console.log(profileInfo, Object.keys(profileInfo).length);
+          postNewUser(profileInfo);
+          navigation.navigate("Matches", profileInfo);
         }}
       />
-      <Button
+     
+      {/* this button first needs to send post request then navigate to matches */}
+    </ScrollView>
+  );
+}
+// have a submit button with disabled until preferences saved ??? ternary ???
+export default AddPreferences;
+
+ /* <Button
         title="Submit Profile"
         disabled={!savedPreferences}
         onPress={() => {
@@ -152,10 +162,4 @@ function AddPreferences({ route, navigation }) {
             Object.keys(profileInfo).length
           );
         }}
-      />
-      {/* this button first needs to send post request then navigate to matches */}
-    </ScrollView>
-  );
-}
-// have a submit button with disabled until preferences saved ??? ternary ???
-export default AddPreferences;
+      /> */
