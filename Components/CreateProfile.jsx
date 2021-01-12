@@ -26,6 +26,7 @@ function CreateProfile({ route, navigation }) {
   // NEED TO STORE PHOTO URL
   const [postcode, onChangePostCode] = React.useState("");
   // lat and long are added directly to userDetails
+  const [image, setImage] = useState("");
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
   const [gender, setGender] = useState(4);
@@ -98,7 +99,7 @@ function CreateProfile({ route, navigation }) {
   // returns boolean true or false for the disabled feature of the go to preferences button
   // accesses the props directly
   const detailsChecker = () => {
-    console.log(firstName.length === 0 || lastName.length === 0);
+    // console.log(firstName.length === 0 || lastName.length === 0);
     /*
     Everything else at least has a pre-set state --> could still alter so there is none and check if equal ro "" or undefined
     TESTED : First Name, Last Name, Postcode (lat and long??) Description
@@ -107,19 +108,19 @@ function CreateProfile({ route, navigation }) {
 
     const is18 = (dateString) => {
       const today = new Date();
-      const year = dateString.slice(0, 4)
-      const month = dateString.slice(4, 6) - 1
-      const day = dateString.slice(6)
+      const year = dateString.slice(0, 4);
+      const month = dateString.slice(4, 6) - 1;
+      const day = dateString.slice(6);
       let age = today.getFullYear() - year;
       let m = today.getMonth() - month;
       if (m < 0 || (m === 0 && today.getDay() < day)) {
         age--;
       }
-      return (age >= 18);
-    }
+      return age >= 18;
+    };
 
-    const correctDate = formatDate(date)
-    console.log(correctDate, is18(correctDate))
+    const correctDate = formatDate(date);
+    //console.log(correctDate, is18(correctDate));
 
     if (
       firstName.length === 0 ||
@@ -135,9 +136,10 @@ function CreateProfile({ route, navigation }) {
   };
 
   const copyURL = (url) => {
-    const copyOfUrl = url
-    console.log('in copyURL in CreateProfile', url, copyOfUrl)
-  }
+    const copyOfUrl = url;
+    console.log("in copyURL in CreateProfile", url, copyOfUrl);
+    setImage(copyOfUrl);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -271,7 +273,7 @@ function CreateProfile({ route, navigation }) {
                 // username: username,
                 first_name: firstName,
                 last_name: lastName,
-                image_url: "I NEED REPLACING :)",
+                image_url: image,
                 latitude: coords.latitude,
                 longitude: coords.longitude,
                 date_of_birth: formatDate(date),
@@ -283,6 +285,7 @@ function CreateProfile({ route, navigation }) {
                 weekends: weekends,
                 description: description,
               });
+              console.log("testing the image", image, userDetails.image_url);
               detailsChecker();
             });
           }}
