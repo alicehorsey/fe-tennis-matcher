@@ -17,9 +17,26 @@ export const getUsers = (currentUser) => {
         weekday_daytime,
         weekday_evening,
         weekends,
+        distance,
+        latitude,
+        longitude,
     } = currentUser;
     return tennisAPI
-        .get("/users", { params: { username, gender_preference, min_ability, max_ability } })
+        .get("/users", {
+            params: {
+                username,
+                gender_preference,
+                min_ability,
+                max_ability,
+                playing_hand,
+                weekday_daytime,
+                weekday_evening,
+                weekends,
+                distance,
+                latitude,
+                longitude,
+            }
+        })
         .then(({ data }) => data.users)
         .catch((error) => console.log(error));
 };
