@@ -168,7 +168,7 @@ function CreateProfile({ extraData, navigation }) {
           placeholder="Post Code"
           autoCompleteType="postal-code"
         />
-        <Text>What is your Date of Birth?</Text>
+        <Text>What is your date of birth?</Text>
         <View>
           <Button onPress={showDatepicker} title="Choose Date" />
         </View>

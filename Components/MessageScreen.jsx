@@ -107,8 +107,8 @@ class Chat extends React.Component {
         return (
             <>
                 <Text>Send a message to {matchedUser.first_name}!</Text>
-
-                {/* <GiftedChat
+{/* 
+                <GiftedChat
                     messages={this.state.messages}
                     onSend={this.send}
                     user={this.user}
