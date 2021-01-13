@@ -15,9 +15,10 @@ import { ButtonGroup, CheckBox } from "react-native-elements";
 import Constants from "expo-constants";
 import SelectAndAddPhoto from "./SelectAndAddPhoto";
 
-function CreateProfile({ route, navigation }) {
-  // const userLoginDetails = { ...route.params.user };
-  // const username = userLoginDetails.email;
+function CreateProfile({ extraData, navigation }) {
+  const userLoginDetails = extraData;
+  console.log(userLoginDetails);
+  const username = userLoginDetails.email;
   //Above is working :)
   //Username should come from the route from Registration
   const testUsername = "wileycoyote@roadrunner.com";
@@ -125,9 +126,10 @@ function CreateProfile({ route, navigation }) {
     if (
       firstName.length === 0 ||
       lastName.length === 0 ||
-      postcode.length === 0 ||
-      description.length === 0 ||
-      is18(correctDate) === false
+      postcode.length === 0
+      // ||
+      // description.length === 0 ||
+      // is18(correctDate) === false
     ) {
       setUserComplete(true);
     } else {
@@ -270,7 +272,7 @@ function CreateProfile({ route, navigation }) {
               //console.log(coords.latitude);
               setUserDetails({
                 // need to hard code the user and photo to test upload
-                // username: username,
+                username: username,
                 first_name: firstName,
                 last_name: lastName,
                 image_url: image,

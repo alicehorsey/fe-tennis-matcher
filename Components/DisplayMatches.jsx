@@ -7,6 +7,8 @@ const height = width * 1.3
 
 const DisplayMatches = (props) => {
 
+    console.log(props.extraData, "display matches screen")
+
     const [matchedUsers, setMatchedUsers] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [active, setActive] = useState(0)
@@ -44,7 +46,7 @@ const DisplayMatches = (props) => {
     useEffect(() => {
         getUsers(user)
             .then(matchingUsers => {
-                console.log(matchingUsers[0], matchingUsers.length)
+                // console.log(matchingUsers[0], matchingUsers.length)
                 setIsLoading(false)
                 setMatchedUsers(matchingUsers)
             })
@@ -92,6 +94,11 @@ const DisplayMatches = (props) => {
                                     <Text>{matchedUser.playing_hand}</Text>
                                     <Text >{matchedUser.description}</Text>
                                 </View>
+
+                                <Button
+                                    title="Message Player"
+                                    onPress={() => props.navigation.navigate("Message Player", { user, matchedUser })}
+                                />
                             </View>
                         ))
                     }
