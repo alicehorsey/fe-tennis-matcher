@@ -1,57 +1,34 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, Image, Button, ScrollView, Dimensions, StyleSheet, Alert } from 'react-native';
+import { Text, View, Image, Button, ScrollView, Dimensions, StyleSheet, Alert, Modal, TouchableHighlight } from 'react-native';
 import firebase from '../constants/Firebase';
-import { getUsers } from '../API.js';
+import { getUser, getUsers } from '../API.js';
+import AddPreferences from './AddPreferences';
 const { width } = Dimensions.get("window")
 const height = width * 1.3
 
-const DisplayMatches = (props) => {
+const DisplayMatches = (props, { navigation }) => {
 
-    console.log(props.extraData, "display matches screen")
+    //console.log(props.extraData, "display matches screen")
 
     const [matchedUsers, setMatchedUsers] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [active, setActive] = useState(0)
-    const [user, setUser] = useState({
-        "user_id": "1",
-        "username": "martina.hingis@yahoo.co.uk",
-        "first_name": "Martina",
-        "last_name": "Hingis",
-        "latitude": "53.796305",
-        "longitude": "-1.564126",
-        "date_of_birth": "19800930",
-        "gender": "m",
-        "ability": "1",
-        "playing_hand": "right-handed",
-        "club_membership": "Kirkstall Abbey Tennis Club",
-        "weekday_daytime": "",
-        "weekday_evening": "",
-        "weekends": "",
-        "description": "Tennis is mostly mental. Of course you must have a lot of physical skill but you can't play tennis well and not be a good thinker. You win or lose the match before you even go out there. Venus Williams",
-        "distance": "10",
-        "min_ability": "1",
-        "max_ability": "3",
-        "hand_preference": "",
-        "min_age": "18",
-        "max_age": "100",
-        "gender_preference": "m"
-    })
-
-    //console.log(props.route.params.user, "display matches screen")
-
-
-    // console.log(props.route.params.user, "display matches screen")
+    const [modalVisible, setModalVisible] = useState(false)
+    const [user, setUser] = useState({})
 
     const abilityStrings = { 1: 'Beginner', 2: 'Intermediate', 3: 'Advanced', 4: 'Expert' }
 
-
     useEffect(() => {
-        getUsers(user)
-            .then(matchingUsers => {
-                console.log(matchingUsers[0], matchingUsers.length)
-                // console.log(matchingUsers[0], matchingUsers.length)
-                setIsLoading(false)
-                setMatchedUsers(matchingUsers)
+        getUser("martina.hingis@yahoo.co.uk") ///props.username?
+            .then(user => {
+                setUser(user)
+                getUsers(user)
+                    .then(fetchedUsers => {
+                        console.log(fetchedUsers[0], fetchedUsers.length)
+                        if (fetchedUsers.length === 0) setModalVisible(true)
+                        setIsLoading(false)
+                        setMatchedUsers(fetchedUsers)
+                    })
             })
     }, [])
 
@@ -63,6 +40,7 @@ const DisplayMatches = (props) => {
     const handleClick = () => {
         const newMatchedUsers = [...matchedUsers]
         newMatchedUsers.splice(active, 1)
+        if (newMatchedUsers.length === 0) setModalVisible(true)
         setMatchedUsers(newMatchedUsers)
     }
 
@@ -71,6 +49,27 @@ const DisplayMatches = (props) => {
             <Text>LOADING</Text>
         </View> :
             <View style={style.container}>
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => {
+                        Alert.alert('Modal has been closed.');
+                    }}>
+                    <View style={style.centeredView}>
+                        <View style={style.modalView}>
+                            <Text style={style.modalText}>You have no matches!</Text>
+                            <TouchableHighlight
+                                style={{ ...style.openButton, backgroundColor: '#2196F3' }}
+                                onPress={() => {
+                                    setModalVisible(!modalVisible);
+                                    // navigation.navigate('Message Player')
+                                }}>
+                                <Text style={style.textStyle}>Amend your preferences!</Text>
+                            </TouchableHighlight>
+                        </View>
+                    </View>
+                </Modal>
                 <ScrollView
                     pagingEnabled
                     horizontal style={style.scroll}
@@ -82,6 +81,7 @@ const DisplayMatches = (props) => {
                     {
                         matchedUsers.map((matchedUser, index) => (
                             <View key={index} style={{ flexDirection: 'column' }}>
+                                <Text>{user.first_name}'s Matches!</Text>
                                 <Button
                                     title='Remove player'
                                     id={index}
@@ -118,13 +118,74 @@ const DisplayMatches = (props) => {
 };
 
 const style = StyleSheet.create({
-    container: { marginTop: 0, width, height },
+    container: { marginTop: 20, width, height },
     scroll: { width, height },
     image: { width, height, resizeMode: 'cover', flex: 1 },
     userInfo: { width, paddingLeft: 5, paddingRight: 5, alignItems: 'center' },
     pagination: { flexDirection: 'row', position: 'absolute', bottom: -30, alignSelf: 'center' },
     pagingText: { fontSize: (width / 35), color: 'green', margin: 3 },
-    pagingActiveText: { fontSize: (width / 35), color: 'black', margin: 3 }
+    pagingActiveText: { fontSize: (width / 35), color: 'black', margin: 3 },
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 22,
+    },
+    modalView: {
+        margin: 20,
+        backgroundColor: 'white',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
+    openButton: {
+        backgroundColor: '#F194FF',
+        borderRadius: 20,
+        padding: 10,
+        elevation: 2,
+    },
+    textStyle: {
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    modalText: {
+        marginBottom: 15,
+        textAlign: 'center',
+    },
 })
 
 export default DisplayMatches;
+
+// {
+//     "user_id": "1",
+//     "username": "martina.hingis@yahoo.co.uk",
+//     "first_name": "Martina",
+//     "last_name": "Hingis",
+//     "latitude": "53.796305",
+//     "longitude": "-1.564126",
+//     "date_of_birth": "19800930",
+//     "gender": "m",
+//     "ability": "1",
+//     "playing_hand": "right-handed",
+//     "club_membership": "Kirkstall Abbey Tennis Club",
+//     "weekday_daytime": "",
+//     "weekday_evening": "",
+//     "weekends": "",
+//     "description": "Tennis is mostly mental. Of course you must have a lot of physical skill but you can't play tennis well and not be a good thinker. You win or lose the match before you even go out there. Venus Williams",
+//     "distance": "0",
+//     "min_ability": "1",
+//     "max_ability": "4",
+//     "hand_preference": "",
+//     "min_age": "18",
+//     "max_age": "100",
+//     "gender_preference": "m"
+// }

@@ -204,7 +204,6 @@ async function uploadImageAsync(uri, user) {
         .storage()
         .ref()
         .child(uuid.v4());  ////.child(username)
-    const snapshot = await ref.put(blob);
 
     const snapshot = await ref.put(blob);
 
