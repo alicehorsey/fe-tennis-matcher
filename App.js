@@ -137,7 +137,10 @@ export default function App() {
                   <Drawer.Screen name="Messages List">
                     {(props) => <MessagesList {...props} extraData={user} />}
                   </Drawer.Screen>
-                  <Drawer.Screen name="Message Player">
+                  <Drawer.Screen
+                    name="Message Player"
+                    options={{ drawerLabel: '' }}
+                  >
                     {(props) => <MessageScreen {...props} extraData={user} />}
                   </Drawer.Screen>
                 </>
