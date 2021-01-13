@@ -16,16 +16,16 @@ import {
 } from "react-native";
 import uuid from "uuid";
 
-// Firebase sets some timeers for a long period, which will trigger some warnings. Let's turn that off for this example
-console.disableYellowBox = true;
-
 export default class SelectAndAddPhoto extends React.Component {
   state = {
     image: null,
     uploading: false,
+    username: this.props.username,
   };
 
   async componentDidMount() {
+    console.log("compDidMount user.username >>>", this.state.username);
+    console.log("copyURL? >>>", this.props.copyURL);
     await Permissions.askAsync(Permissions.CAMERA_ROLL);
     await Permissions.askAsync(Permissions.CAMERA);
   }
@@ -153,12 +153,23 @@ export default class SelectAndAddPhoto extends React.Component {
   };
 
   _handleImagePicked = async (pickerResult) => {
+    const { copyURL } = this.props;
+    console.log(copyURL);
     try {
       this.setState({ uploading: true });
 
       if (!pickerResult.cancelled) {
-        const uploadUrl = await uploadImageAsync(pickerResult.uri);
-        console.log(uploadUrl);
+        const uploadUrl = await uploadImageAsync(
+          pickerResult.uri,
+          this.state.username
+        );
+        console.log(
+          this.props.copyURL,
+          typeof copyURL,
+          uploadUrl,
+          "this is upload URL"
+        );
+        this.props.copyURL(uploadUrl);
         this.setState({ image: uploadUrl });
       }
     } catch (e) {
@@ -170,10 +181,8 @@ export default class SelectAndAddPhoto extends React.Component {
   };
 }
 
-async function uploadImageAsync(uri) {
-  // username props:
-  const { username } = this.props;
-  console.log(username, "<<< username const");
+async function uploadImageAsync(uri, user) {
+  console.log("user in upload function >>", user);
   // Why are we using XMLHttpRequest? See:
   // https://github.com/expo/expo/issues/2402#issuecomment-443726662
   const blob = await new Promise((resolve, reject) => {
@@ -187,10 +196,12 @@ async function uploadImageAsync(uri) {
     };
     xhr.responseType = "blob";
     xhr.open("GET", uri, true);
+
     xhr.send(null);
   });
 
-  const ref = firebase.storage().ref().child(username);
+  const ref = firebase.storage().ref().child("testy@test.com");
+
   const snapshot = await ref.put(blob);
 
   // We're done with the blob, close and release it

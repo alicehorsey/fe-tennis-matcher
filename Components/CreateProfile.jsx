@@ -15,9 +15,10 @@ import { ButtonGroup, CheckBox } from "react-native-elements";
 import Constants from "expo-constants";
 import SelectAndAddPhoto from "./SelectAndAddPhoto";
 
-function CreateProfile({ route, navigation }) {
-  // const userLoginDetails = { ...route.params.user };
-  // const username = userLoginDetails.email;
+function CreateProfile({ extraData, navigation }) {
+  const userLoginDetails = extraData;
+  console.log(userLoginDetails);
+  const username = userLoginDetails.email;
   //Above is working :)
   //Username should come from the route from Registration
   const testUsername = "wileycoyote@roadrunner.com";
@@ -26,6 +27,7 @@ function CreateProfile({ route, navigation }) {
   // NEED TO STORE PHOTO URL
   const [postcode, onChangePostCode] = React.useState("");
   // lat and long are added directly to userDetails
+  const [image, setImage] = useState("");
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
   const [gender, setGender] = useState(4);
@@ -98,7 +100,7 @@ function CreateProfile({ route, navigation }) {
   // returns boolean true or false for the disabled feature of the go to preferences button
   // accesses the props directly
   const detailsChecker = () => {
-    console.log(firstName.length === 0 || lastName.length === 0);
+    // console.log(firstName.length === 0 || lastName.length === 0);
     /*
     Everything else at least has a pre-set state --> could still alter so there is none and check if equal ro "" or undefined
     TESTED : First Name, Last Name, Postcode (lat and long??) Description
@@ -107,32 +109,40 @@ function CreateProfile({ route, navigation }) {
 
     const is18 = (dateString) => {
       const today = new Date();
-      const year = dateString.slice(0, 4)
-      const month = dateString.slice(4, 6) - 1
-      const day = dateString.slice(6)
+      const year = dateString.slice(0, 4);
+      const month = dateString.slice(4, 6) - 1;
+      const day = dateString.slice(6);
       let age = today.getFullYear() - year;
       let m = today.getMonth() - month;
       if (m < 0 || (m === 0 && today.getDay() < day)) {
         age--;
       }
-      return (age >= 18);
-    }
+      return age >= 18;
+    };
 
-    const correctDate = formatDate(date)
-    console.log(correctDate, is18(correctDate))
+    const correctDate = formatDate(date);
+    //console.log(correctDate, is18(correctDate));
 
     if (
       firstName.length === 0 ||
       lastName.length === 0 ||
-      postcode.length === 0 ||
-      description.length === 0 ||
-      is18(correctDate) === false
+      postcode.length === 0
+      // ||
+      // description.length === 0 ||
+      // is18(correctDate) === false
     ) {
       setUserComplete(true);
     } else {
       setUserComplete(false);
     }
   };
+
+  const copyURL = (url) => {
+    const copyOfUrl = url;
+    console.log("in copyURL in CreateProfile", url, copyOfUrl);
+    setImage(copyOfUrl);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
@@ -151,7 +161,6 @@ function CreateProfile({ route, navigation }) {
           placeholder="Last Name"
           autoCompleteType="name"
         />
-
         <TextInput
           style={styles.inputFields}
           onChangeText={(text) => onChangePostCode(text)}
@@ -159,12 +168,10 @@ function CreateProfile({ route, navigation }) {
           placeholder="Post Code"
           autoCompleteType="postal-code"
         />
-
         <Text>What is your Date of Birth?</Text>
         <View>
           <Button onPress={showDatepicker} title="Choose Date" />
         </View>
-
         {show && (
           <DateTimePicker
             testID="dateTimePicker"
@@ -184,7 +191,6 @@ function CreateProfile({ route, navigation }) {
           selectedIndex={gender}
           buttons={genderOptions}
         ></ButtonGroup>
-
         <Text>What hand do you play?</Text>
         <ButtonGroup
           onPress={(selected) => {
@@ -193,7 +199,6 @@ function CreateProfile({ route, navigation }) {
           selectedIndex={hand}
           buttons={handOptions}
         ></ButtonGroup>
-
         <Text>What is your ability level?</Text>
         <ButtonGroup
           onPress={(selected) => setAbility(selected)}
@@ -203,10 +208,9 @@ function CreateProfile({ route, navigation }) {
         {/*
         need to pass username down on the props
         */}
-        <SelectAndAddPhoto username={testUsername} />
+        <SelectAndAddPhoto username={testUsername} copyURL={copyURL} />
 
         <Text>What is your availabilty?</Text>
-
         <CheckBox
           center
           title="weekday daytime"
@@ -251,7 +255,6 @@ function CreateProfile({ route, navigation }) {
           }}
           checked={weekends}
         />
-
         <Text>
           Please write a brief description of what you are looking for.
         </Text>
@@ -269,10 +272,10 @@ function CreateProfile({ route, navigation }) {
               //console.log(coords.latitude);
               setUserDetails({
                 // need to hard code the user and photo to test upload
-                // username: username,
+                username: username,
                 first_name: firstName,
                 last_name: lastName,
-                image_url: "I NEED REPLACING :)",
+                image_url: image,
                 latitude: coords.latitude,
                 longitude: coords.longitude,
                 date_of_birth: formatDate(date),
@@ -284,6 +287,7 @@ function CreateProfile({ route, navigation }) {
                 weekends: weekends,
                 description: description,
               });
+              console.log("testing the image", image, userDetails.image_url);
               detailsChecker();
             });
           }}
@@ -296,7 +300,6 @@ function CreateProfile({ route, navigation }) {
           }}
           disabled={userComplete}
         />
-
         {/* </View> */}
       </ScrollView>
     </SafeAreaView>
