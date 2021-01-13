@@ -8,25 +8,25 @@ import {
   ScrollView,
 } from "react-native";
 import { Slider, Icon, CheckBox, ButtonGroup } from "react-native-elements";
-import { postNewUser } from "../API";
+import { updateUser } from "../API";
 
-function AddPreferences({ route, navigation }) {
+function ChangePreferences({ route, navigation }) {
   const profileInfo = { ...route.params };
   // console.log(profileInfo);
 
-  const [distance, setDistance] = useState(40);
+  const [distance, setDistance] = useState(profileInfo.distance);
   const opponentHandButtons = ["left-handed", "right-handed", "either"];
-  const [opponentHand, setOpponentHand] = useState(2);
+  const [opponentHand, setOpponentHand] = useState(opponentHandButtons.indexOf(profileInfo.gender_preference));
   const abilityLevelButtons = [
     "beginner",
     "intermediate",
     "advanced",
     "expert",
   ];
-  const [opponentAbility, setOppoenentAbility] = useState([0, 3]);
+  const [opponentAbility, setOppoenentAbility] = useState([profileInfo.min_ability, profileInfo.max_ability]);
 
   const opponentGroupOptions = ["mens", "womens", "either"];
-  const [group, setGroup] = useState(2);
+  const [group, setGroup] = useState(opponentGroupOptions.indexOf(profileInfo.gender_preference));
   const [savedPreferences, setSavedPreferences] = useState(false);
   // current queries set up are gender / playing hand / min ability / max ability
   const addPreferences = (
@@ -98,7 +98,7 @@ function AddPreferences({ route, navigation }) {
       </View>
       <Text>***</Text>
       <Text>***</Text>
-      <Text>Opponent hand</Text>
+      <Text>Opponent Hand</Text>
       <ButtonGroup
         onPress={(selected) => {
           setOpponentHand(selected);
@@ -106,7 +106,7 @@ function AddPreferences({ route, navigation }) {
         selectedIndex={opponentHand}
         buttons={opponentHandButtons}
       ></ButtonGroup>
-      <Text>Opponent hand is {opponentHandButtons[opponentHand]}</Text>
+      <Text>Opponent Hand is {opponentHandButtons[opponentHand]}</Text>
       <Text>***</Text>
       <Text>***</Text>
       <Text>Choose your range of opponent ability levels</Text>
@@ -139,27 +139,13 @@ function AddPreferences({ route, navigation }) {
           );
 
           console.log(profileInfo, Object.keys(profileInfo).length);
-          postNewUser(profileInfo);
+          updateUser(profileInfo);
           navigation.navigate("Matches", profileInfo);
         }}
       />
      
-      {/* this button first needs to send post request then navigate to matches */}
     </ScrollView>
   );
 }
-// have a submit button with disabled until preferences saved ??? ternary ???
-export default AddPreferences;
+export default ChangePreferences;
 
- /* <Button
-        title="Submit Profile"
-        disabled={!savedPreferences}
-        onPress={() => {
-          // PROBLEM : READ THE CONSOLE.LOG --> Only on second click of the submit button are matches posted
-          console.log(
-            "Here is the final object to post",
-            profileInfo,
-            Object.keys(profileInfo).length
-          );
-        }}
-      /> */
