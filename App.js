@@ -13,6 +13,7 @@ import DisplayMatches from "./Components/DisplayMatches";
 import MessageScreen from "./Components/MessageScreen";
 
 import { decode, encode } from 'base-64'
+import DisplayTennisClubs from "./Components/DisplayTennisClubs";
 if (!global.btoa) { global.btoa = encode }
 if (!global.atob) { global.atob = decode }
 import firebase from './constants/Firebase';
