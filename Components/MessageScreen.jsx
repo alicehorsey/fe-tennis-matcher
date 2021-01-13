@@ -94,11 +94,11 @@ class Chat extends React.Component {
     //     };
     // }
 
-    // onSend(messages = []) {
-    //     this.setState((previousState) => ({
-    //         messages: GiftedChat.append(previousState.messages, messages),
-    //     }));
-    // }
+    onSend(messages = []) {
+        this.setState((previousState) => ({
+            messages: GiftedChat.append(previousState.messages, messages),
+        }));
+    }
 
     render() {
 
@@ -107,8 +107,8 @@ class Chat extends React.Component {
         return (
             <>
                 <Text>Send a message to {matchedUser.first_name}!</Text>
-
-                {/* <GiftedChat
+{/* 
+                <GiftedChat
                     messages={this.state.messages}
                     onSend={this.send}
                     user={this.user}

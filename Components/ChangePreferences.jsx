@@ -10,7 +10,7 @@ import {
 import { Slider, Icon, CheckBox, ButtonGroup } from "react-native-elements";
 import { updateUser } from "../API";
 
-function AddPreferences({ route, navigation }) {
+function ChangePreferences({ route, navigation }) {
   const profileInfo = { ...route.params };
   // console.log(profileInfo);
 

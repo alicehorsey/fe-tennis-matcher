@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from "react-native";
 import { Slider, Icon, CheckBox, ButtonGroup } from "react-native-elements";
-import { patchUser } from "../API";
+import { postNewUser } from "../API";
 
 function AddPreferences({ route, navigation }) {
   const profileInfo = { ...route.params };
@@ -98,7 +98,7 @@ function AddPreferences({ route, navigation }) {
       </View>
       <Text>***</Text>
       <Text>***</Text>
-      <Text>Opponent Hand</Text>
+      <Text>Opponent hand</Text>
       <ButtonGroup
         onPress={(selected) => {
           setOpponentHand(selected);
@@ -106,7 +106,7 @@ function AddPreferences({ route, navigation }) {
         selectedIndex={opponentHand}
         buttons={opponentHandButtons}
       ></ButtonGroup>
-      <Text>Opponent Hand is {opponentHandButtons[opponentHand]}</Text>
+      <Text>Opponent hand is {opponentHandButtons[opponentHand]}</Text>
       <Text>***</Text>
       <Text>***</Text>
       <Text>Choose your range of opponent ability levels</Text>

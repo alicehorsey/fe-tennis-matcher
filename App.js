@@ -8,7 +8,6 @@ import "react-native-gesture-handler";
 import { LoginScreen, RegistrationScreen } from "./src/logInScreens";
 import CreateProfile from "./Components/CreateProfile";
 import AddPreferences from "./Components/AddPreferences";
-import ChangePreferences from "./Components/ChangePreferences";
 import DisplayMatches from "./Components/DisplayMatches";
 import MessageScreen from "./Components/MessageScreen";
 
