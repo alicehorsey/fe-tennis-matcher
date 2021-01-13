@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, Image, Button, ScrollView, Dimensions, StyleSheet, Alert, Modal, TouchableHighlight } from 'react-native';
+import { Text, View, Image, Button, ScrollView, Dimensions, StyleSheet, Alert, Modal, TouchableHighlight, TouchableOpacity } from 'react-native';
 import firebase from '../constants/Firebase';
 import { getUser, getUsers } from '../API.js';
 import AddPreferences from './AddPreferences';
@@ -8,8 +8,7 @@ const height = width * 1.3
 
 const DisplayMatches = (props) => {
 
-    console.log(props.extraData, "firebase data - display matches screen")
-    console.log(props.userProfile, "profile data - display matches screen")
+    console.log(props.navigation.navigate, 'props.navigation in displayMatches')
 
     const [matchedUsers, setMatchedUsers] = useState([])
     const [isLoading, setIsLoading] = useState(true)
@@ -47,11 +46,28 @@ const DisplayMatches = (props) => {
         setMatchedUsers(newMatchedUsers)
     }
 
+    const toggleDrawer = () => {
+        //Props to open/close the drawer
+        props.navigation.toggleDrawer();
+    };
+
     return (
         isLoading ? <View>
             <Text>LOADING</Text>
         </View> :
             <View style={style.container}>
+                <View style={{ flexDirection: 'row' }}>
+                    {/* <TouchableOpacity onPress={() => toggleDrawer()}>
+                        <Image
+                            source={{ uri: 'https://raw.githubusercontent.com/AboutReact/sampleresource/master/drawerWhite.png' }}
+                            style={{
+                                width: 25,
+                                height: 25,
+                                marginLeft: 5
+                            }}
+                        />
+                    </TouchableOpacity> */}
+                </View>
                 <Modal
                     animationType="slide"
                     transparent={true}
@@ -66,7 +82,7 @@ const DisplayMatches = (props) => {
                                 style={{ ...style.openButton, backgroundColor: '#2196F3' }}
                                 onPress={() => {
                                     setModalVisible(!modalVisible);
-                                    // navigation.navigate('Message Player')
+                                    props.navigation.navigate("Change Preferences")
                                 }}>
                                 <Text style={style.textStyle}>Amend your preferences!</Text>
                             </TouchableHighlight>

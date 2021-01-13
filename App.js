@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Button, TouchableOpacity, Image } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import "react-native-gesture-handler";
@@ -35,6 +35,11 @@ export default function App() {
   const [profileData, setProfileData] = useState(null);
   const [profileCreated, setProfileCreated] = useState(null);
   // const [profileLoading, setProfileLoading] = useState(true)
+
+  const toggleDrawer = () => {
+    //Props to open/close the drawer
+    navigation.toggleDrawer();
+  };
 
   useEffect(() => {
     console.log("hello");
@@ -83,7 +88,8 @@ export default function App() {
       <>
         <NavigationContainer>
           <Drawer.Navigator
-            screenOptions={{
+            screenOptions={({ navigation }) => ({
+              headerShown: true,
               headerStyle: {
                 backgroundColor: "#f4511e",
               },
@@ -92,12 +98,19 @@ export default function App() {
                 fontWeight: "bold",
               },
               headerRight: () => (
-                <Button
-                  onPress={() => alert("This is a button!")}
-                  title="Info"
-                />
-              ),
-            }}
+                <TouchableOpacity onPress={
+                  () => navigation.toggleDrawer()}>
+                  <Image
+                    source={{ uri: 'https://raw.githubusercontent.com/AboutReact/sampleresource/master/drawerWhite.png' }}
+                    style={{
+                      width: 25,
+                      height: 25,
+                      marginLeft: 5
+                    }}
+                  />
+                </TouchableOpacity>
+              )
+            })}
           >
             {user ? (
               profileCreated ? (
@@ -124,50 +137,53 @@ export default function App() {
                   <Drawer.Screen name="Messages List">
                     {(props) => <MessagesList {...props} extraData={user} />}
                   </Drawer.Screen>
-                  <Drawer.Screen name="Message Player">
+                  <Drawer.Screen
+                    name="Message Player"
+                    options={{ drawerLabel: '' }}
+                  >
                     {(props) => <MessageScreen {...props} extraData={user} />}
                   </Drawer.Screen>
                 </>
               ) : (
-                <>
-                  <Drawer.Screen name="Create Profile">
-                    {(props) => <CreateProfile {...props} extraData={user} />}
-                  </Drawer.Screen>
-                  <Drawer.Screen
-                    name="AddPreferences"
-                    component={AddPreferences}
-                    options={{ title: "Preferences" }}
-                  />
-                  <Drawer.Screen name="Matches">
-                    {(props) => <DisplayMatches {...props} extraData={user} />}
-                  </Drawer.Screen>
-                  <Drawer.Screen name="Display Tennis Clubs">
-                    {(props) => (
-                      <DisplayTennisClubs {...props} extraData={user} />
-                    )}
-                  </Drawer.Screen>
-                  <Drawer.Screen name="Change Preferences">
-                    {(props) => (
-                      <ChangePreferences {...props} extraData={user} />
-                    )}
-                  </Drawer.Screen>
-                  <Drawer.Screen name="Messages List">
-                    {(props) => <MessagesList {...props} extraData={user} />}
-                  </Drawer.Screen>
-                  <Drawer.Screen name="Message Player">
-                    {(props) => <MessageScreen {...props} extraData={user} />}
-                  </Drawer.Screen>
-                </>
-              )
+                  <>
+                    <Drawer.Screen name="Create Profile">
+                      {(props) => <CreateProfile {...props} extraData={user} />}
+                    </Drawer.Screen>
+                    <Drawer.Screen
+                      name="AddPreferences"
+                      component={AddPreferences}
+                      options={{ title: "Preferences" }}
+                    />
+                    <Drawer.Screen name="Matches">
+                      {(props) => <DisplayMatches {...props} extraData={user} />}
+                    </Drawer.Screen>
+                    <Drawer.Screen name="Display Tennis Clubs">
+                      {(props) => (
+                        <DisplayTennisClubs {...props} extraData={user} />
+                      )}
+                    </Drawer.Screen>
+                    <Drawer.Screen name="Change Preferences">
+                      {(props) => (
+                        <ChangePreferences {...props} extraData={user} />
+                      )}
+                    </Drawer.Screen>
+                    <Drawer.Screen name="Messages List">
+                      {(props) => <MessagesList {...props} extraData={user} />}
+                    </Drawer.Screen>
+                    <Drawer.Screen name="Message Player">
+                      {(props) => <MessageScreen {...props} extraData={user} />}
+                    </Drawer.Screen>
+                  </>
+                )
             ) : (
-              <>
-                <Drawer.Screen name="Login" component={LoginScreen} />
-                <Drawer.Screen
-                  name="Registration"
-                  component={RegistrationScreen}
-                />
-              </>
-            )}
+                <>
+                  <Drawer.Screen name="Login" component={LoginScreen} />
+                  <Drawer.Screen
+                    name="Registration"
+                    component={RegistrationScreen}
+                  />
+                </>
+              )}
           </Drawer.Navigator>
         </NavigationContainer>
       </>
