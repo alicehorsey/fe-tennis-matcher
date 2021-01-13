@@ -6,7 +6,7 @@ import AddPreferences from './AddPreferences';
 const { width } = Dimensions.get("window")
 const height = width * 1.3
 
-const DisplayMatches = (props, { navigation }) => {
+const DisplayMatches = (props) => {
 
     console.log(props.extraData, "firebase data - display matches screen")
     console.log(props.userProfile, "profile data - display matches screen")
@@ -16,11 +16,13 @@ const DisplayMatches = (props, { navigation }) => {
     const [active, setActive] = useState(0)
     const [modalVisible, setModalVisible] = useState(false)
     const [user, setUser] = useState({})
+    const username = props.extraData.email
 
     const abilityStrings = { 1: 'Beginner', 2: 'Intermediate', 3: 'Advanced', 4: 'Expert' }
 
     useEffect(() => {
-        getUser("martina.hingis@yahoo.co.uk") ///props.username?
+        console.log('username in UseEffect >>', username)
+        getUser(username) ///props.username?
             .then(user => {
                 setUser(user)
                 getUsers(user)
