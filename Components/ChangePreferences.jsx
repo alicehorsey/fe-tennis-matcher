@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -8,27 +8,45 @@ import {
   ScrollView,
 } from "react-native";
 import { Slider, Icon, CheckBox, ButtonGroup } from "react-native-elements";
-import { updateUser } from "../API";
+import { updateUser, getUser } from "../API";
 
-function ChangePreferences({ route, navigation }) {
-  const profileInfo = { ...route.params };
-  // console.log(profileInfo);
+function ChangePreferences(props) {
+  
+  console.log(props, "Change Preferences Screen")
 
-  const [distance, setDistance] = useState(profileInfo.distance);
+  
+  //console.log(profileInfo);
+
+  const [loading, setLoading] = useState(true);
+  const [profileInfo, setProfileInfo] = useState(null);
+
+  const [distance, setDistance] = useState(null);
   const opponentHandButtons = ["left-handed", "right-handed", "either"];
-  const [opponentHand, setOpponentHand] = useState(opponentHandButtons.indexOf(profileInfo.gender_preference));
+  const [opponentHand, setOpponentHand] = useState(null);
   const abilityLevelButtons = [
     "beginner",
     "intermediate",
     "advanced",
     "expert",
   ];
-  const [opponentAbility, setOppoenentAbility] = useState([profileInfo.min_ability, profileInfo.max_ability]);
+  const [opponentAbility, setOppoenentAbility] = useState([]);
 
   const opponentGroupOptions = ["mens", "womens", "either"];
-  const [group, setGroup] = useState(opponentGroupOptions.indexOf(profileInfo.gender_preference));
+  const [group, setGroup] = useState(null);
   const [savedPreferences, setSavedPreferences] = useState(false);
-  // current queries set up are gender / playing hand / min ability / max ability
+
+  useEffect(() => {
+    getUser(props.extraData.email).then((data) => {
+      console.log(data)
+      setLoading(false);
+      setProfileInfo(data);
+      setDistance(data.distance);
+      setOpponentHand(opponentHandButtons.indexOf(data.gender_preference));
+      setOppoenentAbility([data.min_ability, data.max_ability]);
+      setGroup(opponentGroupOptions.indexOf(data.gender_preference));
+    });
+  }, [])
+
   const addPreferences = (
     profileData,
     distance,
@@ -66,6 +84,9 @@ function ChangePreferences({ route, navigation }) {
     return profileData;
   };
 
+  if (loading) {
+    return <Text>Loading!</Text>;
+  } else {
   return (
     <ScrollView>
       <Text>User adding preferences screen</Text>
@@ -140,12 +161,13 @@ function ChangePreferences({ route, navigation }) {
 
           console.log(profileInfo, Object.keys(profileInfo).length);
           updateUser(profileInfo);
-          navigation.navigate("Matches", profileInfo);
+          props.navigation.navigate("Matches", profileInfo)
         }}
       />
 
     </ScrollView>
   );
+}
 }
 export default ChangePreferences;
 
