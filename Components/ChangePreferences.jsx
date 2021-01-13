@@ -143,7 +143,7 @@ function ChangePreferences({ route, navigation }) {
           navigation.navigate("Matches", profileInfo);
         }}
       />
-     
+
     </ScrollView>
   );
 }
