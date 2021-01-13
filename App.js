@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import "react-native-gesture-handler";
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import { LoginScreen, RegistrationScreen } from "./src/logInScreens";
 import CreateProfile from "./Components/CreateProfile";
@@ -19,13 +20,16 @@ import firebase from './constants/Firebase';
 import { getUser } from './API';
 import axios from "axios";
 
-const Stack = createStackNavigator();
+// const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
 
 export default function App() {
 
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState(null)
-  const [profileCreated, setProfileCreated] = useState(false)
+  const [profileData, setProfileData] = useState(null)
+  const [profileCreated, setProfileCreated] = useState(null)
+  // const [profileLoading, setProfileLoading] = useState(true)
 
 
   useEffect(() => {
@@ -40,12 +44,27 @@ export default function App() {
           .get()
           .then((document) => {
             const userData = document.data()
-            console.log(userData, "userData line 53")
-            setLoading(false)
+            console.log(userData, "userData line 46")
             setUser(userData)
+
+            if (userData !== undefined) {
+              getUser(userData.email).then(data => {
+                // if (typeof data === "object") {
+                //   setLoading(false)
+                //   setProfileCreated(true)
+                // }
+                console.log(Object.keys(data).length, "profile data line 54")
+                if (Object.keys(data).length > 0) {
+                  setProfileData(data)
+                  setProfileCreated(true)
+                }
+              })
+            }
+            setLoading(false)
+
           })
           .catch((error) => {
-            console.log(error)
+            console.log(error, "error")
             setLoading(false)
           });
       } else {
@@ -61,19 +80,11 @@ export default function App() {
       <Text>Loading!</Text>
     )
   } else {
-    //Need to add a mini "loading" here while get request to back end happens
-    if (user) {
-      getUser(user.email).then(data => {
-        if (typeof data === "object") {
-          setProfileCreated(true)
-        }
-      })
-    }
 
     return (
       <>
         < NavigationContainer >
-          <Stack.Navigator
+          <Drawer.Navigator
             screenOptions={{
               headerStyle: {
                 backgroundColor: "#f4511e",
@@ -82,12 +93,18 @@ export default function App() {
               headerTitleStyle: {
                 fontWeight: "bold",
               },
+              headerRight: () => (
+                <Button
+                  onPress={() => alert('This is a button!')}
+                  title="Info"
+                />
+              ),
             }}>
 
-            {user ? (profileCreated ? (<><Stack.Screen name="Matches" >
-              {props => <DisplayMatches {...props} extraData={user} />}
-            </Stack.Screen>
-              <Stack.Screen
+            {user ? (profileCreated ? (<><Drawer.Screen name="Matches" >
+              {props => <DisplayMatches {...props} extraData={user} userProfile={profileData} />}
+            </Drawer.Screen>
+              <Drawer.Screen
                 name="Message Player"
                 component={MessageScreen}
                 options={{
@@ -95,18 +112,18 @@ export default function App() {
                 }}
               /></>) : (
                 <>
-                  <Stack.Screen name="Create Profile">
+                  <Drawer.Screen name="Create Profile">
                     {props => <CreateProfile {...props} extraData={user} />}
-                  </Stack.Screen>
-                  <Stack.Screen
+                  </Drawer.Screen>
+                  <Drawer.Screen
                     name="AddPreferences"
                     component={AddPreferences}
                     options={{ title: "Preferences" }}
                   />
-                  <Stack.Screen name="Matches" >
+                  <Drawer.Screen name="Matches" >
                     {props => <DisplayMatches {...props} extraData={user} />}
-                  </Stack.Screen>
-                  <Stack.Screen
+                  </Drawer.Screen>
+                  <Drawer.Screen
                     name="Message Player"
                     component={MessageScreen}
                     options={{
@@ -117,19 +134,19 @@ export default function App() {
               )
             ) : (
                 <>
-                  <Stack.Screen name="Login" component={LoginScreen} />
-                  <Stack.Screen name="Registration" component={RegistrationScreen} />
+                  <Drawer.Screen name="Login" component={LoginScreen} />
+                  <Drawer.Screen name="Registration" component={RegistrationScreen} />
 
                 </>
               )}
-          </Stack.Navigator>
+          </Drawer.Navigator>
         </NavigationContainer >
       </>
     );
+
   }
 
 }
-
 
 
 const styles = StyleSheet.create({
@@ -140,3 +157,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
+
+
+

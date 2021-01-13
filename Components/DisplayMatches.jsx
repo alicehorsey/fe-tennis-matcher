@@ -8,7 +8,8 @@ const height = width * 1.3
 
 const DisplayMatches = (props, { navigation }) => {
 
-    //console.log(props.extraData, "display matches screen")
+    console.log(props.extraData, "firebase data - display matches screen")
+    console.log(props.userProfile, "profile data - display matches screen")
 
     const [matchedUsers, setMatchedUsers] = useState([])
     const [isLoading, setIsLoading] = useState(true)
