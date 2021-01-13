@@ -2,7 +2,7 @@ import firebase from "firebase";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCDebnOqYKC8dlLC-Xri4F_xNbKrC_HCx8",
-  authDomain: "tennis-match-b1298.firebaseapp.com",
+  authDomain: "tennis-match-b129s8.firebaseapp.com",
   databaseURL:
     "https://tennis-match-b1298-default-rtdb.europe-west1.firebasedatabase.app",
   projectId: "tennis-match-b1298",
@@ -14,5 +14,7 @@ const firebaseConfig = {
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
+
+
 
 export default firebase;

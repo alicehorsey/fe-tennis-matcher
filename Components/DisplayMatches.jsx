@@ -7,6 +7,8 @@ const height = width * 1.3
 
 const DisplayMatches = (props) => {
 
+    console.log(props.extraData, "display matches screen")
+
     const [matchedUsers, setMatchedUsers] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [active, setActive] = useState(0)
@@ -32,10 +34,13 @@ const DisplayMatches = (props) => {
         "hand_preference": "",
         "min_age": "18",
         "max_age": "100",
-        "gender_preference": "f"
+        "gender_preference": "m"
     })
 
     //console.log(props.route.params.user, "display matches screen")
+
+
+    // console.log(props.route.params.user, "display matches screen")
 
     const abilityStrings = { 1: 'Beginner', 2: 'Intermediate', 3: 'Advanced', 4: 'Expert' }
 
@@ -44,6 +49,7 @@ const DisplayMatches = (props) => {
         getUsers(user)
             .then(matchingUsers => {
                 console.log(matchingUsers[0], matchingUsers.length)
+                // console.log(matchingUsers[0], matchingUsers.length)
                 setIsLoading(false)
                 setMatchedUsers(matchingUsers)
             })
@@ -91,6 +97,11 @@ const DisplayMatches = (props) => {
                                     <Text>{matchedUser.playing_hand}</Text>
                                     <Text >{matchedUser.description}</Text>
                                 </View>
+
+                                <Button
+                                    title="Message Player"
+                                    onPress={() => props.navigation.navigate("Message Player", { user, matchedUser })}
+                                />
                             </View>
                         ))
                     }
