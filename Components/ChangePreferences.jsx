@@ -23,7 +23,7 @@ function ChangePreferences({ route, navigation }) {
     "advanced",
     "expert",
   ];
-  const [opponentAbility, setOppoenentAbility] = useState([profileInfo.min_ability, profileInfo.max_ability]);
+  const [opponentAbility, setOpponentAbility] = useState([profileInfo.min_ability, profileInfo.max_ability]);
 
   const opponentGroupOptions = ["mens", "womens", "either"];
   const [group, setGroup] = useState(opponentGroupOptions.indexOf(profileInfo.gender_preference));
@@ -111,7 +111,7 @@ function ChangePreferences({ route, navigation }) {
       <Text>***</Text>
       <Text>Choose your range of opponent ability levels</Text>
       <ButtonGroup
-        onPress={(selected) => setOppoenentAbility(selected)}
+        onPress={(selected) => setOpponentAbility(selected)}
         selectMultiple={true}
         selectedIndexes={opponentAbility}
         buttons={abilityLevelButtons}
@@ -120,9 +120,7 @@ function ChangePreferences({ route, navigation }) {
       <Text>***</Text>
       <Text>What group do you want to play in?</Text>
       <ButtonGroup
-        onPress={(selected) => {
-          setGroup(selected);
-        }}
+        onPress={(selected) => setGroup(selected)}
         selectedIndex={group}
         buttons={opponentGroupOptions}
       ></ButtonGroup>

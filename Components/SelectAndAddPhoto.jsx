@@ -25,7 +25,6 @@ export default class SelectAndAddPhoto extends React.Component {
 
     async componentDidMount() {
         console.log("compDidMount user.username >>>", this.state.username);
-        console.log("copyURL? >>>", this.props.copyURL);
         await Permissions.askAsync(Permissions.CAMERA_ROLL);
         await Permissions.askAsync(Permissions.CAMERA);
     }
@@ -44,7 +43,6 @@ export default class SelectAndAddPhoto extends React.Component {
                             marginHorizontal: 15,
                         }}
                     >
-                        Example: Upload ImagePicker result
                     </Text>
                 )}
 
@@ -153,8 +151,7 @@ export default class SelectAndAddPhoto extends React.Component {
     };
 
     _handleImagePicked = async (pickerResult) => {
-        const { copyURL } = this.props;
-        console.log(copyURL);
+        const { setURL } = this.props;
         try {
             this.setState({ uploading: true });
 
@@ -163,13 +160,7 @@ export default class SelectAndAddPhoto extends React.Component {
                     pickerResult.uri,
                     this.state.username
                 );
-                console.log(
-                    this.props.copyURL,
-                    typeof copyURL,
-                    uploadUrl,
-                    "this is upload URL"
-                );
-                this.props.copyURL(uploadUrl);
+                this.props.setURL(uploadUrl);
                 this.setState({ image: uploadUrl });
             }
         } catch (e) {

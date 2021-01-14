@@ -137,11 +137,7 @@ function CreateProfile({ extraData, navigation }) {
     }
   };
 
-  const copyURL = (url) => {
-    const copyOfUrl = url;
-    console.log("in copyURL in CreateProfile", url, copyOfUrl);
-    setImage(copyOfUrl);
-  };
+  const setURL = (url) => setImage(url);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -170,7 +166,8 @@ function CreateProfile({ extraData, navigation }) {
         />
         <Text>What is your date of birth?</Text>
         <View>
-          <Button onPress={showDatepicker} title="Choose Date" />
+          <Button
+            onPress={showDatepicker} title="Choose Date" />
         </View>
         {show && (
           <DateTimePicker
@@ -208,7 +205,7 @@ function CreateProfile({ extraData, navigation }) {
         {/*
         need to pass username down on the props
         */}
-        <SelectAndAddPhoto username={testUsername} copyURL={copyURL} />
+        <SelectAndAddPhoto username={testUsername} setURL={setURL} />
 
         <Text>What is your availabilty?</Text>
         <CheckBox

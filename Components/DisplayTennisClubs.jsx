@@ -3,8 +3,8 @@ import MapView, { Marker } from 'react-native-maps';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
 const clubsData = require("../assets/tennis.clubs.js");
 
-export default function DisplayTennisClubs() {
-    console.log(clubsData)
+export default function DisplayTennisClubs(props) {
+    console.log('CLUBS', props)
     return (
         <View style={styles.container}>
             <MapView
