@@ -167,6 +167,7 @@ function CreateProfile({ extraData, navigation }) {
         <Text>What is your date of birth?</Text>
         <View>
           <Button
+            color='#55008c'
             onPress={showDatepicker} title="Choose Date" />
         </View>
         {show && (
@@ -184,12 +185,14 @@ function CreateProfile({ extraData, navigation }) {
 
         <Text>What is your gender?</Text>
         <ButtonGroup
+          selectedButtonStyle={{ backgroundColor: '#55008c' }}
           onPress={(selected) => setGender(selected)}
           selectedIndex={gender}
           buttons={genderOptions}
         ></ButtonGroup>
         <Text>What hand do you play?</Text>
         <ButtonGroup
+          selectedButtonStyle={{ backgroundColor: '#55008c' }}
           onPress={(selected) => {
             setHand(selected);
           }}
@@ -198,6 +201,7 @@ function CreateProfile({ extraData, navigation }) {
         ></ButtonGroup>
         <Text>What is your ability level?</Text>
         <ButtonGroup
+          selectedButtonStyle={{ backgroundColor: '#55008c' }}
           onPress={(selected) => setAbility(selected)}
           selectedIndex={userAbility}
           buttons={abilityLevelButtons}
@@ -209,6 +213,7 @@ function CreateProfile({ extraData, navigation }) {
 
         <Text>What is your availabilty?</Text>
         <CheckBox
+          checkedColor='#55008c'
           center
           title="weekday daytime"
           checkedIcon="check-circle"
@@ -226,6 +231,7 @@ function CreateProfile({ extraData, navigation }) {
           checked={weekdayDaytime}
         />
         <CheckBox
+          checkedColor='#55008c'
           center
           title="weekday evening"
           checkedIcon="check-circle"
@@ -243,6 +249,7 @@ function CreateProfile({ extraData, navigation }) {
           checked={weekdayEvening}
         />
         <CheckBox
+          checkedColor='#55008c'
           center
           title="weekends"
           checkedIcon="check-circle"
@@ -262,6 +269,7 @@ function CreateProfile({ extraData, navigation }) {
           placeholder="New friends to play tennis with in the Leeds area!"
         />
         <Button
+          color='#55008c'
           title="Save your details"
           onPress={() => {
             // LAT LONG REQUEST
@@ -290,6 +298,7 @@ function CreateProfile({ extraData, navigation }) {
           }}
         />
         <Button
+          color='#55008c'
           title="Go To Preferences"
           onPress={() => {
             console.log(userDetails, "Here are the passing details");

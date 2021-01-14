@@ -100,6 +100,7 @@ function AddPreferences({ route, navigation }) {
       <Text>***</Text>
       <Text>Opponent hand</Text>
       <ButtonGroup
+        selectedButtonStyle={{ backgroundColor: '#55008c', color: 'white' }}
         onPress={(selected) => {
           setOpponentHand(selected);
         }}
@@ -111,6 +112,7 @@ function AddPreferences({ route, navigation }) {
       <Text>***</Text>
       <Text>Choose your range of opponent ability levels</Text>
       <ButtonGroup
+        selectedButtonStyle={{ backgroundColor: '#55008c', color: 'white' }}
         onPress={(selected) => setOppoenentAbility(selected)}
         selectMultiple={true}
         selectedIndexes={opponentAbility}
@@ -120,6 +122,7 @@ function AddPreferences({ route, navigation }) {
       <Text>***</Text>
       <Text>What group do you want to play in?</Text>
       <ButtonGroup
+        selectedButtonStyle={{ backgroundColor: '#55008c', color: 'white' }}
         onPress={(selected) => {
           setGroup(selected);
         }}
@@ -128,6 +131,7 @@ function AddPreferences({ route, navigation }) {
       ></ButtonGroup>
       <Text>Your preferred group: {opponentGroupOptions[group]}</Text>
       <Button
+        color='#55008c'
         title="Save Preferences"
         onPress={() => {
           addPreferences(
@@ -143,7 +147,7 @@ function AddPreferences({ route, navigation }) {
           navigation.navigate("Matches", profileInfo);
         }}
       />
-     
+
       {/* this button first needs to send post request then navigate to matches */}
     </ScrollView>
   );
@@ -151,15 +155,15 @@ function AddPreferences({ route, navigation }) {
 // have a submit button with disabled until preferences saved ??? ternary ???
 export default AddPreferences;
 
- /* <Button
-        title="Submit Profile"
-        disabled={!savedPreferences}
-        onPress={() => {
-          // PROBLEM : READ THE CONSOLE.LOG --> Only on second click of the submit button are matches posted
-          console.log(
-            "Here is the final object to post",
-            profileInfo,
-            Object.keys(profileInfo).length
-          );
-        }}
-      /> */
+/* <Button
+       title="Submit Profile"
+       disabled={!savedPreferences}
+       onPress={() => {
+         // PROBLEM : READ THE CONSOLE.LOG --> Only on second click of the submit button are matches posted
+         console.log(
+           "Here is the final object to post",
+           profileInfo,
+           Object.keys(profileInfo).length
+         );
+       }}
+     /> */

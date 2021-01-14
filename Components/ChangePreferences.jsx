@@ -100,6 +100,7 @@ function ChangePreferences({ route, navigation }) {
       <Text>***</Text>
       <Text>Opponent Hand</Text>
       <ButtonGroup
+        selectedButtonStyle={{ backgroundColor: '#55008c', color: 'white' }}
         onPress={(selected) => {
           setOpponentHand(selected);
         }}
@@ -111,6 +112,7 @@ function ChangePreferences({ route, navigation }) {
       <Text>***</Text>
       <Text>Choose your range of opponent ability levels</Text>
       <ButtonGroup
+        selectedButtonStyle={{ backgroundColor: '#55008c', color: 'white' }}
         onPress={(selected) => setOpponentAbility(selected)}
         selectMultiple={true}
         selectedIndexes={opponentAbility}
@@ -120,12 +122,14 @@ function ChangePreferences({ route, navigation }) {
       <Text>***</Text>
       <Text>What group do you want to play in?</Text>
       <ButtonGroup
+        selectedButtonStyle={{ backgroundColor: '#55008c', color: 'white' }}
         onPress={(selected) => setGroup(selected)}
         selectedIndex={group}
         buttons={opponentGroupOptions}
       ></ButtonGroup>
       <Text>Your preferred group: {opponentGroupOptions[group]}</Text>
       <Button
+        color='#55008c'
         title="Save Preferences"
         onPress={() => {
           addPreferences(
@@ -135,13 +139,11 @@ function ChangePreferences({ route, navigation }) {
             group,
             opponentHand
           );
-
           console.log(profileInfo, Object.keys(profileInfo).length);
           updateUser(profileInfo);
           navigation.navigate("Matches", profileInfo);
         }}
       />
-
     </ScrollView>
   );
 }

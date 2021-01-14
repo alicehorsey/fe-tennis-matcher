@@ -47,11 +47,14 @@ export default class SelectAndAddPhoto extends React.Component {
                 )}
 
                 <Button
+                    color='#55008c'
                     onPress={this._pickImage}
                     title="Pick an image from camera roll"
                 />
 
-                <Button onPress={this._takePhoto} title="Take a photo" />
+                <Button
+                    color='#55008c'
+                    onPress={this._takePhoto} title="Take a photo" />
 
                 {this._maybeRenderImage()}
                 {this._maybeRenderUploadingOverlay()}
