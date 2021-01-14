@@ -126,6 +126,9 @@ export default function App() {
                       />
                     )}
                   </Drawer.Screen>
+                  <Drawer.Screen name="Player Chat">
+                    {(props) => <MessagesList {...props} extraData={user} />}
+                  </Drawer.Screen>
                   <Drawer.Screen name="Display Tennis Clubs">
                     {(props) => (
                       <DisplayTennisClubs {...props} extraData={user} />
@@ -136,12 +139,9 @@ export default function App() {
                       <ChangePreferences {...props} extraData={user} />
                     )}
                   </Drawer.Screen>
-                  <Drawer.Screen name="Messages List">
-                    {(props) => <MessagesList {...props} extraData={user} />}
-                  </Drawer.Screen>
                   <Drawer.Screen
                     name="Message Player"
-                    options={{ drawerLabel: '' }
+                    options={{ drawerLabel: 'Log Out' }
                     }
                   >
                     {(props) => <MessageScreen {...props} extraData={user} />}
@@ -167,6 +167,9 @@ export default function App() {
                     <Drawer.Screen name="Matches">
                       {(props) => <DisplayMatches {...props} extraData={user} />}
                     </Drawer.Screen>
+                    <Drawer.Screen name="Player Chat">
+                      {(props) => <MessagesList {...props} extraData={user} />}
+                    </Drawer.Screen>
                     <Drawer.Screen name="Display Tennis Clubs">
                       {(props) => (
                         <DisplayTennisClubs {...props} extraData={user} />
@@ -177,10 +180,11 @@ export default function App() {
                         <ChangePreferences {...props} extraData={user} />
                       )}
                     </Drawer.Screen>
-                    <Drawer.Screen name="Messages List">
-                      {(props) => <MessagesList {...props} extraData={user} />}
-                    </Drawer.Screen>
-                    <Drawer.Screen name="Message Player">
+                    <Drawer.Screen
+                      name="Message Player"
+                      options={{ drawerLabel: 'Log Out' }
+                      }
+                    >
                       {(props) => <MessageScreen {...props} extraData={user} />}
                     </Drawer.Screen>
                     <Drawer.Screen
