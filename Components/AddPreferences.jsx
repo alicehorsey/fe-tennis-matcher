@@ -68,11 +68,8 @@ function AddPreferences({ route, navigation }) {
 
   return (
     <ScrollView>
-      <Text>User adding preferences screen</Text>
-      <Text>Set your maximum distance:</Text>
-      <Text>Distance: {distance}</Text>
-
-      <Text>Should be false on refresh: {savedPreferences.toString()}</Text>
+      <Text style={styles.questions}>How far are you willing to travel?</Text>
+      <Text style={styles.questions}>Distance chosen: {distance} miles</Text>
       <View>
         <Slider
           value={distance}
@@ -96,9 +93,8 @@ function AddPreferences({ route, navigation }) {
           }}
         />
       </View>
-      <Text>***</Text>
-      <Text>***</Text>
-      <Text>Opponent hand</Text>
+
+      <Text style={styles.questions}>What would you like your opponent hand to be?</Text>
       <ButtonGroup
         selectedButtonStyle={{ backgroundColor: '#55008c', color: 'white' }}
         onPress={(selected) => {
@@ -107,10 +103,8 @@ function AddPreferences({ route, navigation }) {
         selectedIndex={opponentHand}
         buttons={opponentHandButtons}
       ></ButtonGroup>
-      <Text>Opponent hand is {opponentHandButtons[opponentHand]}</Text>
-      <Text>***</Text>
-      <Text>***</Text>
-      <Text>Choose your range of opponent ability levels</Text>
+
+      <Text style={styles.questions}>What ability would you like your opponent to be?</Text>
       <ButtonGroup
         selectedButtonStyle={{ backgroundColor: '#55008c', color: 'white' }}
         onPress={(selected) => setOppoenentAbility(selected)}
@@ -118,9 +112,8 @@ function AddPreferences({ route, navigation }) {
         selectedIndexes={opponentAbility}
         buttons={abilityLevelButtons}
       ></ButtonGroup>
-      <Text>***</Text>
-      <Text>***</Text>
-      <Text>What group do you want to play in?</Text>
+
+      <Text style={styles.questions}>What group do you want to play in?</Text>
       <ButtonGroup
         selectedButtonStyle={{ backgroundColor: '#55008c', color: 'white' }}
         onPress={(selected) => {
@@ -129,7 +122,7 @@ function AddPreferences({ route, navigation }) {
         selectedIndex={group}
         buttons={opponentGroupOptions}
       ></ButtonGroup>
-      <Text>Your preferred group: {opponentGroupOptions[group]}</Text>
+      <Text style={styles.questions}>Hope you find your match!</Text>
       <Button
         color='#55008c'
         title="Save Preferences"
@@ -154,6 +147,14 @@ function AddPreferences({ route, navigation }) {
 }
 // have a submit button with disabled until preferences saved ??? ternary ???
 export default AddPreferences;
+
+const styles = StyleSheet.create({
+  questions: {
+    margin: 10,
+    fontSize: 18
+  }
+})
+
 
 /* <Button
        title="Submit Profile"

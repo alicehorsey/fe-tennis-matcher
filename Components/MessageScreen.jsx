@@ -32,8 +32,8 @@ class Chat extends React.Component {
         return (
 
             <View style={{ flex: 1 }}>
-                <Text style={{ alignSelf: "center", fontSize: 40 }}>Player Chat!</Text>
-                <Text style={{ alignSelf: "center", fontSize: 40 }}>{matchedUser.first_name}</Text>
+
+                <Text style={{ alignSelf: "center", fontSize: 40 }}>🎾 {matchedUser.first_name} 🎾</Text>
                 <GiftedChat
                     messages={this.state.messages}
                     showUserAvatar={true}

@@ -8,7 +8,7 @@ const height = width * 1.3
 
 const DisplayMatches = (props) => {
 
-    console.log(props.navigation.navigate, 'props.navigation in displayMatches')
+    // console.log(props.navigation.navigate, 'props.navigation in displayMatches')
 
     const [matchedUsers, setMatchedUsers] = useState([])
     const [isLoading, setIsLoading] = useState(true)
@@ -49,7 +49,8 @@ const DisplayMatches = (props) => {
 
     return (
         isLoading ? <View>
-            <Text>LOADING</Text>
+            <Text style={{ fontSize: 50 }}>🎾 Loading 🎾</Text>
+
         </View> :
             <View style={style.container}>
                 <View style={{ flexDirection: 'row' }}>
@@ -96,7 +97,7 @@ const DisplayMatches = (props) => {
                     {
                         matchedUsers.map((matchedUser, index) => (
                             <View key={index} style={{ flexDirection: 'column' }}>
-                                <Text style={{ alignSelf: "center", fontSize: 40 }}>{user.first_name}'s Matches!</Text>
+                                <Text style={{ alignSelf: "center", fontSize: 40 }}>🎾 {user.first_name}'s Matches! 🎾</Text>
                                 <Button
                                     color='#55008c'
                                     title='Remove player'

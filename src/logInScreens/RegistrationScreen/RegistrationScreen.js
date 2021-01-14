@@ -51,7 +51,6 @@ export default function RegistrationScreen({ navigation }) {
             <KeyboardAwareScrollView
                 style={{ flex: 1, width: '100%' }}
                 keyboardShouldPersistTaps="always">
-                <Text style={styles.intro}>Please register your details for log in here</Text>
                 <TextInput
                     style={styles.input}
                     placeholder='Full Name'
@@ -96,7 +95,7 @@ export default function RegistrationScreen({ navigation }) {
                     <Text style={styles.buttonTitle}>Create account</Text>
                 </TouchableOpacity>
                 <View style={styles.footerView}>
-                    <Text style={styles.footerText}>Already got an account? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Log in</Text></Text>
+                    <Text style={styles.footerText}>Already a Tennis Match User? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Log in</Text></Text>
                 </View>
             </KeyboardAwareScrollView>
         </View>

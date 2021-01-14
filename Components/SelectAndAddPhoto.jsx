@@ -43,6 +43,7 @@ export default class SelectAndAddPhoto extends React.Component {
                             marginHorizontal: 15,
                         }}
                     >
+                        {/* Example: Upload ImagePicker result */}
                     </Text>
                 )}
 

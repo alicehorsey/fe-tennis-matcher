@@ -72,7 +72,9 @@ export default function App() {
 
   //This is the beginning of the return function
   if (loading) {
-    return <Text>Loading!</Text>;
+    return (
+      <Text style={{ fontSize: 50 }}>🎾 Loading 🎾</Text>
+    )
   } else {
     return (
       <>
