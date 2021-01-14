@@ -100,7 +100,7 @@ const DisplayMatches = (props) => {
                     {
                         matchedUsers.map((matchedUser, index) => (
                             <View key={index} style={{ flexDirection: 'column' }}>
-                                <Text>{user.first_name}'s Matches!</Text>
+                                <Text style={{ alignSelf: "center", fontSize: 40 }}>{user.first_name}'s Matches!</Text>
                                 <Button
                                     title='Remove player'
                                     id={index}
