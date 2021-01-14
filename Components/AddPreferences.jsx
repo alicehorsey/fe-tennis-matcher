@@ -96,6 +96,7 @@ function AddPreferences({ route, navigation }) {
 
       <Text style={styles.questions}>What would you like your opponent hand to be?</Text>
       <ButtonGroup
+        selectedButtonStyle={{ backgroundColor: '#55008c', color: 'white' }}
         onPress={(selected) => {
           setOpponentHand(selected);
         }}
@@ -105,6 +106,7 @@ function AddPreferences({ route, navigation }) {
 
       <Text style={styles.questions}>What ability would you like your opponent to be?</Text>
       <ButtonGroup
+        selectedButtonStyle={{ backgroundColor: '#55008c', color: 'white' }}
         onPress={(selected) => setOppoenentAbility(selected)}
         selectMultiple={true}
         selectedIndexes={opponentAbility}
@@ -113,6 +115,7 @@ function AddPreferences({ route, navigation }) {
 
       <Text style={styles.questions}>What group do you want to play in?</Text>
       <ButtonGroup
+        selectedButtonStyle={{ backgroundColor: '#55008c', color: 'white' }}
         onPress={(selected) => {
           setGroup(selected);
         }}
@@ -121,6 +124,7 @@ function AddPreferences({ route, navigation }) {
       ></ButtonGroup>
       <Text style={styles.questions}>Hope you find your match!</Text>
       <Button
+        color='#55008c'
         title="Save Preferences"
         onPress={() => {
           addPreferences(
