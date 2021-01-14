@@ -8,7 +8,7 @@ import MessageScreen from "./MessageScreen"
 class MessagesList extends React.Component {
 
     state = {
-        players: ["Joseph", "Nathalia", "Paul"]
+        players: ["Martina", "Nathalia", "Paul"]
     }
 
     render() {
