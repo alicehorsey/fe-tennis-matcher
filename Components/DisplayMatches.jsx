@@ -21,6 +21,7 @@ const DisplayMatches = (props) => {
 
     useEffect(() => {
         console.log('username in UseEffect >>', username)
+        console.log('props in username', props)
         getUser(username) ///props.username?
             .then(user => {
                 setUser(user)
@@ -45,11 +46,6 @@ const DisplayMatches = (props) => {
         if (newMatchedUsers.length === 0) setModalVisible(true)
         setMatchedUsers(newMatchedUsers)
     }
-
-    const toggleDrawer = () => {
-        //Props to open/close the drawer
-        props.navigation.toggleDrawer();
-    };
 
     return (
         isLoading ? <View>
@@ -102,8 +98,9 @@ const DisplayMatches = (props) => {
                             <View key={index} style={{ flexDirection: 'column' }}>
                                 <Text style={{ alignSelf: "center", fontSize: 40 }}>{user.first_name}'s Matches!</Text>
                                 <Button
+                                    color='#55008c'
                                     title='Remove player'
-                                    id={index}
+                                    //id={index}
                                     onPress={handleClick}
                                 />
                                 <Image
@@ -113,11 +110,13 @@ const DisplayMatches = (props) => {
                                 <View style={style.userInfo}>
                                     <Text style={{ fontWeight: 'bold', fontSize: width / 20 }}>{matchedUser.first_name}</Text>
                                     <Text>Ability: {abilityStrings[matchedUser.ability]}</Text>
-                                    <Text>{matchedUser.playing_hand}</Text>
+                                    <Text>{matchedUser.playing_hand[0].toUpperCase() + matchedUser.playing_hand.slice(1)}</Text>
+                                    <Text>Club: {matchedUser.club_membership || 'None'}</Text>
                                     <Text >{matchedUser.description}</Text>
                                 </View>
 
                                 <Button
+                                    color='#55008c'
                                     title="Message Player"
                                     onPress={() => props.navigation.navigate("Message Player", { user, matchedUser })}
                                 />
@@ -137,10 +136,10 @@ const DisplayMatches = (props) => {
 };
 
 const style = StyleSheet.create({
-    container: { marginTop: 20, width, height },
+    container: { marginTop: 0, width, height },
     scroll: { width, height },
-    image: { width, height, resizeMode: 'cover', flex: 1 },
-    userInfo: { width, paddingLeft: 5, paddingRight: 5, alignItems: 'center' },
+    image: { width, height, resizeMode: 'contain', flex: 1 },
+    userInfo: { width, paddingLeft: 5, paddingRight: 5, alignItems: 'center', alignSelf: 'center' },
     pagination: { flexDirection: 'row', position: 'absolute', bottom: -30, alignSelf: 'center' },
     pagingText: { fontSize: (width / 35), color: 'green', margin: 3 },
     pagingActiveText: { fontSize: (width / 35), color: 'black', margin: 3 },
@@ -183,28 +182,3 @@ const style = StyleSheet.create({
 })
 
 export default DisplayMatches;
-
-// {
-//     "user_id": "1",
-//     "username": "martina.hingis@yahoo.co.uk",
-//     "first_name": "Martina",
-//     "last_name": "Hingis",
-//     "latitude": "53.796305",
-//     "longitude": "-1.564126",
-//     "date_of_birth": "19800930",
-//     "gender": "m",
-//     "ability": "1",
-//     "playing_hand": "right-handed",
-//     "club_membership": "Kirkstall Abbey Tennis Club",
-//     "weekday_daytime": "",
-//     "weekday_evening": "",
-//     "weekends": "",
-//     "description": "Tennis is mostly mental. Of course you must have a lot of physical skill but you can't play tennis well and not be a good thinker. You win or lose the match before you even go out there. Venus Williams",
-//     "distance": "0",
-//     "min_ability": "1",
-//     "max_ability": "4",
-//     "hand_preference": "",
-//     "min_age": "18",
-//     "max_age": "100",
-//     "gender_preference": "m"
-// }

@@ -34,6 +34,7 @@
     "react-native-image-viewing": "^0.2.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.3",
     "react-native-maps": "^0.27.1",
+    "react-native-material-buttons": "^0.6.0",
     "react-native-progress": "^4.1.2",
     "react-native-reanimated": "~1.13.0",
     "react-native-safe-area-context": "3.1.9",
