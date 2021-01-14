@@ -68,11 +68,8 @@ function AddPreferences({ route, navigation }) {
 
   return (
     <ScrollView>
-      <Text>User adding preferences screen</Text>
-      <Text>Set your maximum distance:</Text>
-      <Text>Distance: {distance}</Text>
-
-      <Text>Should be false on refresh: {savedPreferences.toString()}</Text>
+      <Text style={styles.questions}>How far are you willing to travel?</Text>
+      <Text style={styles.questions}>Distance chosen: {distance} miles</Text>
       <View>
         <Slider
           value={distance}
@@ -96,9 +93,8 @@ function AddPreferences({ route, navigation }) {
           }}
         />
       </View>
-      <Text>***</Text>
-      <Text>***</Text>
-      <Text>Opponent hand</Text>
+
+      <Text style={styles.questions}>What would you like your opponent hand to be?</Text>
       <ButtonGroup
         onPress={(selected) => {
           setOpponentHand(selected);
@@ -106,19 +102,16 @@ function AddPreferences({ route, navigation }) {
         selectedIndex={opponentHand}
         buttons={opponentHandButtons}
       ></ButtonGroup>
-      <Text>Opponent hand is {opponentHandButtons[opponentHand]}</Text>
-      <Text>***</Text>
-      <Text>***</Text>
-      <Text>Choose your range of opponent ability levels</Text>
+
+      <Text style={styles.questions}>What ability would you like your opponent to be?</Text>
       <ButtonGroup
         onPress={(selected) => setOppoenentAbility(selected)}
         selectMultiple={true}
         selectedIndexes={opponentAbility}
         buttons={abilityLevelButtons}
       ></ButtonGroup>
-      <Text>***</Text>
-      <Text>***</Text>
-      <Text>What group do you want to play in?</Text>
+
+      <Text style={styles.questions}>What group do you want to play in?</Text>
       <ButtonGroup
         onPress={(selected) => {
           setGroup(selected);
@@ -126,7 +119,7 @@ function AddPreferences({ route, navigation }) {
         selectedIndex={group}
         buttons={opponentGroupOptions}
       ></ButtonGroup>
-      <Text>Your preferred group: {opponentGroupOptions[group]}</Text>
+      <Text style={styles.questions}>Hope you find your match!</Text>
       <Button
         title="Save Preferences"
         onPress={() => {
@@ -143,7 +136,7 @@ function AddPreferences({ route, navigation }) {
           navigation.navigate("Matches", profileInfo);
         }}
       />
-     
+
       {/* this button first needs to send post request then navigate to matches */}
     </ScrollView>
   );
@@ -151,15 +144,23 @@ function AddPreferences({ route, navigation }) {
 // have a submit button with disabled until preferences saved ??? ternary ???
 export default AddPreferences;
 
- /* <Button
-        title="Submit Profile"
-        disabled={!savedPreferences}
-        onPress={() => {
-          // PROBLEM : READ THE CONSOLE.LOG --> Only on second click of the submit button are matches posted
-          console.log(
-            "Here is the final object to post",
-            profileInfo,
-            Object.keys(profileInfo).length
-          );
-        }}
-      /> */
+const styles = StyleSheet.create({
+  questions: {
+    margin: 10,
+    fontSize: 18
+  }
+})
+
+
+/* <Button
+       title="Submit Profile"
+       disabled={!savedPreferences}
+       onPress={() => {
+         // PROBLEM : READ THE CONSOLE.LOG --> Only on second click of the submit button are matches posted
+         console.log(
+           "Here is the final object to post",
+           profileInfo,
+           Object.keys(profileInfo).length
+         );
+       }}
+     /> */

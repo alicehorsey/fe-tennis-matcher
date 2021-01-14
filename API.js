@@ -22,21 +22,23 @@ export const getUsers = (currentUser) => {
         longitude,
     } = currentUser;
     return tennisAPI
-        .get("/users", {
-            params: {
-                username,
-                gender_preference,
-                min_ability,
-                max_ability,
-                playing_hand,
-                weekday_daytime,
-                weekday_evening,
-                weekends,
-                distance,
-                latitude,
-                longitude,
+        .get("/users",
+            {
+                params: {
+                    username,
+                    gender_preference,
+                    min_ability,
+                    max_ability,
+                    playing_hand,
+                    // weekday_daytime,
+                    // weekday_evening,
+                    // weekends,
+                    distance,
+                    latitude,
+                    longitude,
+                }
             }
-        })
+        )
         .then(({ data }) => data.users)
         .catch((error) => console.log(error));
 };
@@ -63,12 +65,12 @@ export const postNewUser = (newUser) => {
 };
 
 export const updateUser = (currentUser) => {
-  return tennisAPI
-    .patch(`/users/${currentUser.username}`, currentUser)
-    .then(({ data }) => {
-      console.log(data);
-      return data;
-    });
+    return tennisAPI
+        .patch(`/users/${currentUser.username}`, currentUser)
+        .then(({ data }) => {
+            console.log(data);
+            return data;
+        });
 };
 
 export const getCoords = (postcode) => {

@@ -29,6 +29,7 @@ function CreateProfile({ extraData, navigation }) {
   // lat and long are added directly to userDetails
   const [image, setImage] = useState("");
   const [date, setDate] = useState(new Date());
+  const [dateButton, setDateButton] = useState("Choose Date")
   const [show, setShow] = useState(false);
   const [gender, setGender] = useState(4);
   const [userAbility, setAbility] = useState(0);
@@ -57,17 +58,7 @@ function CreateProfile({ extraData, navigation }) {
     "advanced",
     "expert",
   ];
-  // Date-picker functionality
-  // Date stored in the state as a timestamp
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShow(Platform.OS === "ios");
-    setDate(currentDate);
-  };
 
-  const showDatepicker = () => {
-    setShow(true);
-  };
 
   //This function works for changing a date timestamp coming back from the calendar date picker into the format of YYYYMMDD
   //We can use this function to format the date from the state before sending it to the backend
@@ -81,6 +72,21 @@ function CreateProfile({ extraData, navigation }) {
     );
     return formattedDate.toISOString().slice(0, 10).replace(/-/g, "");
   };
+
+  // Date-picker functionality
+  // Date stored in the state as a timestamp
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === "ios");
+    setDate(currentDate);
+    setDateButton(new Date(currentDate).toString().slice(4, 15))
+  };
+
+  const showDatepicker = () => {
+    setShow(true);
+  };
+
+
   // getting gender into m /f / other for the backend
   const formatGender = (choice, array) => {
     //console.log(choice);
@@ -146,7 +152,6 @@ function CreateProfile({ extraData, navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
-        <Text style={styles.title}>Create Profile</Text>
         <TextInput
           style={styles.inputFields}
           onChangeText={(text) => onChangeFirstNameText(text)}
@@ -168,9 +173,9 @@ function CreateProfile({ extraData, navigation }) {
           placeholder="Post Code"
           autoCompleteType="postal-code"
         />
-        <Text>What is your date of birth?</Text>
+        <Text style={styles.questions}>What is your date of birth?</Text>
         <View>
-          <Button onPress={showDatepicker} title="Choose Date" />
+          <Button onPress={showDatepicker} title={dateButton} />
         </View>
         {show && (
           <DateTimePicker
@@ -182,16 +187,16 @@ function CreateProfile({ extraData, navigation }) {
           />
         )}
         {/* Uncomment to see what date is selected if required! */}
-        <Text>{date.toString()}</Text>
-        <Text>{formatDate(date)}</Text>
+        {/* <Text>{date.toString()}</Text>
+        <Text>{formatDate(date)}</Text> */}
 
-        <Text>What is your gender?</Text>
+        <Text style={styles.questions}>What is your gender?</Text>
         <ButtonGroup
           onPress={(selected) => setGender(selected)}
           selectedIndex={gender}
           buttons={genderOptions}
         ></ButtonGroup>
-        <Text>What hand do you play?</Text>
+        <Text style={styles.questions}>What hand do you play?</Text>
         <ButtonGroup
           onPress={(selected) => {
             setHand(selected);
@@ -199,7 +204,7 @@ function CreateProfile({ extraData, navigation }) {
           selectedIndex={hand}
           buttons={handOptions}
         ></ButtonGroup>
-        <Text>What is your ability level?</Text>
+        <Text style={styles.questions}>What is your ability level?</Text>
         <ButtonGroup
           onPress={(selected) => setAbility(selected)}
           selectedIndex={userAbility}
@@ -208,9 +213,10 @@ function CreateProfile({ extraData, navigation }) {
         {/*
         need to pass username down on the props
         */}
+        <Text style={styles.questions}>Select your photo</Text>
         <SelectAndAddPhoto username={testUsername} copyURL={copyURL} />
 
-        <Text>What is your availabilty?</Text>
+        <Text style={styles.questions}>What is your availabilty?</Text>
         <CheckBox
           center
           title="weekday daytime"
@@ -255,10 +261,11 @@ function CreateProfile({ extraData, navigation }) {
           }}
           checked={weekends}
         />
-        <Text>
+        <Text style={styles.questions}>
           Please write a brief description of what you are looking for.
         </Text>
         <TextInput
+          multiline={true}
           style={styles.inputFields_description}
           onChangeText={(text) => onChangeDescriptionText(text)}
           value={description}
@@ -312,6 +319,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     marginTop: Constants.statusBarHeight,
+    paddingTop: 30
   },
   scrollView: {
     marginHorizontal: 10,
@@ -322,9 +330,14 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     alignSelf: "center",
   },
+  questions: {
+    margin: 10,
+    fontSize: 18
+  },
   inputFields: {
     borderBottomWidth: 1,
-    marginBottom: 20,
+    marginBottom: 30,
+    fontSize: 18
   },
   inputFields_description: {
     borderBottomWidth: 1,

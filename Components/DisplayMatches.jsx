@@ -8,7 +8,7 @@ const height = width * 1.3
 
 const DisplayMatches = (props) => {
 
-    console.log(props.navigation.navigate, 'props.navigation in displayMatches')
+    // console.log(props.navigation.navigate, 'props.navigation in displayMatches')
 
     const [matchedUsers, setMatchedUsers] = useState([])
     const [isLoading, setIsLoading] = useState(true)
@@ -53,7 +53,8 @@ const DisplayMatches = (props) => {
 
     return (
         isLoading ? <View>
-            <Text>LOADING</Text>
+            <Image source={{ uri: "https://11cresma.files.wordpress.com/2010/01/tennis-ball.jpg" }}
+                style={{ width: 50, height: 50, alignSelf: "center", margin: 15 }} />;
         </View> :
             <View style={style.container}>
                 <View style={{ flexDirection: 'row' }}>

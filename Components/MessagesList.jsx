@@ -15,7 +15,6 @@ class MessagesList extends React.Component {
 
         return (
             <View style={{ flex: 1 }}>
-                <Text style={{ alignSelf: "center", fontSize: 40 }}>Player Chat!</Text>
                 {this.state.players.map(player => {
                     return (<>
                         {/* <Image source={require('../assets/tennis.png')} */}

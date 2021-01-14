@@ -64,7 +64,6 @@ class Chat extends React.Component {
         const { player } = this.props.route.params;
         return (
             <View style={{ flex: 1 }}>
-                <Text style={{ alignSelf: "center", fontSize: 40 }}>Player Chat!</Text>
                 <Text style={{ alignSelf: "center", fontSize: 40 }}>{player}</Text>
                 <GiftedChat
                     messages={this.state.messages}

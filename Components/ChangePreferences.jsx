@@ -89,11 +89,10 @@ function ChangePreferences(props) {
   } else {
     return (
       <ScrollView>
-        <Text>User adding preferences screen</Text>
-        <Text>Set your maximum distance:</Text>
-        <Text>Distance: {distance}</Text>
 
-        <Text>Should be false on refresh: {savedPreferences.toString()}</Text>
+        <Text style={styles.questions}>How far are you willing to travel?</Text>
+        <Text style={styles.questions}>Distance chosen: {distance} miles</Text>
+
         <View>
           <Slider
             value={distance}
@@ -117,9 +116,8 @@ function ChangePreferences(props) {
             }}
           />
         </View>
-        <Text>***</Text>
-        <Text>***</Text>
-        <Text>Opponent Hand</Text>
+
+        <Text style={styles.questions}>What would you like your opponent hand to be?</Text>
         <ButtonGroup
           onPress={(selected) => {
             setOpponentHand(selected);
@@ -127,19 +125,16 @@ function ChangePreferences(props) {
           selectedIndex={opponentHand}
           buttons={opponentHandButtons}
         ></ButtonGroup>
-        <Text>Opponent Hand is {opponentHandButtons[opponentHand]}</Text>
-        <Text>***</Text>
-        <Text>***</Text>
-        <Text>Choose your range of opponent ability levels</Text>
+        <Text style={styles.questions}>What ability would you like your opponent to be?</Text>
+
         <ButtonGroup
           onPress={(selected) => setOppoenentAbility(selected)}
           selectMultiple={true}
           selectedIndexes={opponentAbility}
           buttons={abilityLevelButtons}
         ></ButtonGroup>
-        <Text>***</Text>
-        <Text>***</Text>
-        <Text>What group do you want to play in?</Text>
+
+        <Text style={styles.questions}>What group do you want to play in?</Text>
         <ButtonGroup
           onPress={(selected) => {
             setGroup(selected);
@@ -147,7 +142,7 @@ function ChangePreferences(props) {
           selectedIndex={group}
           buttons={opponentGroupOptions}
         ></ButtonGroup>
-        <Text>Your preferred group: {opponentGroupOptions[group]}</Text>
+        <Text style={styles.questions}>Hope you find your match!</Text>
         <Button
           title="Save Preferences"
           onPress={() => {
@@ -171,3 +166,9 @@ function ChangePreferences(props) {
 }
 export default ChangePreferences;
 
+const styles = StyleSheet.create({
+  questions: {
+    margin: 10,
+    fontSize: 18
+  }
+})
