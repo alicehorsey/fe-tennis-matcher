@@ -16,6 +16,7 @@ import { decode, encode } from "base-64";
 import DisplayTennisClubs from "./Components/DisplayTennisClubs";
 import ChangePreferences from "./Components/ChangePreferences";
 import MessagesList from "./Components/MessagesList";
+import Player1Message from "./Components/Player1Message"
 if (!global.btoa) {
   global.btoa = encode;
 }
@@ -25,6 +26,7 @@ if (!global.atob) {
 import firebase from "./constants/Firebase";
 import { getUser } from "./API";
 import axios from "axios";
+import collectPlayer from './Components/MessagesList'
 
 // const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -139,9 +141,17 @@ export default function App() {
                   </Drawer.Screen>
                   <Drawer.Screen
                     name="Message Player"
-                    options={{ drawerLabel: '' }}
+                    options={{ drawerLabel: '' }
+                    }
                   >
                     {(props) => <MessageScreen {...props} extraData={user} />}
+                  </Drawer.Screen>
+                  <Drawer.Screen
+                    name="Message"
+                    options={{ drawerLabel: '' }
+                    }
+                  >
+                    {(props) => <Player1Message {...props} extraData={user} />}
                   </Drawer.Screen>
                 </>
               ) : (
@@ -172,6 +182,13 @@ export default function App() {
                     </Drawer.Screen>
                     <Drawer.Screen name="Message Player">
                       {(props) => <MessageScreen {...props} extraData={user} />}
+                    </Drawer.Screen>
+                    <Drawer.Screen
+                      name="Message"
+                      options={{ drawerLabel: '' }
+                      }
+                    >
+                      {(props) => <Player1Message {...props} extraData={user} />}
                     </Drawer.Screen>
                   </>
                 )
