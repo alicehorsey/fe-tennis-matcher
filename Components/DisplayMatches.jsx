@@ -49,8 +49,8 @@ const DisplayMatches = (props) => {
 
     return (
         isLoading ? <View>
-            <Image source={{ uri: "https://11cresma.files.wordpress.com/2010/01/tennis-ball.jpg" }}
-                style={{ width: 50, height: 50, alignSelf: "center", margin: 15 }} />;
+            <Text style={{ fontSize: 50 }}>🎾 Loading 🎾</Text>
+
         </View> :
             <View style={style.container}>
                 <View style={{ flexDirection: 'row' }}>
@@ -97,7 +97,7 @@ const DisplayMatches = (props) => {
                     {
                         matchedUsers.map((matchedUser, index) => (
                             <View key={index} style={{ flexDirection: 'column' }}>
-                                <Text style={{ alignSelf: "center", fontSize: 40 }}>{user.first_name}'s Matches!</Text>
+                                <Text style={{ alignSelf: "center", fontSize: 40 }}>🎾 {user.first_name}'s Matches! 🎾</Text>
                                 <Button
                                     color='#55008c'
                                     title='Remove player'

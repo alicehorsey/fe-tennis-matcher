@@ -72,8 +72,9 @@ export default function App() {
 
   //This is the beginning of the return function
   if (loading) {
-    return <Image source={{ uri: "https://11cresma.files.wordpress.com/2010/01/tennis-ball.jpg" }}
-      style={{ width: 50, height: 50, alignSelf: "center", margin: 15 }} />;
+    return (
+      <Text style={{ fontSize: 50 }}>🎾 Loading 🎾</Text>
+    )
   } else {
     return (
       <>

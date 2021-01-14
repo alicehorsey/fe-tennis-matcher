@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -8,27 +8,98 @@ import {
   ScrollView,
 } from "react-native";
 import { Slider, Icon, CheckBox, ButtonGroup } from "react-native-elements";
-import { updateUser } from "../API";
+import { updateUser, getUser } from "../API";
 
-function ChangePreferences({ route, navigation }) {
-  const profileInfo = { ...route.params };
-  // console.log(profileInfo);
+function ChangePreferences(props) {
+  // const profileInfo = { ...route.params };
+  // // console.log(profileInfo);
 
-  const [distance, setDistance] = useState(profileInfo.distance);
+  // const [distance, setDistance] = useState(profileInfo.distance);
+  // const opponentHandButtons = ["left-handed", "right-handed", "either"];
+  // const [opponentHand, setOpponentHand] = useState(opponentHandButtons.indexOf(profileInfo.gender_preference));
+  // const abilityLevelButtons = [
+  //   "beginner",
+  //   "intermediate",
+  //   "advanced",
+  //   "expert",
+  // ];
+  // const [opponentAbility, setOpponentAbility] = useState([profileInfo.min_ability, profileInfo.max_ability]);
+
+  // const opponentGroupOptions = ["mens", "womens", "either"];
+  // const [group, setGroup] = useState(opponentGroupOptions.indexOf(profileInfo.gender_preference));
+  // const [savedPreferences, setSavedPreferences] = useState(false);
+  // // current queries set up are gender / playing hand / min ability / max ability
+  // const addPreferences = (
+  //   profileData,
+  //   distance,
+  //   opponentAbility,
+  //   group,
+  //   opponentHand
+  // ) => {
+  //   profileData.distance = distance;
+  //   if (opponentAbility.length === 0) {
+  //     profileData.min_ability = 1;
+  //     profileData.max_ability = 4;
+  //   } else if (opponentAbility.length === 1) {
+  //     profileData.min_ability = opponentAbility[0] + 1;
+  //     profileData.max_ability = opponentAbility[0] + 1;
+  //   } else {
+  //     profileData.min_ability = opponentAbility.sort()[0] + 1;
+  //     profileData.max_ability =
+  //       opponentAbility.sort()[opponentAbility.length - 1] + 1;
+  //   }
+  //   if (group === 0) {
+  //     profileData.gender_preference = "m";
+  //   } else if (group === 1) {
+  //     profileData.gender_preference = "f";
+  //   } else {
+  //     profileData.gender_preference = "";
+  //   }
+  //   if (opponentHand === 0) {
+  //     profileData.hand_preference = "left-handed";
+  //   } else if (opponentHand === 1) {
+  //     profileData.hand_preference = "right-handed";
+  //   } else {
+  //     // this will not add anything could be removed
+  //     profileData.hand_preference = "";
+  //   }
+  //   return profileData;
+  // };
+
+  console.log(props, "Change Preferences Screen")
+
+  //console.log(profileInfo);
+
+  const [loading, setLoading] = useState(true);
+  const [profileInfo, setProfileInfo] = useState(null);
+
+  const [distance, setDistance] = useState(null);
   const opponentHandButtons = ["left-handed", "right-handed", "either"];
-  const [opponentHand, setOpponentHand] = useState(opponentHandButtons.indexOf(profileInfo.gender_preference));
+  const [opponentHand, setOpponentHand] = useState(null);
   const abilityLevelButtons = [
     "beginner",
     "intermediate",
     "advanced",
     "expert",
   ];
-  const [opponentAbility, setOpponentAbility] = useState([profileInfo.min_ability, profileInfo.max_ability]);
+  const [opponentAbility, setOppoenentAbility] = useState([]);
 
   const opponentGroupOptions = ["mens", "womens", "either"];
-  const [group, setGroup] = useState(opponentGroupOptions.indexOf(profileInfo.gender_preference));
+  const [group, setGroup] = useState(null);
   const [savedPreferences, setSavedPreferences] = useState(false);
-  // current queries set up are gender / playing hand / min ability / max ability
+
+  useEffect(() => {
+    getUser(props.extraData.email).then((data) => {
+      console.log(data)
+      setLoading(false);
+      setProfileInfo(data);
+      setDistance(data.distance);
+      setOpponentHand(opponentHandButtons.indexOf(data.gender_preference));
+      setOppoenentAbility([data.min_ability, data.max_ability]);
+      setGroup(opponentGroupOptions.indexOf(data.gender_preference));
+    });
+  }, [])
+
   const addPreferences = (
     profileData,
     distance,
@@ -66,8 +137,14 @@ function ChangePreferences({ route, navigation }) {
     return profileData;
   };
 
+
+
+
+
+
+
   if (loading) {
-    return <Text>Loading!</Text>;
+    return <Text style={{ fontSize: 50 }}>🎾 Loading 🎾</Text>;
   } else {
     return (
 
