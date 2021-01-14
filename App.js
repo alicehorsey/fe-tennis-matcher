@@ -16,6 +16,7 @@ import { decode, encode } from "base-64";
 import DisplayTennisClubs from "./Components/DisplayTennisClubs";
 import ChangePreferences from "./Components/ChangePreferences";
 import MessagesList from "./Components/MessagesList";
+import Player1Message from "./Components/Player1Message"
 if (!global.btoa) {
   global.btoa = encode;
 }
@@ -25,6 +26,7 @@ if (!global.atob) {
 import firebase from "./constants/Firebase";
 import { getUser } from "./API";
 import axios from "axios";
+import collectPlayer from './Components/MessagesList'
 
 // const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -124,6 +126,9 @@ export default function App() {
                       />
                     )}
                   </Drawer.Screen>
+                  <Drawer.Screen name="Player Chat">
+                    {(props) => <MessagesList {...props} extraData={user} />}
+                  </Drawer.Screen>
                   <Drawer.Screen name="Display Tennis Clubs">
                     {(props) => (
                       <DisplayTennisClubs {...props} extraData={user} />
@@ -134,14 +139,19 @@ export default function App() {
                       <ChangePreferences {...props} extraData={user} />
                     )}
                   </Drawer.Screen>
-                  <Drawer.Screen name="Messages List">
-                    {(props) => <MessagesList {...props} extraData={user} />}
-                  </Drawer.Screen>
                   <Drawer.Screen
                     name="Message Player"
-                    options={{ drawerLabel: '' }}
+                    options={{ drawerLabel: 'Log Out' }
+                    }
                   >
                     {(props) => <MessageScreen {...props} extraData={user} />}
+                  </Drawer.Screen>
+                  <Drawer.Screen
+                    name="Message"
+                    options={{ drawerLabel: '' }
+                    }
+                  >
+                    {(props) => <Player1Message {...props} extraData={user} />}
                   </Drawer.Screen>
                 </>
               ) : (
@@ -157,6 +167,9 @@ export default function App() {
                     <Drawer.Screen name="Matches">
                       {(props) => <DisplayMatches {...props} extraData={user} />}
                     </Drawer.Screen>
+                    <Drawer.Screen name="Player Chat">
+                      {(props) => <MessagesList {...props} extraData={user} />}
+                    </Drawer.Screen>
                     <Drawer.Screen name="Display Tennis Clubs">
                       {(props) => (
                         <DisplayTennisClubs {...props} extraData={user} />
@@ -167,11 +180,19 @@ export default function App() {
                         <ChangePreferences {...props} extraData={user} />
                       )}
                     </Drawer.Screen>
-                    <Drawer.Screen name="Messages List">
-                      {(props) => <MessagesList {...props} extraData={user} />}
-                    </Drawer.Screen>
-                    <Drawer.Screen name="Message Player">
+                    <Drawer.Screen
+                      name="Message Player"
+                      options={{ drawerLabel: 'Log Out' }
+                      }
+                    >
                       {(props) => <MessageScreen {...props} extraData={user} />}
+                    </Drawer.Screen>
+                    <Drawer.Screen
+                      name="Message"
+                      options={{ drawerLabel: '' }
+                      }
+                    >
+                      {(props) => <Player1Message {...props} extraData={user} />}
                     </Drawer.Screen>
                   </>
                 )

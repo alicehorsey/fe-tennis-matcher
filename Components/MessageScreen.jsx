@@ -8,91 +8,18 @@ import firebase from "../constants/Firebase";
 
 class Chat extends React.Component {
 
+
     state = {
-        messages: [],
+        messages: [{
+            _id: 1,
+            createdAt: new Date(),
+            text: `Welcome to Tennis Match Chat!\nSend your first message here!`,
+            user: {
+                _id: 1,
+                avatar: "https://11cresma.files.wordpress.com/2010/01/tennis-ball.jpg",
+            },
+        }],
     }
-
-    //For connecting to firebase....
-    // componentWillMount() {
-    //     this.setState({
-    //         messages: [],
-    //     });
-    // }
-
-    // get ref() {
-    //     return firebase.database().ref('messages');
-    // }
-
-    // on = callback =>
-    //     this.ref
-    //         .limitToLast(20)
-    //         .on('child_added', snapshot => callback(this.parse(snapshot)));
-
-    // parse = snapshot => {
-    //     const { timestamp: numberStamp, text, user } = snapshot.val();
-    //     const { key: _id } = snapshot;
-
-    //     const timestamp = new Date(numberStamp);
-
-    //     const message = {
-    //         _id,
-    //         timestamp,
-    //         text,
-    //         user,
-    //     };
-    //     return message;
-    // }
-
-    // off() {
-    //     this.ref.off();
-    // }
-
-    // get uid() {
-    //     return (firebase.auth().currentUser || {}).uid;
-    // }
-
-    // get timestamp() {
-    //     return firebase.database.ServerValue.TIMESTAMP;
-    // }
-
-
-    // send = messages => {
-    //     for (let i = 0; i < messages.length; i++) {
-    //         const { text, user } = messages[i];
-
-    //         const message = {
-    //             text,
-    //             user,
-    //             timestamp: this.timestamp,
-    //         };
-    //         this.append(message);
-    //     }
-    // };
-
-    // append = message => this.ref.push(message);
-
-
-    // componentDidMount() {
-
-
-    //     this.on(message =>
-    //         this.setState(previousState => ({
-    //             messages: GiftedChat.append(previousState.messages, message),
-    //         }))
-    //     );
-    // }
-    // // 2.
-    // componentWillUnmount() {
-    //     this.off();
-    // }
-
-    // get user() {
-    //     // Return our name and our UID for GiftedChat to parse
-    //     return {
-    //         name: this.props.route.params.user.first_name,
-    //         _id: firebase.shared.uid,
-    //     };
-    // }
 
     onSend(messages = []) {
         this.setState((previousState) => ({
@@ -101,28 +28,22 @@ class Chat extends React.Component {
     }
 
     render() {
-
         const { matchedUser, user } = this.props.route.params;
-
         return (
-            <>
-                <Text>Send a message to {matchedUser.first_name}!</Text>
-{/* 
-                <GiftedChat
-                    messages={this.state.messages}
-                    onSend={this.send}
-                    user={this.user}
-                /> */}
 
+            <View style={{ flex: 1 }}>
+                <Text style={{ alignSelf: "center", fontSize: 40 }}>Player Chat!</Text>
+                <Text style={{ alignSelf: "center", fontSize: 40 }}>{matchedUser.first_name}</Text>
                 <GiftedChat
                     messages={this.state.messages}
-                    renderAvatar={() => null}
+                    showUserAvatar={true}
                     onSend={(messages) => this.onSend(messages)}
                     user={{
                         _id: user.first_name,
+                        avatar: "https://11cresma.files.wordpress.com/2010/01/tennis-ball.jpg",
                     }}
                 />
-            </>
+            </View>
         );
     }
 }

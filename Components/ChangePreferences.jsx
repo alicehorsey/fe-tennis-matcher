@@ -11,10 +11,10 @@ import { Slider, Icon, CheckBox, ButtonGroup } from "react-native-elements";
 import { updateUser, getUser } from "../API";
 
 function ChangePreferences(props) {
-  
-  console.log(props, "Change Preferences Screen")
 
-  
+  // console.log(props.userData, "Change Preferences Screen")
+
+
   //console.log(profileInfo);
 
   const [loading, setLoading] = useState(true);
@@ -87,87 +87,87 @@ function ChangePreferences(props) {
   if (loading) {
     return <Text>Loading!</Text>;
   } else {
-  return (
-    <ScrollView>
-      <Text>User adding preferences screen</Text>
-      <Text>Set your maximum distance:</Text>
-      <Text>Distance: {distance}</Text>
+    return (
+      <ScrollView>
+        <Text>User adding preferences screen</Text>
+        <Text>Set your maximum distance:</Text>
+        <Text>Distance: {distance}</Text>
 
-      <Text>Should be false on refresh: {savedPreferences.toString()}</Text>
-      <View>
-        <Slider
-          value={distance}
-          onValueChange={setDistance}
-          maximumValue={50}
-          minimumValue={1}
-          step={1}
-          trackStyle={{ height: 10, backgroundColor: "transparent" }}
-          thumbStyle={{ height: 20, width: 20, backgroundColor: "transparent" }}
-          thumbProps={{
-            children: (
-              <Icon
-                name="tennisball-outline"
-                type="ionicon"
-                size={20}
-                reverse
-                containerStyle={{ bottom: 20, right: 20 }}
-                color="#92a835"
-              />
-            ),
+        <Text>Should be false on refresh: {savedPreferences.toString()}</Text>
+        <View>
+          <Slider
+            value={distance}
+            onValueChange={setDistance}
+            maximumValue={50}
+            minimumValue={1}
+            step={1}
+            trackStyle={{ height: 10, backgroundColor: "transparent" }}
+            thumbStyle={{ height: 20, width: 20, backgroundColor: "transparent" }}
+            thumbProps={{
+              children: (
+                <Icon
+                  name="tennisball-outline"
+                  type="ionicon"
+                  size={20}
+                  reverse
+                  containerStyle={{ bottom: 20, right: 20 }}
+                  color="#92a835"
+                />
+              ),
+            }}
+          />
+        </View>
+        <Text>***</Text>
+        <Text>***</Text>
+        <Text>Opponent Hand</Text>
+        <ButtonGroup
+          onPress={(selected) => {
+            setOpponentHand(selected);
+          }}
+          selectedIndex={opponentHand}
+          buttons={opponentHandButtons}
+        ></ButtonGroup>
+        <Text>Opponent Hand is {opponentHandButtons[opponentHand]}</Text>
+        <Text>***</Text>
+        <Text>***</Text>
+        <Text>Choose your range of opponent ability levels</Text>
+        <ButtonGroup
+          onPress={(selected) => setOppoenentAbility(selected)}
+          selectMultiple={true}
+          selectedIndexes={opponentAbility}
+          buttons={abilityLevelButtons}
+        ></ButtonGroup>
+        <Text>***</Text>
+        <Text>***</Text>
+        <Text>What group do you want to play in?</Text>
+        <ButtonGroup
+          onPress={(selected) => {
+            setGroup(selected);
+          }}
+          selectedIndex={group}
+          buttons={opponentGroupOptions}
+        ></ButtonGroup>
+        <Text>Your preferred group: {opponentGroupOptions[group]}</Text>
+        <Button
+          title="Save Preferences"
+          onPress={() => {
+            addPreferences(
+              profileInfo,
+              distance,
+              opponentAbility,
+              group,
+              opponentHand
+            );
+
+            console.log(profileInfo, Object.keys(profileInfo).length);
+            updateUser(profileInfo);
+            props.navigation.navigate("Matches", profileInfo)
           }}
         />
-      </View>
-      <Text>***</Text>
-      <Text>***</Text>
-      <Text>Opponent Hand</Text>
-      <ButtonGroup
-        onPress={(selected) => {
-          setOpponentHand(selected);
-        }}
-        selectedIndex={opponentHand}
-        buttons={opponentHandButtons}
-      ></ButtonGroup>
-      <Text>Opponent Hand is {opponentHandButtons[opponentHand]}</Text>
-      <Text>***</Text>
-      <Text>***</Text>
-      <Text>Choose your range of opponent ability levels</Text>
-      <ButtonGroup
-        onPress={(selected) => setOppoenentAbility(selected)}
-        selectMultiple={true}
-        selectedIndexes={opponentAbility}
-        buttons={abilityLevelButtons}
-      ></ButtonGroup>
-      <Text>***</Text>
-      <Text>***</Text>
-      <Text>What group do you want to play in?</Text>
-      <ButtonGroup
-        onPress={(selected) => {
-          setGroup(selected);
-        }}
-        selectedIndex={group}
-        buttons={opponentGroupOptions}
-      ></ButtonGroup>
-      <Text>Your preferred group: {opponentGroupOptions[group]}</Text>
-      <Button
-        title="Save Preferences"
-        onPress={() => {
-          addPreferences(
-            profileInfo,
-            distance,
-            opponentAbility,
-            group,
-            opponentHand
-          );
 
-          console.log(profileInfo, Object.keys(profileInfo).length);
-          updateUser(profileInfo);
-          props.navigation.navigate("Matches", profileInfo)
-        }}
-      />
-
-    </ScrollView>
-  );
-}
+      </ScrollView>
+    );
+  }
 }
 export default ChangePreferences;
 
