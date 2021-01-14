@@ -47,7 +47,7 @@ export default function LoginScreen({ navigation }) {
             <KeyboardAwareScrollView
                 style={{ flex: 1, width: '100%' }}
                 keyboardShouldPersistTaps="always">
-                <Text style={styles.intro}>Log in to find your Tennis Match!</Text>
+                {/* <Text style={{ fontSize: 40 }}>Log in to find your Match!</Text> */}
                 <TextInput
                     style={styles.input}
                     placeholder='E-mail'
@@ -73,7 +73,7 @@ export default function LoginScreen({ navigation }) {
                     <Text style={styles.buttonTitle}>Log in</Text>
                 </TouchableOpacity>
                 <View style={styles.footerView}>
-                    <Text style={styles.footerText}>Don't have an account? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Sign up</Text></Text>
+                    <Text style={styles.footerText}>Don't have a Tennis Match account? <Text onPress={onFooterLinkPress} style={styles.footerLink}>Sign up</Text></Text>
                 </View>
             </KeyboardAwareScrollView>
         </View>
